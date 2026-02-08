@@ -179,7 +179,7 @@
     <p>Takes three integer inputs: a, b and c and returns the largest of these three values.</p>
     <ul>
         <li>Example: <code>largest(1, 2, 3)</code> should return 3.</li>
-        <li>largest should not throw an exception.</li>
+        <li>The function should not throw an exception.</li>
         <li>The function prototype is <code>int largest(int a, int b, int c)</code>.</li>
     </ul>
 
@@ -187,7 +187,7 @@
     <p>Takes two integer inputs and returns true if and only if the sum of the two values is an even number. If the sum of the input values is an odd number, then the function returns false.</p>
     <ul>
         <li>Example: <code>sum_is_even(3, 5)</code> should return true.</li>
-        <li>sum_is_even should not throw an exception.</li>
+        <li>The function should not throw an exception.</li>
         <li>The function prototype is <code>bool sum_is_even(int a, int b)</code>.</li>
     </ul>
 
@@ -195,7 +195,7 @@
     <p>Takes one input which represents a number of apples that need to be packed into boxes. Each box can store a maximum of 20 apples. The function returns the minimum number of boxes needed to store the given number of apples.</p>
     <ul>
         <li>Example: <code>boxes_needed(13)</code> should return 1.</li>
-        <li>boxes_needed should not throw an exception.</li>
+        <li>The function should not throw an exception.</li>
         <li>The function prototype is <code>unsigned int boxes_needed(int apples)</code>.</li>
     </ul>
     <p class="footnote">Problems sourced and adapted from Ettles, Andrew & Luxton-Reilly, Andrew & Denny, Paul. (2018). Common logic errors made by novice programmers.</p>
@@ -205,7 +205,7 @@
     <p>The function should return true if section A performs better than section B and false otherwise.</p>
     <ul>
         <li>Example: <code>smarter_section(40, 50, 75, 100)</code> should return true.</li>
-        <li>smarter_section should throw <code>std::invalid_argument</code> if the arguments are invalid.</li>
+        <li>The function should throw <code>std::invalid_argument</code> if the arguments are invalid.</li>
         <li>The function prototype is <code>bool smarter_section(int A_correct, int A_total, int B_correct, int B_total)</code>.</li>
         <li>Do not catch the exception within this function.</li>
     </ul>
@@ -214,7 +214,7 @@
     <p>Takes two inputs: the number of pizzas you have eaten, and a Boolean which is true if it is the weekend and false otherwise. The function should return true if you had a good dinner, and false if you didn't. A good dinner is a dinner where you eat between 10 and 20 pizzas (inclusive) unless it is a weekend, in which case there is no upper bound on the number of pizzas.</p>
     <ul>
         <li>Example: <code>good_dinner(13, false)</code> should return true.</li>
-        <li>good_dinner should not throw an exception.</li>
+        <li>The function should not throw an exception.</li>
         <li>The function prototype is <code>bool good_dinner(int pizzas, bool is_weekend)</code>.</li>
     </ul>
 
@@ -222,8 +222,8 @@
     <p>Takes two integer inputs, low and high and calculates the sum of all integers between low and high, inclusive.</p>
     <ul>
         <li>Example: <code>sum_between(1, 10)</code> should return 55.</li>
-        <li>sum_between should throw <code>std::invalid_argument</code> if low and high are out of order.</li>
-        <li>sum_between should throw <code>std::overflow_error</code> if the sum exceeds the maximum/minimum value of a signed 32-bit integer.
+        <li>The function should throw <code>std::invalid_argument</code> if low and high are out of order.</li>
+        <li>The function should throw <code>std::overflow_error</code> if the sum exceeds the maximum/minimum value of a signed 32-bit integer.
             <ul>
                 <li>The maximum value of a signed 32-bit integer is 2147483647</li>
                 <li>The minimum value of a signed 32-bit integer is -2147483648</li>
@@ -243,7 +243,7 @@
     <p>Takes two integer inputs: <code>a</code> and <code>b</code> and returns the product of these two values.</p>
     <ul>
         <li>Example: <code>product(2, 2)</code> should return 4.</li>
-        <li>product should throw <code>std::overflow_error</code> if the product exceeds the maximum/minimum value of a signed 64-bit integer (<code>int64_t</code>).
+        <li>The function should throw <code>std::overflow_error</code> if the product exceeds the maximum/minimum value of a signed 64-bit integer (<code>int64_t</code>).
             <ul>
                 <li>The maximum value of a signed 64-bit integer is 9223372036854775807</li>
                 <li>The minimum value of a signed 64-bit integer is -9223372036854775808</li>
