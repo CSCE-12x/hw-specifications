@@ -153,7 +153,7 @@
             <li>None of the autograder test cases rely on the provided main function.  But, you must submit the file for the compilation test</li>
             <li>We will refuse to help you if you do not add your own tests.</li>
             </ul>
-        <li>Do not read from standard input (i.e. std::cin) in the functions. The autograder will not send any information to standard input. Your program will starve and timeout. That will be sad. The input comes from the function parameters. </li>
+        <li>Do not read from standard input (i.e. <code>std::cin</code>) in the functions. The autograder will not send any information to standard input. Your program will starve and timeout. That will be sad. The input comes from the function parameters. </li>
             <ul>
             <li>You can specify the input by writing your own test cases in the main function or using the existing main function and providing values by hand when you run it locally.</li>
             </ul>
@@ -178,49 +178,50 @@
     <h3>1. largest</h3>
     <p>Takes three integer inputs: a, b and c and returns the largest of these three values.</p>
     <ul>
+        <li>The function prototype is <code>int largest(int a, int b, int c)</code>.</li>
         <li>Example: <code>largest(1, 2, 3)</code> should return 3.</li>
         <li>The function should not throw an exception.</li>
-        <li>The function prototype is <code>int largest(int a, int b, int c)</code>.</li>
     </ul>
 
     <h3>2. sum_is_even</h3>
-    <p>Takes two integer inputs and returns true if and only if the sum of the two values is an even number. If the sum of the input values is an odd number, then the function returns false.</p>
+    <p>Takes two integer inputs and returns <code>true</code> if and only if the sum of the two values is an even number. If the sum of the input values is an odd number, then the function returns false.</p>
     <ul>
-        <li>Example: <code>sum_is_even(3, 5)</code> should return true.</li>
-        <li>The function should not throw an exception.</li>
         <li>The function prototype is <code>bool sum_is_even(int a, int b)</code>.</li>
+        <li>Example: <code>sum_is_even(3, 5)</code> should return <code>true</code>.</li>
+        <li>The function should not throw an exception.</li>
     </ul>
 
     <h3>3. boxes_needed</h3>
     <p>Takes one input which represents a number of apples that need to be packed into boxes. Each box can store a maximum of 20 apples. The function returns the minimum number of boxes needed to store the given number of apples.</p>
     <ul>
+        <li>The function prototype is <code>unsigned int boxes_needed(int apples)</code>.</li>
         <li>Example: <code>boxes_needed(13)</code> should return 1.</li>
         <li>The function should not throw an exception.</li>
-        <li>The function prototype is <code>unsigned int boxes_needed(int apples)</code>.</li>
     </ul>
     <p class="footnote">Problems sourced and adapted from Ettles, Andrew & Luxton-Reilly, Andrew & Denny, Paul. (2018). Common logic errors made by novice programmers.</p>
 
     <h3>4. smarter_section</h3>
     <p>Takes four inputs and determines which section performed better on a particular exam question. The first input is the number of students in section A that answer the question correctly, and the second input is the total number of students in section A. Similarly, the third input is the number of students in section B that answer the question correctly, and the fourth input is the total number of students in section B. The performance of each section can be measured as the percentage of students who answer a question correctly.</p>
-    <p>The function should return true if section A performs better than section B and false otherwise.</p>
+    <p>The function should return <code>true</code> if section A performs better than section B and false otherwise.</p>
     <ul>
-        <li>Example: <code>smarter_section(40, 50, 75, 100)</code> should return true.</li>
-        <li>The function should throw <code>std::invalid_argument</code> if the arguments are invalid.</li>
         <li>The function prototype is <code>bool smarter_section(int A_correct, int A_total, int B_correct, int B_total)</code>.</li>
+        <li>Example: <code>smarter_section(40, 50, 75, 100)</code> should return <code>true</code>.</li>
+        <li>The function should throw <code>std::invalid_argument</code> if the arguments are invalid.</li>
         <li>Do not catch the exception within this function.</li>
     </ul>
 
     <h3>5. good_dinner</h3>
-    <p>Takes two inputs: the number of pizzas you have eaten, and a Boolean which is true if it is the weekend and false otherwise. The function should return true if you had a good dinner, and false if you didn't. A good dinner is a dinner where you eat between 10 and 20 pizzas (inclusive) unless it is a weekend, in which case there is no upper bound on the number of pizzas.</p>
+    <p>Takes two inputs: the number of pizzas you have eaten, and a Boolean which is <code>true</code> if it is the weekend and false otherwise. The function should return <code>true</code> if you had a good dinner, and false if you didn't. A good dinner is a dinner where you eat between 10 and 20 pizzas (inclusive) unless it is a weekend, in which case there is no upper bound on the number of pizzas.</p>
     <ul>
-        <li>Example: <code>good_dinner(13, false)</code> should return true.</li>
-        <li>The function should not throw an exception.</li>
         <li>The function prototype is <code>bool good_dinner(int pizzas, bool is_weekend)</code>.</li>
+        <li>Example: <code>good_dinner(13, false)</code> should return <code>true</code>.</li>
+        <li>The function should not throw an exception.</li>
     </ul>
 
     <h3>6. sum_between</h3>
     <p>Takes two integer inputs, low and high and calculates the sum of all integers between low and high, inclusive.</p>
     <ul>
+        <li>The function prototype is <code>int32_t sum_between(int32_t low, int32_t high)</code>.</li>
         <li>Example: <code>sum_between(1, 10)</code> should return 55.</li>
         <li>The function should throw <code>std::invalid_argument</code> if low and high are out of order.</li>
         <li>The function should throw <code>std::overflow_error</code> if the sum exceeds the maximum/minimum value of a signed 32-bit integer.
@@ -236,12 +237,12 @@
                 <li>One way to gain insight is to draw a simple number line and use it to help visualize the problem and guide you towards a solution.</li>
             </ul>
         </li>
-        <li>The function prototype is <code>int32_t sum_between(int32_t low, int32_t high)</code>.</li>
     </ul>
 
     <h3>7. product</h3>
     <p>Takes two integer inputs: <code>a</code> and <code>b</code> and returns the product of these two values.</p>
     <ul>
+        <li>The function prototype is <code>int64_t product(int64_t a, int64_t b)</code>.</li>
         <li>Example: <code>product(2, 2)</code> should return 4.</li>
         <li>The function should throw <code>std::overflow_error</code> if the product exceeds the maximum/minimum value of a signed 64-bit integer (<code>int64_t</code>).
             <ul>
@@ -252,7 +253,6 @@
         </li>
         <li>Do not catch the exception within this function.</li>
         <li>Use of <code>__int128_t</code> and <code>__uint128_t</code> is not allowed.</li>
-        <li>The function prototype is <code>int64_t product(int64_t a, int64_t b)</code>.</li>
     </ul>
 
     <div class="section-break"></div>
@@ -370,7 +370,7 @@ if (a * a > std::numeric_limits<int>::max()) {
     <p>and <code>char_min := std::numeric_limits&lt;char&gt;::min()</code></p>
     <p>I'll work with the assumption that both <code>tilde</code> and <code>three</code> are positive.</p>
     With some thought you should be able to figure out which combinations of positive and negative values could become too big or too small.
-I'll work with the assumption that both tilde and three are positive.
+I'll work with the assumption that both <code>tilde</code> and <code>three</code> are positive.
 <pre>three + tilde > char_max</pre>
 <p>Then we can subtract one of them from both sides. I'll subtract tilde.</p>
 <pre>
@@ -380,15 +380,15 @@ I'll work with the assumption that both tilde and three are positive.
 <pre>
 three > char_max - tilde
 </pre>
-<p>Assuming the original sum would have been positive, this inequality is guaranteed to never have an overflow. Since <code>char_max</code> is the largest value possible, subtracting any positive value from it will result in values in the range 0 (if tilde is equal to <code>char_max</code>) to <code>char_max</code> (if tilde is equal to 0).</p>
+<p>Assuming the original sum would have been positive, this inequality is guaranteed to never have an overflow. Since <code>char_max</code> is the largest value possible, subtracting any positive value from it will result in values in the range 0 (if <code>tilde</code> is equal to <code>char_max</code>) to <code>char_max</code> (if <code>tilde</code> is equal to 0).</p>
 
 There are other combinations to consider.
 <ul>
     <li>What might happen…</li>
     <ul>
-        <li>If tilde and three are both negative?</li>
-        <li>If tilde is positive and three is negative?</li>
-        <li>If tilde is negative and three is positive?</li>
+        <li>If <code>tilde</code> and <code>three</code> are both negative?</li>
+        <li>If <code>tilde</code> is positive and <code>three</code> is negative?</li>
+        <li>If <code>tilde</code> is negative and <code>three</code> is positive?</li>
     </ul>
 </ul>
 <p>The analysis for when two numbers are multiplied together is similar.</p>
