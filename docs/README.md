@@ -1,1 +1,1 @@
-# HW Debugging
+# CSCE 120 HW Assignments
