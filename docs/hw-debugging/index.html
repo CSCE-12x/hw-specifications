@@ -4,113 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>HW: Debugging, Input Validation, and Integer Overflow</title>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-            font-size: 11pt;
-            line-height: 1.4;
-            color: #000;
-            max-width: 8.5in; /* Letter paper width */
-            margin: 0 auto;
-            padding: 0.5in;
-            background-color: #fff;
-        }
-
-        h1 {
-            font-size: 18pt;
-            font-weight: bold;
-            margin-bottom: 10px;
-            padding-bottom: 5px;
-            color: rgb(102, 0, 0);
-        }
-
-        h2 {
-            font-size: 14pt;
-            font-weight: bold;
-            color: purple;
-            margin-bottom: 14pt;
-            padding-bottom: 4pt;
-            border-bottom: 1px solid lightgrey;
-        }
-
-        h3 {
-            font-size: 12pt;
-            font-weight: bold;
-            margin-top: 18pt;
-            margin-bottom: 6pt;
-            color: rgb(0, 103, 103);
-        }
-
-        p {
-            margin-bottom: 10px;
-            text-align: justify;
-        }
-
-        ul, ol {
-            margin-top: 5px;
-            margin-bottom: 15px;
-            padding-left: 30px;
-        }
-
-        li {
-            margin-bottom: 5px;
-        }
-
-        code {
-            font-family: "Courier New", Courier, monospace;
-            background-color: #f4f4f4;
-            padding: 0 3px;
-            font-size: 0.95em;
-        }
-
-        pre {
-            font-family: "Courier New", Courier, monospace;
-            background-color: #f4f4f4;
-            border: 1px solid #ddd;
-            padding: 10px;
-            margin: 10px 0;
-            white-space: pre-wrap;
-            font-size: 0.9em;
-        }
-
-        .section-break {
-            margin-top: 40px;
-        }
-
-        .bold {
-            font-weight: bold;
-        }
-
-        .italic {
-            font-style: italic;
-        }
-
-        .footnote {
-            font-style: italic;
-            font-size: 8pt;
-            color: gray;
-        }
-
-        /* Simulating the ASCII diagrams/math layout from the PDF */
-        .math-display {
-            font-family: "Courier New", Courier, monospace;
-            margin-left: 20px;
-            white-space: pre;
-            display: block;
-            margin-bottom: 10px;
-        }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
     <h1>HW: Debugging, Input Validation, and Integer Overflow</h1>
 
     <h2 id="overview">Overview</h2>
-    
+
     <h3>TL;DR (too long; didn't read)</h3>
     <ul>
         <li>Debug seven "simple" functions.</li>
@@ -322,7 +223,7 @@
     <ul>
         <li>Example: <code>sum_between(1, 10)</code> should return 55.</li>
         <li>sum_between should throw <code>std::invalid_argument</code> if low and high are out of order.</li>
-        <li>sum_between should throw <code>std::overflow_error</code> if the sum exceeds the maximum/minimum value of a signed 32-bit integer. 
+        <li>sum_between should throw <code>std::overflow_error</code> if the sum exceeds the maximum/minimum value of a signed 32-bit integer.
             <ul>
                 <li>The maximum value of a signed 32-bit integer is 2147483647</li>
                 <li>The minimum value of a signed 32-bit integer is -2147483648</li>
@@ -342,7 +243,7 @@
     <p>Takes two integer inputs: <code>a</code> and <code>b</code> and returns the product of these two values.</p>
     <ul>
         <li>Example: <code>product(2, 2)</code> should return 4.</li>
-        <li>product should throw <code>std::overflow_error</code> if the product exceeds the maximum/minimum value of a signed 64-bit integer (<code>int64_t</code>). 
+        <li>product should throw <code>std::overflow_error</code> if the product exceeds the maximum/minimum value of a signed 64-bit integer (<code>int64_t</code>).
             <ul>
                 <li>The maximum value of a signed 64-bit integer is 9223372036854775807</li>
                 <li>The minimum value of a signed 64-bit integer is -9223372036854775808</li>
@@ -365,7 +266,7 @@
         <li>32 bits, e.g. int (<code>int32_t</code>)</li>
         <li>64 bits, e.g. long long (<code>int64_t</code>)</li>
     </ul>
-    
+
     <p>Each of these types of integers can store only a certain range of numbers, based on their size and signed-ness (totally a word… I used it, you knew what I meant, it's a word.).</p>
     <ul>
         <li>8-bit integers store integers in the range [-128, 127] or [0, 255] (unsigned)</li>
@@ -451,7 +352,7 @@ char sum = three + tilde;
 if (sum > std::numeric_limits<char>::max()) {
     // this will not be reached because sum is a char
     // and sum = -79 which is not > 127
-    std::cout << "2) overflow!" << std::endl; 
+    std::cout << "2) overflow!" << std::endl;
 }
 // with int:
 int a = 65536;

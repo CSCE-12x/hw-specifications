@@ -1,0 +1,98 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 11pt;
+    line-height: 1.4;
+    color: #000;
+    max-width: 8.5in; /* Letter paper width */
+    margin: 0 auto;
+    padding: 0.5in;
+    background-color: #fff;
+}
+
+h1 {
+    font-size: 18pt;
+    font-weight: bold;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+    color: rgb(102, 0, 0);
+}
+
+h2 {
+    font-size: 14pt;
+    font-weight: bold;
+    color: purple;
+    margin-bottom: 14pt;
+    padding-bottom: 4pt;
+    border-bottom: 1px solid lightgrey;
+}
+
+h3 {
+    font-size: 12pt;
+    font-weight: bold;
+    margin-top: 18pt;
+    margin-bottom: 6pt;
+    color: rgb(0, 103, 103);
+}
+
+p {
+    margin-bottom: 10px;
+    text-align: justify;
+}
+
+ul, ol {
+    margin-top: 5px;
+    margin-bottom: 15px;
+    padding-left: 30px;
+}
+
+li {
+    margin-bottom: 5px;
+}
+
+code {
+    font-family: "Courier New", Courier, monospace;
+    background-color: #f4f4f4;
+    padding: 0 3px;
+    font-size: 0.95em;
+}
+
+pre {
+    font-family: "Courier New", Courier, monospace;
+    background-color: #f4f4f4;
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+    white-space: pre-wrap;
+    font-size: 0.9em;
+}
+
+.section-break {
+    margin-top: 40px;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.italic {
+    font-style: italic;
+}
+
+.footnote {
+    font-style: italic;
+    font-size: 8pt;
+    color: gray;
+}
+
+/* Simulating the ASCII diagrams/math layout from the PDF */
+.math-display {
+    font-family: "Courier New", Courier, monospace;
+    margin-left: 20px;
+    white-space: pre;
+    display: block;
+    margin-bottom: 10px;
+}
