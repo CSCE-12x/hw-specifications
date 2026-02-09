@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HW: Debugging, Input Validation, and Integer Overflow</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 11pt;
+            line-height: 1.4;
+            color: #000;
+            max-width: 8.5in; /* Letter paper width */
+            margin: 0 auto;
+            padding: 0.5in;
+            background-color: #fff;
+        }
+
+        h1 {
+            font-size: 18pt;
+            font-weight: bold;
+            margin-bottom: 10px;
+            padding-bottom: 5px;
+            color: rgb(102, 0, 0);
+        }
+
+        h2 {
+            font-size: 14pt;
+            font-weight: bold;
+            color: purple;
+            margin-bottom: 14pt;
+            padding-bottom: 4pt;
+            border-bottom: 1px solid lightgrey;
+        }
+
+        h3 {
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 18pt;
+            margin-bottom: 6pt;
+            color: rgb(0, 103, 103);
+        }
+
+        p {
+            margin-bottom: 10px;
+            text-align: justify;
+        }
+
+        ul, ol {
+            margin-top: 5px;
+            margin-bottom: 15px;
+            padding-left: 30px;
+        }
+
+        li {
+            margin-bottom: 5px;
+        }
+
+        code {
+            font-family: "Courier New", Courier, monospace;
+            background-color: #f4f4f4;
+            padding: 0 3px;
+            font-size: 0.95em;
+        }
+
+        pre {
+            font-family: "Courier New", Courier, monospace;
+            background-color: #f4f4f4;
+            border: 1px solid #ddd;
+            padding: 10px;
+            margin: 10px 0;
+            white-space: pre-wrap;
+            font-size: 0.9em;
+        }
+
+        .section-break {
+            margin-top: 40px;
+        }
+
+        .bold {
+            font-weight: bold;
+        }
+
+        .italic {
+            font-style: italic;
+        }
+
+        .footnote {
+            font-style: italic;
+            font-size: 8pt;
+            color: gray;
+        }
+
+        /* Simulating the ASCII diagrams/math layout from the PDF */
+        .math-display {
+            font-family: "Courier New", Courier, monospace;
+            margin-left: 20px;
+            white-space: pre;
+            display: block;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>HW: Debugging, Input Validation, and Integer Overflow</h1>
+
+    <h2 id="overview">Overview</h2>
+    
+    <h3>TL;DR (too long; didn't read)</h3>
+    <ul>
+        <li>Debug seven "simple" functions.</li>
+    </ul>
+
+    <h3>Objectives</h3>
+    <ul>
+        <li>Practice the debugging process: Discover, Reproduce, Isolate, Fix, Test </li>
+        <li>Perform data validation. </li>
+        <li>Prevent integer overflow. </li>
+        <li>Throw exceptions. </li>
+    </ul>
+
+    <h3>Submission</h3>
+    <p>Submit all and only the following files to the autograder: </p>
+    <ul>
+        <li><code>functions.cpp</code></li>
+        <li><code>test_functions.cpp</code></li>
+    </ul>
+
+    <h3>Allowed Includes</h3>
+    <ul>
+        <li><code>&lt;iostream&gt;</code></li>
+        <li><code>&lt;string&gt;</code></li>
+        <li><code>&lt;stdexcept&gt;</code></li>
+        <li><code>&lt;limits&gt;</code></li>
+        <li><code>&lt;cstdint&gt;</code></li>
+        <li><code>"functions.h"</code></li>
+    </ul>
+
+    <div class="section-break"></div>
+
+    <h2 id="introduction">Introduction</h2>
+    <p>This homework is all about debugging, and addressing some problems before they happen. There are seven functions that need to be fixed. </p>
+
+    <ul>
+        <li>This and all other homeworks are individual assignments. </li>
+        <li>Do not share your code with other students.</li>
+        <li>Do not show your code to other students.</li>
+        <li>Do not look at the code of other students.</li>
+        <li>Do not ask other students how they solved a problem.</li>
+        <li><strong>Do not use AI tools.</strong> </li>
+    </ul>
+
+    <p>HWs are individual practice assignments (LWs, on the other hand, are collaborative practice assignments). </p>
+    <p>If you have questions about this assignment, talk to a Peer Teacher, a TA, or an instructor. Go to the autograder to submit your code. </p>
+
+    <ul>
+        <li>Ask questions on Campuswire. Look there to see if someone has already asked your question. </li>
+        <li>It is very rare that a student's question is unique. Ask there and everyone can benefit from the answer.</li>
+        <li>If you know the answer to someone else's question, go ahead and answer it yourself!</li>
+        <li>If posting to everyone would be an academic integrity violation such as sharing your homework code, make sure you "Post to instructors and TAs". </li>
+        <li>If you know about another student who is sharing their code with other students (or in any other way is violating the Aggie Code of Honor), you should report them to the instructor or <a href="https://cm.maxient.com/reportingform.php?TexasAMUniv&layout_id=11" target="_blank">report them to the AHSO</a>. </li>
+    </ul>
+
+    <div class="section-break"></div>
+
+    <h2 id="what_to_do">What to do</h2>
+    <p>Each of the seven functions already has a buggy implementation provided in the starter code. </p>
+
+    <h3>1. <a href="https://drive.google.com/file/d/1tbt4sY3xFUp5WqhEwq5mHxzVnUhcubbt/view?usp=drive_link" target="_blank">Get Starter Code</a></h3>
+    <ul>
+        <li>Source files</li>
+            <ul>
+            <li><code>functions.cpp</code></li>
+                <ul>
+                <li>Debug this file. The autograder will only test the functions implemented here.</li>
+                </ul>
+            <li><code>test_functions.cpp</code></li>
+                <ul>
+                <li>Provided so you can test your code.</li>
+                <li>Feel free to modify it to help you test.</li>
+                </ul>
+            </ul>
+        <li>Header files</li>
+            <ul>
+            <li><code>functions.h</code></li>
+                <ul>
+                <li>Do not edit. It is correct and other files should be edited to conform with the header file.</li>
+                </ul>
+            </ul>
+        <li>If you put all of the source and header files into a single directory (for example hw_debugging), then you can conveniently compile them all at once using either g++ on the command line or with VS Code.</li>
+    </ul>
+
+
+    <h3>2. Remove Syntax Errors</h3>
+    <ul>
+    <li>Compile to identify syntax errors.</li>
+        <ul>
+        <li>You can use either VS Code or a terminal.</li>
+            <ul>
+                <li>
+                In a terminal (assuming you are in the parent directory of hw_debugging): (do not type the $, which just signifies the command prompt)
+                    <pre>
+    $ cd hw_debugging
+    $ ls
+    functions.cpp  functions.h test_functions.cpp
+    $ g++ -std=c++17 -Wall -Wextra -g -pedantic -Weffc++ *.cpp</pre>
+                </li>
+                    <ul>
+                    <li>The * symbol is a wildcard that matches any valid character in an identifier. So, *.cpp means all files in the current directory whose name ends in *.cpp (i.e., all C++ source files).</li>
+                    </ul>
+            </ul>
+        </ul>
+    <li>Correct the syntax error(s), if any. </li>
+        <ul>
+        <li>Notes</li>
+            <ul>
+            <li>Do not worry about warnings for now, since warnings do not prevent successful compilation of the code. Warnings should be resolved as you debug each function.</li>
+            <li>A syntax error can get the compiler off track. </li>
+                <ul>
+                <li>So, it might end up identifying things as errors that are not really errors. </li>
+                <li>Frequently when you fix the first syntax error and recompile, many if not all of the subsequent errors are resolved!</li>
+                </ul>
+            </ul>
+        <li>Fix the first compiler error and then re-compile.</li>
+        <li>Repeat until there are no syntax errors.</li>
+        </ul>
+    </ul>
+
+
+    <h3>3. Debug Functions</h3>
+    <ul>
+    <li>Avoid completely rewriting the functions. </li>
+        <ul>
+        <li>Try to make the fewest and smallest changes possible to fix the errors. </li>
+        <li>Only if it seems that the implementation is doomed to fail should you consider rewriting the code.</li>
+        </ul>
+    <li>The problems generally get a little bit harder as you go from problem 1 to problem 7. </li>
+        <ul>
+        <li>You don’t have to go in order, but you probably should.</li>
+        </ul>
+    <li>Go through each function and debug one function at a time using the requirements listed below.</li>
+        <ul>
+        <li>You will have to think carefully about what the requirements are and come up with test cases that you can use to debug.</li>
+        <li>We have provided test functions and a main function (in test_functions.cpp) that invokes the test functions. </li>
+            <ul>
+            <li>You can use the provided main and test function. You are also free to edit and/or replace it with your own custom test code to call the functions.</li>
+            <li>None of the autograder test cases rely on the provided main function.  But, you must submit the file for the compilation test</li>
+            <li>We will refuse to help you if you do not add your own tests.</li>
+            </ul>
+        <li>Do not read from standard input (i.e. std::cin) in the functions. The autograder will not send any information to standard input. Your program will starve and timeout. That will be sad. The input comes from the function parameters. </li>
+            <ul>
+            <li>You can specify the input by writing your own test cases in the main function or using the existing main function and providing values by hand when you run it locally.</li>
+            </ul>
+        <li>When you feel you have a function working, submit your code to the autograder and see if you pass the test cases for that function.</li>
+            <ul>
+            <li>Click the tests for more details. Every test will give you useful information.</li>
+            </ul>
+        <li>If you don’t understand an error or get stuck, try searching for the error message first, then contact your TA or instructor. Do not spend more than about 20 minutes stuck before asking for help.</li>
+            <ul>
+            <li>Stuck means making no progress. You may have an idea of what to do and need to read some documentation to figure out how to do it, which might take several hours. That’s OK. You’re not stuck… yet.</li>
+                <ul>
+                <li>For example, you’ll need to know how to detect arithmetic overflows and throw exceptions. Learning this will take some time. That time spent learning is not time spent being stuck. However, if, once you are attempting to implement a fix, you spend more than about 20 minutes attempting to debug the code you wrote to fix the original error, you now are stuck. Get help.</li>
+                </ul>
+            </ul>
+    </ul>
+
+    <div class="section-break"></div>
+
+    <h2 id="requirements">Requirements</h2>
+    <p>Debug the following seven functions: </p>
+
+    <h3>1. largest</h3>
+    <p>Takes three integer inputs: a, b and c and returns the largest of these three values.</p>
+    <ul>
+        <li>Example: <code>largest(1, 2, 3)</code> should return 3.</li>
+        <li>largest should not throw an exception.</li>
+        <li>The function prototype is <code>int largest(int a, int b, int c)</code>.</li>
+    </ul>
+
+    <h3>2. sum_is_even</h3>
+    <p>Takes two integer inputs and returns true if and only if the sum of the two values is an even number. If the sum of the input values is an odd number, then the function returns false.</p>
+    <ul>
+        <li>Example: <code>sum_is_even(3, 5)</code> should return true.</li>
+        <li>sum_is_even should not throw an exception.</li>
+        <li>The function prototype is <code>bool sum_is_even(int a, int b)</code>.</li>
+    </ul>
+
+    <h3>3. boxes_needed</h3>
+    <p>Takes one input which represents a number of apples that need to be packed into boxes. Each box can store a maximum of 20 apples. The function returns the minimum number of boxes needed to store the given number of apples.</p>
+    <ul>
+        <li>Example: <code>boxes_needed(13)</code> should return 1.</li>
+        <li>boxes_needed should not throw an exception.</li>
+        <li>The function prototype is <code>unsigned int boxes_needed(int apples)</code>.</li>
+    </ul>
+    <p class="footnote">Problems sourced and adapted from Ettles, Andrew & Luxton-Reilly, Andrew & Denny, Paul. (2018). Common logic errors made by novice programmers.</p>
+
+    <h3>4. smarter_section</h3>
+    <p>Takes four inputs and determines which section performed better on a particular exam question. The first input is the number of students in section A that answer the question correctly, and the second input is the total number of students in section A. Similarly, the third input is the number of students in section B that answer the question correctly, and the fourth input is the total number of students in section B. The performance of each section can be measured as the percentage of students who answer a question correctly.</p>
+    <p>The function should return true if section A performs better than section B and false otherwise.</p>
+    <ul>
+        <li>Example: <code>smarter_section(40, 50, 75, 100)</code> should return true.</li>
+        <li>smarter_section should throw <code>std::invalid_argument</code> if the arguments are invalid.</li>
+        <li>The function prototype is <code>bool smarter_section(int A_correct, int A_total, int B_correct, int B_total)</code>.</li>
+        <li>Do not catch the exception within this function.</li>
+    </ul>
+
+    <h3>5. good_dinner</h3>
+    <p>Takes two inputs: the number of pizzas you have eaten, and a Boolean which is true if it is the weekend and false otherwise. The function should return true if you had a good dinner, and false if you didn't. A good dinner is a dinner where you eat between 10 and 20 pizzas (inclusive) unless it is a weekend, in which case there is no upper bound on the number of pizzas.</p>
+    <ul>
+        <li>Example: <code>good_dinner(13, false)</code> should return true.</li>
+        <li>good_dinner should not throw an exception.</li>
+        <li>The function prototype is <code>bool good_dinner(int pizzas, bool is_weekend)</code>.</li>
+    </ul>
+
+    <h3>6. sum_between</h3>
+    <p>Takes two integer inputs, low and high and calculates the sum of all integers between low and high, inclusive.</p>
+    <ul>
+        <li>Example: <code>sum_between(1, 10)</code> should return 55.</li>
+        <li>sum_between should throw <code>std::invalid_argument</code> if low and high are out of order.</li>
+        <li>sum_between should throw <code>std::overflow_error</code> if the sum exceeds the maximum/minimum value of a signed 32-bit integer. 
+            <ul>
+                <li>The maximum value of a signed 32-bit integer is 2147483647</li>
+                <li>The minimum value of a signed 32-bit integer is -2147483648</li>
+                <li>See <a href="#integer_overflow">Integer Overflow</a> for more explanation. You should really understand this to get this to work.</li>
+                <li><b>Do not catch the exception within this function.</b></li>
+            </ul>
+        </li>
+        <li>The function should not throw an exception if the final answer fits into a 32-bit integer. Note that an implementation might end up with intermediate sums that would overflow even if the final answer does not. How can you avoid needing intermediate representations that overflow?
+            <ul>
+                <li>One way to gain insight is to draw a simple number line and use it to help visualize the problem and guide you towards a solution.</li>
+            </ul>
+        </li>
+        <li>The function prototype is <code>int32_t sum_between(int32_t low, int32_t high)</code>.</li>
+    </ul>
+
+    <h3>7. product</h3>
+    <p>Takes two integer inputs: <code>a</code> and <code>b</code> and returns the product of these two values.</p>
+    <ul>
+        <li>Example: <code>product(2, 2)</code> should return 4.</li>
+        <li>product should throw <code>std::overflow_error</code> if the product exceeds the maximum/minimum value of a signed 64-bit integer (<code>int64_t</code>). 
+            <ul>
+                <li>The maximum value of a signed 64-bit integer is 9223372036854775807</li>
+                <li>The minimum value of a signed 64-bit integer is -9223372036854775808</li>
+                <li>See <a href="#integer_overflow">Integer Overflow</a> for more explanation. You should really understand this to get this to work.</li>
+            </ul>
+        </li>
+        <li>Do not catch the exception within this function.</li>
+        <li>The function prototype is <code>int64_t product(int64_t a, int64_t b)</code>.</li>
+    </ul>
+
+    <div class="section-break"></div>
+
+    <h2 id="integer_overflow">Integer Overflow</h2>
+
+    <h3>Integer Capacities</h3>
+    <p>Integers in C++ come in various sizes: </p>
+    <ul>
+        <li>8 bits, e.g. char (<code>int8_t</code>)</li>
+        <li>16 bits, e.g. short (<code>int16_t</code>)</li>
+        <li>32 bits, e.g. int (<code>int32_t</code>)</li>
+        <li>64 bits, e.g. long long (<code>int64_t</code>)</li>
+    </ul>
+    
+    <p>Each of these types of integers can store only a certain range of numbers, based on their size and signed-ness (totally a word… I used it, you knew what I meant, it's a word.).</p>
+    <ul>
+        <li>8-bit integers store integers in the range [-128, 127] or [0, 255] (unsigned)</li>
+        <li>16-bit integers store integers in the range [-32768, 32767] or [0, 65535] (unsigned)</li>
+        <li>32-bit integers store integers in the range [-2147483648, 2147483647] or [0, 4294967295] (unsigned).</li>
+        <li>64-bit integers store integers in the range [-9223372036854775808, 9223372036854775807] or [0, 18446744073709551615] (unsigned).</li>
+    </ul>
+
+
+    <p>To get the minimum and maximum values of a numeric type T, use: <code>std::numeric_limits&lt;T&gt;::min()</code> and <code>std::numeric_limits&lt;T&gt;::max()</code>. </p>
+    <pre>// -2147483648
+std::numeric_limits&lt;int32_t&gt;::min()
+// 2147483647
+std::numeric_limits&lt;int32_t&gt;::max()</pre>
+
+    <h3>Integer Binary Representation and Overflow</h3>
+    <p>Signed integers have one bit reserved to encode the sign of the number, while the rest of the bits are used to encode the magnitude.  Unsigned integers use all the bits for the magnitude.  This is why unsigned numbers can represent “bigger” numbers: they sacrifice negative numbers in exchange for bigger positive numbers.</p>
+
+    <p>This is an example of a 8-bit signed integer (i.e. char, this one is 65, or 'A'):</p>
+    <pre>
+0 1 0 0 0 0 0 1
+^ ^-----------^
+| magnitude bits
+sign bit</pre>
+
+    <p>If we add 1 to 65 ('A'), we get 66 ('B'):</p>
+    <pre>
+  01000001
++        1
+  --------
+  01000010</pre>
+
+    <p>If we keep adding 1, we eventually reach 126 ('~') and then 127 (DEL, not printable).</p>
+    <pre>
+  01111110 // 126
++        1
+  --------
+  01111111 // 127
+    </pre>
+
+    <p>If we add 1 to 127, we get 128, right?</p>
+    <pre>
+  01111111 // 127
++        1
+  --------
+  10000000 // 128?
+    </pre>
+
+    <p>Actually... no. Since our integer is signed, we get -128.</p>
+    <pre>
+1 0 0 0 0 0 0 0 // -128
+^ ^-----------^
+|   magnitude
+sign
+    </pre>
+
+    <p>That looks like -0, right? It's not. Signed integers are represented using something called 2's complement. Don't worry about how it works right now (it's actually simple… but also out of scope for this class).</p>
+    <p>The important thing to note is that the magnitude of the number overflowed into the sign bit. A similar thing happens to unsigned numbers that get too big, except the overflow just falls off the end and is lost:</p>
+
+    <pre>
+  1 1 1 1 1 1 1 1  // unsigned 255 (signed -1)
++               1
+-----------------
+1|0 0 0 0 0 0 0 0  // unsigned 0 (signed 0)
+^
+overflow is lost</pre>
+
+    <p>This problem, where a mathematical operation on two integers results in a number which does not fit into the data type (e.g. two 8-bit numbers added together can sometimes yield a 9-bit number) is called <b>Integer Overflow</b>. Sometimes you might see <b>underflow</b> in an error message. Regardless, it can be a serious problem in C++ programs.</p>
+
+    <h3>Avoiding Overflow</h3>
+    <p>Whenever we do math with integers where the result could be larger in magnitude than the data type has room for, we must guard against integer overflow. The result of an operation which overflows is undefined. Usually it's whatever actually did fit (the part that overflowed is lost), but it may not be. When the type is signed, the overflow sometimes flips the sign bit (but not always). Because of this, detecting an overflow cannot be done by simply comparing the result of the operation to the limit:</p>
+    <pre>
+// this will work, but it's not generalizable
+char three = 51;
+char tilde = 126;
+if (three + tilde > std::numeric_limits<char>::max()) {
+    // the addition was promoted to int,
+    // so three + tilde = 177 > 127
+    std::cout << "1) overflow!" << std::endl;
+}
+// watch:
+char sum = three + tilde;
+if (sum > std::numeric_limits<char>::max()) {
+    // this will not be reached because sum is a char
+    // and sum = -79 which is not > 127
+    std::cout << "2) overflow!" << std::endl; 
+}
+// with int:
+int a = 65536;
+if (a * a > std::numeric_limits<int>::max()) {
+    // this will not be reached due to integer overflow
+    std::cout << "3) overflow!" << std::endl;
+}</pre>
+
+    <p>So, how can you determine an inequality that works? Review <a href="https://www.dummies.com/article/business-careers-money/business/accounting/calculation-analysis/rules-operations-inequalities-254754/" target="_blank">rules for manipulating inequalities.</a></p>
+
+    <h3>Deriving an inequality that works.</h3>
+    <p>There are a couple of inequalities that we have to consider for adding two numbers. </p>
+    <p>Let <code>char_max := std::numeric_limits&lt;char&gt;::max()</code></p>
+    <p>and <code>char_min := std::numeric_limits&lt;char&gt;::min()</code></p>
+    <p>I'll work with the assumption that both <code>tilde</code> and <code>three</code> are positive.</p>
+    With some thought you should be able to figure out which combinations of positive and negative values could become too big or too small.
+I'll work with the assumption that both tilde and three are positive.
+<pre>three + tilde > char_max</pre>
+<p>Then we can subtract one of them from both sides. I'll subtract tilde.</p>
+<pre>
+    three + tilde > char_max
+      - tilde             - tilde</pre>
+<p>Results in</p>
+<pre>
+three > char_max - tilde
+</pre>
+<p>Assuming the original sum would have been positive, this inequality is guaranteed to never have an overflow. Since <code>char_max</code> is the largest value possible, subtracting any positive value from it will result in values in the range 0 (if tilde is equal to <code>char_max</code>) to <code>char_max</code> (if tilde is equal to 0).</p>
+
+There are other combinations to consider.
+<ul>
+    <li>What might happen…</li>
+    <ul>
+        <li>If tilde and three are both negative?</li>
+        <li>If tilde is positive and three is negative?</li>
+        <li>If tilde is negative and three is positive?</li>
+    </ul>
+</ul>
+<p>The analysis for when two numbers are multiplied together is similar.</p>
+
+
+<h3>Integer Overflow Summary</h3>
+<ul>
+    <li>If a bigger type exists, you can use it.  E.g. promote 32-bit ints to 64-bit ints.</li>
+    <li>Otherwise…</li>
+    <ul>
+        <li>Use inequalities to determine whether adding, subtracting, multiplying, or dividing numbers would result in overflow/underflow. </li>
+        <li>Some sides of an inequality can themselves overflow, so make sure that doesn't happen </li>
+        <li>Manipulate the inequality into a version that avoids potential overflow/underflow.</li>
+    </ul>
+</ul>
+</body>
+</html>
