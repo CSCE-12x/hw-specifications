@@ -360,22 +360,27 @@ overflow is lost</pre>
 // this will work, but it's not generalizable
 char three = 51;
 char tilde = 126;
-if (three + tilde > std::numeric_limits<char>::max()) {
+std::cout << "three + tilde = " << three + tilde << std::endl;
+if (three + tilde > std::numeric_limits&lt;char&gt;::max()) {
     // the addition was promoted to int,
     // so three + tilde = 177 > 127
     std::cout << "1) overflow!" << std::endl;
 }
 // watch:
 char sum = three + tilde;
-if (sum > std::numeric_limits<char>::max()) {
+std::cout << "sum = " << sum << " (" << static_cast&lt;int&gt;(sum) << ")" << std::endl;
+if (sum > std::numeric_limits&lt;char&gt;::max()) {
     // this will not be reached because sum is a char
     // and sum = -79 which is not > 127
     std::cout << "2) overflow!" << std::endl;
 }
 // with int:
 int a = 65536;
-if (a * a > std::numeric_limits<int>::max()) {
-    // this will not be reached due to integer overflow
+std::cout << "a = " << a << std::endl;
+std::cout << "a * a = " << a * a << std::endl;
+if (a * a > std::numeric_limits&lt;int&gt;::max()) {
+    // this will not be reached because a = 2^16
+    // and so a * a = 2^32, which overflows int
     std::cout << "3) overflow!" << std::endl;
 }</pre>
 
