@@ -394,11 +394,11 @@ if (a * a > std::numeric_limits&lt;int&gt;::max()) {
     With some thought you should be able to figure out which combinations of positive and negative values could become too big or too small.
 I'll work with the assumption that both <code>tilde</code> and <code>three</code> are positive.
 <pre>three + tilde > char_max</pre>
-<p>Then we can subtract one of them from both sides. I'll subtract tilde.</p>
+<p>Then we can subtract one of them from both sides. I'll subtract <code>tilde</code>.</p>
 <pre>
-    three + tilde > char_max
-      - tilde             - tilde</pre>
-<p>Results in</p>
+three + tilde - tilde > char_max - tilde
+</pre>
+<p>This yields</p>
 <pre>
 three > char_max - tilde
 </pre>
