@@ -31,13 +31,6 @@ done
 
 SITE_TITLE="${2:-$(grep -m 1 '# ' $INPUT_FILE | sed -n -e 's/^# //p')}"
 
-# Prepare output filename and assets
-BASENAME="${INPUT_FILE%.*}"
-
-echo "Processing $INPUT_FILE..."
-
-# Pipe the variable into Pandoc
-
 # check that pandoc is installed
 if [[ -z "$(which pandoc)" ]]; then
     echo "pandoc is not installed"
@@ -52,6 +45,9 @@ if [[ -z "$(which pandoc)" ]]; then
     exit 1
 fi
 
+echo "Processing $INPUT_FILE..."
+
+# Pipe the variable into Pandoc
 # Note the '-' at the end of the command—it tells Pandoc to read from STDIN
 # Turn <trap> tags into valid HTML. Perl used for multi-line replacements.
 # -0777: Slurp mode (reads the whole file as one string)
