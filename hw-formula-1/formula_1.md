@@ -139,7 +139,7 @@ The format of the data on each line is as follows:
 
 This is a guide on how to tackle doing this homework.
 
-1. Get the [starter code](https://drive.google.com/file/d/1Tsusk0XXthxbb_C7BtnFlyAXX0xIoyBD/view) and test files
+1. [Get the starter code](https://drive.google.com/file/d/18nKIvXJtGBGRw8fPZnQ2-L3-xN74893K/view?usp=drive_link) and test files
     1. Code Files
         * `rank.cpp`
         * `rank_functions.h`
