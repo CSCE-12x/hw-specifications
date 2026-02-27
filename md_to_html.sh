@@ -3,7 +3,7 @@
 
 # Make sure input file was provided
 if [ $# -eq 0 ]; then
-    echo "usage: $0 <input_file> [site_title [js_file [css_file]]]"
+    echo "usage: $0 <input_file> [site_title] [js_file] [css_file]"
     echo
     echo "defaults:"
     echo "  site_title: text after first '# ' in input_file"
