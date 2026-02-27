@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>../global/index.js</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+  </style>
+  <link rel="stylesheet" href="../global/md_styles.css" />
+  <script src="../global/md_styles.css"></script>
+</head>
+<body>
+<h1 id="hw-dungeon-crawler">HW Dungeon Crawler</h1>
+<h2 id="overview">Overview</h2>
+<hr />
+<h3 id="objectives">Objectives</h3>
+<ul>
+<li>Create and store values in a 2D vector.</li>
+<li>Resize a 2D vector.</li>
+<li>Rely on <code>std::vector</code> for automatic memory
+management</li>
+<li>Use pass by reference.</li>
+</ul>
+<h3 id="introduction">Introduction</h3>
+<p>You have just been hired by <a
+href="https://en.wikipedia.org/wiki/Foobar">Foobar</a> Games as a game
+logic programmer. The company is working on a retro dungeon crawler,
+which is a type of game where you control a character who is navigating
+a fantasy dungeon environment.</p>
+<p>You are in charge of <strong>implementing</strong> and testing part
+of the core game logic. The art and design teams are still working on
+graphics and sound, so you are working on a text-based prototype for
+developing and debugging your logic code.</p>
+<p>In this assignment, you will <strong>implement</strong> the code that
+reads an in-game map (or “dungeon”) from a file into a dynamic 2D vector
+. You must also <strong>implement</strong> updating the map as the
+player moves the character through the dungeon. The player’s goal is to
+pick up the treasure and go to the level’s exit. Additionally, you will
+need to <strong>implement</strong> magic amulets that resize the dungeon
+size as well as <strong>implement</strong> the logic for the monsters
+that chase the player.</p>
+<h2 id="getting-started">Getting Started</h2>
+<hr />
+<ul>
+<li><a
+href="https://drive.google.com/file/d/17adgss3fHsnCidRoZozV_ZyhLkv2nJuY/view?usp=drive_link">Get
+the starter code.</a>
+<ul>
+<li><code>dungeoncrawler.cpp</code>
+<ul>
+<li>Contains the high level game control logic.</li>
+</ul></li>
+<li><code>logic.h</code>
+<ul>
+<li>Contains function prototypes for the game.</li>
+</ul></li>
+<li><code>logic.cpp</code>
+<ul>
+<li><strong>Where you will implement the function
+definitions.</strong></li>
+</ul></li>
+<li><code>helper.h</code>
+<ul>
+<li>Contains function prototypes for helper functions.</li>
+</ul></li>
+<li><code>helper.cpp</code>
+<ul>
+<li>Contains function definitions for helper functions.</li>
+</ul></li>
+<li><code>player.h</code>
+<ul>
+<li>Contains the Player data structure.</li>
+</ul></li>
+<li><code>levels/</code>
+<ul>
+<li>Contains example level files for you to use for testing and
+fun.</li>
+</ul></li>
+</ul></li>
+<li>Submit:
+<ul>
+<li><code>logic.cpp</code></li>
+</ul></li>
+<li>Allowed includes:
+<ul>
+<li><code>&lt;iostream&gt;</code></li>
+<li><code>&lt;fstream&gt;</code></li>
+<li><code>&lt;string&gt;</code></li>
+<li><code>&lt;vector&gt;</code></li>
+<li><code>&lt;cstdint&gt;</code></li>
+<li><code>"helper.h"</code></li>
+<li><code>"logic.h"</code></li>
+<li><code>"player.h"</code></li>
+</ul></li>
+<li>Read over the starter code.
+<ul>
+<li>There is a struct in <code>player.h</code> for the player with their
+position in the grid and a count of their treasure.</li>
+<li>There are tile status constants in <code>logic.h</code> that
+represent the tile type on the map.</li>
+<li>There are constants for the player’s status and keyboard inputs in
+<code>logic.h</code>.</li>
+</ul></li>
+<li>Read over the <a href="#b-input-map-text-file">input file format</a>
+for the program.</li>
+<li>Testing locally is very important for this assignment.</li>
+</ul>
+<pre><code>$ ls
+dungeoncrawler.cpp  helper.cpp  helper.h  levels  logic.cpp
+logic.h             player.h
+$ g++ -std=c++23 -Wall -Wextra -Weffc++ -pedantic -fsanitize=undefined,address *.cpp
+$ ./a.out</code></pre>
+<ul>
+<li>General procedure:
+<ul>
+<li>Pick a function to implement (start with functions that won’t need
+other functions to work).
+<ul>
+<li><u>The order we provide is not necessarily the optimal
+implementation order.</u></li>
+<li><u>Read through all function descriptions first to decide which
+order is best.</u></li>
+</ul></li>
+<li>Read over the function specifications in logic.h.</li>
+<li>Read over the function’s requirements in this document.</li>
+<li>Write some test cases you expect your function to work with.</li>
+<li>Write the function in logic.cpp.</li>
+<li>Test your code.</li>
+<li>If there are any failures, debug and re-evaluate your function.</li>
+</ul></li>
+<li>Refer to the <a href="#appendix">appendix</a> as needed.</li>
+</ul>
+<h2 id="requirements">Requirements</h2>
+<hr />
+<h3 id="loadlevel">LoadLevel()</h3>
+<ul>
+<li>Refer to the <a href="#b-input-map-text-file">input file
+format</a>.</li>
+<li>Open <code>logic.cpp</code> and <code>logic.h</code> and locate the
+<code>LoadLevel</code> function. Make sure to read the block comment
+describing the function in <code>logic.h</code>.</li>
+<li>Consider all the ways in which reading the dungeon map from the file
+could go wrong and write code that detects when those things happen and
+responds correctly.
+<ul>
+<li><strong>Correct behavior:</strong>
+<ul>
+<li>if the input file is invalid in any way, do not create the map but
+return an empty <code>vector&lt;vector&lt;char&gt;&gt;</code>
+instead.</li>
+<li>For how to check validity, refer to the <a
+href="#appendix">appendix</a> and think back to checks done on previous
+homeworks (this is intentionally left up to you to discern).
+<ul>
+<li>One check is to ensure the total number of spaces does not exceed
+<code>INT32_MAX</code>.</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li>Consider what values are created or updated when the dungeon map
+file is valid and write code that sets those values correctly.
+<ul>
+<li><strong>Correct behavior:</strong>
+<ul>
+<li><code>max_row</code> is set to the number of rows in the dungeon
+level map.</li>
+<li><code>max_col</code> is set to the number of columns in the dungeon
+level map.</li>
+<li>player’s row and column attributes are set to the player’s starting
+location in the dungeon level map.</li>
+<li>The return value is a 2D vector dungeon level map and the contents
+of that map are the same as those in the input file (except the player’s
+location which is marked using the player tile symbol).</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="getdirection">GetDirection()</h3>
+<ul>
+<li>Open <code>logic.cpp</code> and <code>logic.h</code> and locate the
+GetDirection function. Make sure to read the block comment describing
+the function in <code>logic.h</code>.</li>
+<li>Consider what values are updated and write code that sets those
+values correctly.
+<ul>
+<li><strong>Correct behavior:</strong>
+<ul>
+<li><code>next_row</code> and <code>next_col</code> are set to the
+appropriate values depending on the input direction.</li>
+<li>Input other than <code>MOVE_UP</code>, <code>MOVE_DOWN</code>,
+<code>MOVE_LEFT</code>, or <code>MOVE_RIGHT</code> is ignored (don’t
+move).</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="resizemap">ResizeMap()</h3>
+<ul>
+<li>Open <code>logic.cpp</code> and locate the <code>resizeMap</code>
+function. Make sure to read the block comment describing the
+function.</li>
+<li>Consider what values are created or updated and write code that sets
+those values correctly
+<ul>
+<li><strong>Correct behavior:</strong>
+<ul>
+<li><p>An enlarged version of the dungeon map is created.</p>
+<ul>
+<li>A 2D vector with <code>(2 * maxRow)</code> rows and
+<code>(2 * maxCol)</code> columns, is created.</li>
+<li>The content of the original map is copied into region
+<strong>A</strong> exactly (including the adventurer). The content of
+the original map is copied into each of the regions <strong>B</strong>,
+<strong>C</strong>, and <strong>D</strong>, except for the adventurer,
+which should be replaced by <code>TILE_OPEN</code>.
+<ul>
+<li>Visually, we can divide this 2D vector into four <code>maxRow</code>
+× <code>maxCol</code> regions :</li>
+</ul></li>
+</ul></li>
+<li><p>maxRow is doubled.</p></li>
+<li><p>maxCol is doubled.</p></li>
+<li><p>The arguments are not modified if any argument is invalid.</p>
+<table border="1">
+<tbody>
+<tr>
+<td>
+<p>    <strong>A</strong>   </p>
+</td>
+<td>
+<p>    <strong>B</strong>    </p>
+</td>
+</tr>
+<tr>
+<td>
+<p>    <strong>C</strong>    </p>
+</td>
+<td>
+<p>    <strong>D</strong>    </p>
+</td>
+</tr>
+</tbody>
+</table></li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="doplayermove">DoPlayerMove()</h3>
+<ul>
+<li>Refer to <a href="#c-gameplay">Appendix C: Gameplay</a></li>
+<li>Open <code>logic.cpp</code> and locate the <code>doPlayerMove</code>
+function. Make sure to read the block comment describing the function.
+You will be returning a status defined in logic.h that gives the result
+of the attempted move.</li>
+<li>Consider all possible and meaningfully different map/game states and
+write code that implements the correct behavior for those states.</li>
+<li><strong>Correct behavior:</strong>
+<ul>
+<li>Update <code>player.row</code> and <code>player.col</code> based on
+the value of <code>nextRow</code> and <code>nextColumn</code>.
+<ul>
+<li>If the next position places the adventurer outside the bounds of the
+map or on an impassable tile (a pillar or a monster), set the status to
+<code>STATUS_STAY</code> and update <code>nextRow</code> and
+<code>nextCol</code> to be the adventurer’s current position (i.e., the
+adventurer did not move). Remember to check that <code>nextRow</code>
+and <code>nextCol</code> are within bounds before using them to check a
+tile’s value (short circuit evaluation might be useful).</li>
+<li>If the next position is on a treasure tile, set the appropriate
+status and increment the adventurer’s treasure by one.</li>
+<li>If the next position is on an amulet tile, set the appropriate
+status.</li>
+<li>If the next position is on a door (to the next level), set the
+appropriate status.</li>
+<li>If the next position is on an exit (to the whole dungeon) and the
+adventurer has at least one piece of treasure, set the appropriate
+status. If the adventurer has no treasure, treat the door as you would a
+pillar.</li>
+</ul></li>
+<li>Update the map by updating the adventurer’s position to the next
+position, setting the new position to <code>TILE_PLAYER</code> and the
+adventurer’s old position to <code>TILE_OPEN</code>.</li>
+<li>Return the appropriate status flag.</li>
+</ul></li>
+</ul>
+<h3 id="domonsterattack">DoMonsterAttack()</h3>
+<ul>
+<li>Open <code>logic.cpp</code> and locate the
+<code>doMonsterAttack</code> function. Make sure to read the block
+comment describing the function.</li>
+<li>Consider all possible and meaningfully different map/game states and
+write code that implements the correct behavior for those states.
+<ul>
+<li>Correct behavior:
+<ul>
+<li>All monsters with a vertical or horizontal line of sight to the
+player move 1 tile closer to the player
+<ul>
+<li>Starting from the tile above the adventurer’s location and working
+upward, check each individual tile to see if there is a monster on the
+tile.</li>
+<li>If there is a monster on a tile, move the monster one tile closer to
+the adventurer.</li>
+<li>Continue to check until you have reached the top of the map or reach
+a pillar (monsters can’t see through pillars)</li>
+<li>Repeat the same logic with down, left, and right (in that order).
+Make sure all monsters that are supposed to move do so before you go to
+the next step.</li>
+</ul></li>
+<li>Return true if a monster reaches the player, false otherwise.
+<ul>
+<li>The adventurer is killed if a monster moves onto their tile (check
+if the player position now contains a monster), return true (adventurer
+killed, game over) if so, otherwise return false (the monsters did not
+attack the adventurer, yet…).</li>
+</ul></li>
+</ul></li>
+</ul></li>
+</ul>
+<h2 id="appendix">Appendix</h2>
+<hr />
+<h3 id="a-testing-your-code">A: Testing Your Code</h3>
+<h4 id="sample-dungeons">Sample Dungeons</h4>
+<p>Included in the starter code from Canvas is a folder of sample
+dungeon levels. You will find the 4 <code>tutorial</code> levels, 2
+levels for the “<code>easy</code>” dungeon, and 3 levels for the
+“<code>hard</code>” dungeon.</p>
+<p><a href="#b-input-map-text-file">See Appendix B for more information
+about playing the game</a>. As an example, to play the hard dungeon, you
+would enter “<code>levels/hard 3</code>” at the beginning prompt. You
+may want to test with the <code>tutorial</code> or <code>easy</code>
+dungeon. The hard dungeon is not for the faint of heart! Can you escape
+it?</p>
+<p>Of course, feel free to create your own levels! <a
+href="#a-testing-your-code">Review Appendix A for information about the
+level file structure.</a></p>
+<h4 id="debug-printouts">Debug Printouts</h4>
+<p>Because we want to only print out the map with each action, you will
+need to remove the debugging output from your code before submitting for
+the full program test cases. The full program cases do not include any
+debugging output, so <strong>Gradescope will not allow them to pass if
+extraneous (e.g. debug) output is present.</strong></p>
+<h4 id="test-cases">Test Cases</h4>
+<p>In addition to the extensive unit tests that you considered
+(i.e. inputs and expected results), Gradescope also has unit tests
+associated with each function. There are also full system tests which
+check the integration of your code into the existing gameplay loop (in
+dungeoncrawler.cpp).</p>
+<p>However, you should remember that you are responsible for correctly
+implementing the game logic and testing your code, so some test cases
+may not have thorough coverage of every possible edge case. Try to think
+of edge cases and test them out yourself while developing!</p>
+<p>Note that video games can be particularly challenging to find all
+bugs through <a
+href="https://en.wikipedia.org/wiki/Test-driven_development">test-driven
+development</a>. Games rely extensively on user interaction, so it is
+possible for a nearly-infinite combination of edge cases to exist. The
+gaming industry has helped popularize play-testing jobs and <a
+href="https://en.wikipedia.org/wiki/Software_testing#Beta_testing">beta
+software</a> releases as one means of identifying bugs during
+development.</p>
+<h4 id="more-ideas">More Ideas</h4>
+<p>After you have finished and earned a score on Gradescope with which
+you are satisfied, here are some other game mechanics you can think
+about implementing. You won’t get extra credit for these, but if you
+have some free time you might find them both enjoyable and good
+practice.</p>
+<ul>
+<li>Monsters with different behaviors, for example up/down or left/right
+every turn, diagonally, two or more squares per turn, etc.
+<ul>
+<li>Note: Most of what we have done so far in this course has been
+procedural, but as you learn more about object-oriented approaches,
+think about how we could do more complicated monster behaviors. You
+could keep a list of monster objects, each with their own location,
+actions, etc. that you update each turn.</li>
+</ul></li>
+<li>Doors that require different amounts of treasure to unlock, or let
+you go back to a previous level.</li>
+<li>Nonlinear dungeons, where levels have multiple doors to different
+levels.</li>
+<li>Levels that shrink each turn, like a trash compactor.</li>
+<li>More items with different properties, for example a shield to
+protect you against monsters, a sword to let you attack monsters, a
+potion that lets you move faster or freeze monsters, bombs that blow up
+pillars, etc.</li>
+<li>The ability to restart a level if the adventurer is killed.</li>
+<li>Update the map on the console without reprinting it.</li>
+</ul>
+<p>Even though this is a very rudimentary game, we hope you can imagine
+how this assignment relates to modern computer games. With some
+graphics, music and sound effects, and a little polish, you’ve built the
+basics of a turn-based dungeon crawler!</p>
+<h3 id="b-input-map-text-file">B: Input Map Text File</h3>
+<p>This assignment will involve reading a text file that contains
+information of the dungeon map’s internal representation. This text file
+consists of three parts:</p>
+<ul>
+<li>Line 1: Map Dimensions. This line contains two values for
+representing the map’s number of rows and number of columns,
+respectively. (Neither can be bigger than 999,999)</li>
+<li>Line 2: Player Starting Location. This line contains two values for
+representing the player’s starting row and column, respectively.</li>
+<li>Lines 3+: These lines contain the individual tile information of the
+dungeon map as char values.
+<ul>
+<li>The first number in Line 3 represents the map tile at (0, 0), where
+the first value is the row position and the second value is the column
+position.</li>
+<li>Refer to the tile status constants in logic.h for more details.</li>
+</ul></li>
+</ul>
+<p>The following is an example text file for a 5×3 tile representation
+of a dungeon map.</p>
+<pre><code>5 3
+3 0
+M + -
+- + -
+- + !
+- - -
+@ - $</code></pre>
+<ul>
+<li>Line 1: The map has 5 rows and 3 columns.</li>
+<li>Line 2: The player will start at map location (3, 0), where 3 is the
+row position and 0 is the column position. Remember that indexing starts
+from 0, so the top left corner will be map location (0, 0). The player
+can only be placed on an open spot.</li>
+<li>Lines 3-7: The map’s internal representation for each map tile.
+<ul>
+<li><strong>Note #1:</strong> Whitespace for lines 3 and after are
+purely for aesthetic purposes, so you must not assume that line breaks
+represent the actual map dimensions or that there will be spaces in
+between the char values.</li>
+<li><strong>Note #2:</strong> In this assignment you will be using
+row-major ordering when working with your 2D vectors , as this is how a
+C++ program will typically order a 2D vector.</li>
+<li><strong>Note #3:</strong> Each level of a dungeon has its own map
+stored in a different file, each named according to the dungeon name
+followed by the level number. For example, if the dungeon is named
+“<code>tutorial</code>” and has four levels, the files will be
+“<code>tutorial1.txt</code>”, “<code>tutorial2.txt</code>”,
+“<code>tutorial3.txt</code>”, and “<code>tutorial4.txt</code>”.</li>
+<li><strong>Note #4:</strong> Only the final level will have an exit (an
+<strong>!</strong> symbol); all the other levels have doors (a
+<strong>?</strong> symbol) to the next level.
+<ul>
+<li>It is possible for a “final level” to have both an exit and a door
+(for example, a “secret” level).</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="c-gameplay">C: Gameplay</h3>
+<p>These are sketches and descriptions from the design team of the
+expected gameplay that you must implement and test.</p>
+<h4 id="loading-a-game">Loading a Game</h4>
+<p>Each game starts with a printout of the instructions, followed by a
+prompt for the dungeon name and the number of levels in the dungeon.
+Here our dungeon is called tutorial and it has 4 levels (user input in
+𝕕𝕠𝕦𝕓𝕝𝕖 𝕤𝕥𝕣𝕦𝕔𝕜):</p>
+<pre><code>---------------------------------------------------------
+Good day, adventurer!
+Your goal is to get the treasure and escape the dungeon!
+--- SYMBOLS ---
+o : That is you, the adventurer!
+$ : These are treasures. Lots of money!
+@ : These magical amulets resize the level.
+M : These are monsters; avoid them!
++, -, | : These are unpassable obstacles.
+? : A door to another level.
+! : A door to escape the dungeon.
+--- CONTROLS ---
+w, a, s, d : Move up, left, down, and right.
+e : Stay still for a turn.
+q : Abandon your quest.
+---------------------------------------------------------
+Please enter the dungeon name and number of rooms: 𝕥𝕦𝕥𝕠𝕣𝕚𝕒𝕝 𝟜↵</code></pre>
+<p>Note: if “𝕥𝕦𝕥𝕠𝕣𝕚𝕒𝕝 𝟜” is not displaying on your screen, refer to the
+following <a href="./loading_game.png">screenshot</a>.</p>
+<h4 id="navigating-the-dungeon">Navigating the Dungeon</h4>
+<p>Our dungeon crawler uses the WASD method of controlling the in-game
+adventurer: <strong>w</strong> and <strong>s</strong> move the
+adventurer up one row and down one row respectively, while
+<strong>a</strong> and <strong>d</strong> move the adventurer left one
+column and right one column respectively. Entering <strong>e</strong>
+will cause the adventurer to stay still for a turn.</p>
+<p>Tiles with unpassable obstacles (a pillar) cannot be moved onto, and
+are represented by the <strong>+</strong> symbol. The door to the next
+level is represented by the <strong>?</strong> symbol, while the door
+out of the dungeon (and thus the game) is represented by the
+<strong>!</strong> symbol.</p>
+<p>Reference: <a
+href="https://en.wikipedia.org/wiki/Arrow_keys#WASD_keys">WASD
+keys</a>.</p>
+<pre><code>Level 1
++---------+
+| o ?     |
+| +       |
+|         |
++---------+
+
+Enter command (w,a,s,d: move, e: stay still, q: quit): s↵
++---------+
+| o ?     |
+| +       |
+|         |
++---------+
+You didn&#39;t move. Are you lost?
+Enter command (w,a,s,d: move, e: stay still, q: quit): d↵
+
++---------+
+|   o     |
+| +       |
+|         |
++---------+
+You have moved to row 0 and column 1
+You go through the doorway into the unknown beyond...</code></pre>
+<h4 id="treasure">Treasure</h4>
+<p>Dungeons are dangerous places, so why would you put up with all that
+risk for no reward? Tiles with treasure on them are represented by the
+<strong>$</strong> symbol. Pick up a piece of treasure by moving the
+adventurer to that tile.</p>
+<p>Upon exiting, the game will tell you how much treasure was picked up
+by the adventurer across all levels. But make sure you don’t leave
+empty-handed, since the door out of the dungeon (represented by the
+<strong>!</strong> symbol) won’t open if you don’t have at least one
+piece of treasure!</p>
+<pre><code>Level 2
++---------------+
+| ?             |
+| o $           |
+|               |
++---------------+
+Enter command (w,a,s,d: move, e: stay still, q: quit): d↵
++---------------+
+| ?             |
+|   o           |
+|               |
++---------------+
+You have moved to row 1 and column 1
+Well done, adventurer! You found some treasure.
+You now have 1 treasure.
+Enter command (w,a,s,d: move, e: stay still, q: quit): w↵
++---------------+
+| ? o           |
+|               |
+|               |
++---------------+
+You have moved to row 0 and column 1
+Enter command (w,a,s,d: move, e: stay still, q: quit): w↵
++---------------+
+| ? o           |
+|               |
+|               |
++---------------+
+You didn&#39;t move. Are you lost?
+Enter command (w,a,s,d: move, e: stay still, q: quit): a↵
++---------------+
+| o             |
+|               |
+|               |
++---------------+
+You have moved to row 0 and column 0
+You go through the doorway into the unknown beyond...</code></pre>
+<h4 id="monsters">Monsters</h4>
+<p>So, what makes dungeons so dangerous anyway? The monsters kept in
+them to guard the treasure of course! Monsters are represented by the
+symbol <strong>M</strong>, and will chase any adventurer in their line
+of sight (i.e., if the adventurer is a <a
+href="https://en.wikipedia.org/wiki/Rook_%28chess%29">rook</a>’s move
+from them). Thankfully, they are slow and move only one tile per turn,
+and cannot see over unpassable obstacles, allowing the adventurer to
+hide behind them.</p>
+<p>The adventurer is quick enough that he can get through a door before
+a monster attacks on the next turn, but won’t be able to pick up an item
+and then withstand an attack. Monster attacks are lethal, and being
+killed by the monster will cause you to lose the game. The adventurer is
+not strong enough to attack a monster, so the only strategy is to run
+away. Monsters are powerful, and will destroy any (passable) obstacle in
+their path - including treasure, amulets, doors, and even other
+monsters! Make sure that the monsters don’t destroy the only way
+out…</p>
+<pre><code>Level 3
++---------+
+| M $     |
+| $ $     |
+|         |
+| o       |
+|         |
+|   ?     |
++---------+
+Enter command (w,a,s,d: move, e: stay still, q: quit): s↵
++---------+
+|   $     |
+| M $     |
+|         |
+|         |
+| o       |
+|   ?     |
++---------+
+You have moved to row 4 and column 0
+Enter command (w,a,s,d: move, e: stay still, q: quit): s↵
++---------+
+|   $     |
+|   $     |
+| M       |
+|         |
+|         |
+| o ?     |
++---------+
+You have moved to row 5 and column 0
+Enter command (w,a,s,d: move, e: stay still, q: quit): d↵
++---------+
+|   $     |
+|   $     |
+| M       |
+|         |
+|         |
+|   o     |
++---------+
+You have moved to row 5 and column 1
+You go through the doorway into the unknown beyond...</code></pre>
+<h4 id="magic-amulets">Magic Amulets</h4>
+<p>The dungeon also holds many ancient and mysterious artifacts, such as
+magic amulets. Magic amulets are represented by the @ symbol. Picking up
+an amulet will cause the level to double in size, with three additional
+copies of the level (without additional adventurers, but with additional
+monsters and items) appearing below, to the right, and diagonally below
+and right of the level. Unfortunately, the amulet is destroyed in the
+process and isn’t copied as well.</p>
+<p>Be careful, magic can be dangerous to use - make sure you don’t
+accidentally have a monster appear right next to you! But in wise hands,
+magic can help you escape from otherwise impossible levels…</p>
+<pre><code>Level 4
++---------+
+| o       |
+|   + +   |
+| @ + !   |
++---------+
+Enter command (w,a,s,d: move, e: stay still, q: quit): s↵
++---------+
+|         |
+| o + +   |
+| @ + !   |
++---------+
+You have moved to row 1 and column 0
+Enter command (w,a,s,d: move, e: stay still, q: quit): s↵
++------------------+
+|                  |
+|   + +      + +   |
+| o + !      + !   |
+|                  |
+|   + +      + +   |
+|   + !      + !   |
++------------------+
+You have moved to row 2 and column 0
+The magic amulet sparkles and crumbles into dust.
+The ground begins to rumble. Are the walls moving?
+Enter command (w,a,s,d: move, e: stay still, q: quit): s↵
++------------------+
+|                  |
+|   + +      + +   |
+|   + !      + !   |
+| o                |
+|   + +      + +   |
+|   + !      + !   |
++------------------+
+You have moved to row 3 and column 0</code></pre>
+<p> </p>
+<pre><code>Enter command (w,a,s,d: move, e: stay still, q: quit): d↵
++------------------+
+|                  |
+|   + +      + +   |
+|   + !      + !   |
+|   o              |
+|   + +      + +   |
+|   + !      + !   |
++------------------+
+You have moved to row 3 and column 1
+Enter command (w,a,s,d: move, e: stay still, q: quit): d↵
++------------------+
+|                  |
+|   + +      + +   |
+|   + !      + !   |
+|     o            |
+|   + +      + +   |
+|   + !      + !   |
++------------------+
+You have moved to row 3 and column 2
+Enter command (w,a,s,d: move, e: stay still, q: quit): w↵
++------------------+
+|                  |
+|   + +      + +   |
+|   + o      + !   |
+|                  |
+|   + +      + +   |
+|   + !      + !   |
++------------------+
+You have moved to row 2 and column 2
+Congratulations, adventurer! You have escaped the dungeon!
+You escaped with 1 treasure and in 16 total moves.</code></pre>
+<h4 id="quitting-the-game">Quitting the Game</h4>
+<p>You can quit the game at any time by entering the symbol
+<code>q</code>. Just be careful, as there is no way to save your
+progress.</p>
+</body>
+</html>
