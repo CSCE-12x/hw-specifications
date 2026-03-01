@@ -83,7 +83,7 @@ If you know about another student who is sharing their code with other students 
   * Makes the book available because it is returned
   * Return `true` if the book was not available (success).  Return `false` if the book was already returned (failure).
 
-#### Overloaded operator\<\< for Book
+#### Overloaded `operator<<` for `Book`
 
 * Prints this string: `title: "TITLE" by AUTHOR, isbn: ISBN` where TITLE is the book title, AUTHOR is the first and last name of the author, and ISBN is the ISBN number of the book. No end-of-line after ISBN. TITLE must be surrounded by double quotes.
 
@@ -99,7 +99,7 @@ If you know about another student who is sharing their code with other students 
 * An access function (getter) `Member::get_name()`
 * An access function (getter) `Member::get_id()`
 
-#### Overloaded operator\<\< for Member
+#### Overloaded `operator<<` for `Member`
 
 * Prints this string: `Member: NAME, id: ID` where NAME is the first and last name of the member (separated by a space) and ID is an assigned ID. No end of line after ID.
 
