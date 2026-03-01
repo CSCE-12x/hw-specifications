@@ -49,9 +49,9 @@ If you know about another student who is sharing their code with other students 
 * `<string>`
 * `<vector>`
 * `"book.h"`
-* `"member.h"`
 * `"library.h"`
 * `"lms_utilities.h"`
+* `"member.h"`
 
 ### Classes
 
