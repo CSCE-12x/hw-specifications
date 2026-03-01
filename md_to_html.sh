@@ -3,16 +3,10 @@
 
 # Make sure input file was provided
 if [ $# -eq 0 ]; then
-    echo "usage: $0 <input_file> [site_title] [js_file] [css_file]"
-    echo
-    echo "defaults:"
-    echo "  site_title: text after first '# ' in input_file"
-    echo "    e.g. \"# HW: Stuff and Things\" -> \"HW: Stuff and Things\""
-    echo "  js_file: ../global/index.js"
-    echo "  css_file: ../global/md_styles.css"
-    echo
-    echo "when you run this script, make sure your current working directory is the one"
-    echo "from which you will serve your HTML file."
+    echo "usage: $0 <input_file> <site_title> <js_file> <css_file>"
+    echo "example: ../md_to_html.sh dungeon-crawler.md \"HW Dungeon Crawler\" ../global/index.js ../global/md_styles.css"
+    echo ""
+    echo "When you run this script, make sure your current working directory is the one from which you will serve your HTML file."
     exit 1
 fi
 
