@@ -70,7 +70,7 @@ Crazy 8s is a simple classic card game which is very similar to Uno. If you aren
 
 ### Allowed Includes
 
-* `<cctype>`
+* `<cstddef>`
 * `<fstream>`
 * `<iostream>`
 * `<sstream>`
@@ -134,6 +134,7 @@ Crazy 8s is a simple classic card game which is very similar to Uno. If you aren
   * For example, if the cards in the player's hand are the 8 of Hearts and the 3 of Diamonds, this method should return the string "8 Hearts, 3 Diamonds"
 * `Player::PlayCard(rank: string const&, suit: string const&): Card const*`
   * Choose a card to play from the player's hand.  Remove and return it.
+  * `rank` and `suit` are those of the active card (the currently showing discarded card).
   * Call the card's `Play` method to increment the number of times the card has been played.
   * Return the null pointer if the player does not play a card.
   * The process of choosing a card to play is different for AI players and for humans:
@@ -156,6 +157,7 @@ Crazy 8s is a simple classic card game which is very similar to Uno. If you aren
   * Construct a new instance of `Game` with all attributes empty.
 * `Game::~Game()`
   * Deallocate all cards and players.
+  * This method is provided (already implemented) in `game.h`.
 * `Game::LoadDeckFromFile(filename: string const&): void`
   * Load a deck from the file with the given name.
   * [Refer to the Data File Format section](#data-file-format), which specifies the format of card information included in the file.
@@ -184,7 +186,7 @@ Crazy 8s is a simple classic card game which is very similar to Uno. If you aren
       * The second card from the top of the discard pile will become the bottom card of the draw pile.
       * The bottom card of the discard pile will end up as the top card of the draw pile.
       * In a typical game, we would shuffle the discard pile, but this non-random approach makes testing and debugging easier.
-    * If the discard pile contains only one card, there is nothing to draw, so print nothing and throw a `std::runtime_error` exception.
+    * Throw a `std::runtime_error` exception if the discard pile contains only one card.
 * `Game::Deal(num_cards: size_t): Card*`
   * Discard the top card of the deck, deal the given number of cards to each player.  Return the initially discarded card.
   * First, form a starting discard pile by discarding the top (last) card of the draw pile
