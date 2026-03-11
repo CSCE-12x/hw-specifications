@@ -66,7 +66,159 @@ Crazy 8s is a simple classic card game which is very similar to Uno. If you aren
   * If a test timesout, it is possible that your code is stuck waiting for user input after the autograder has given you all the input it has (e.g. you’re rejecting a valid input)
 * **Test (locally) early and often.**
 
-## Sample Execution
+## Requirements
+
+### Allowed Includes
+
+* `<cctype>`
+* `<fstream>`
+* `<iostream>`
+* `<sstream>`
+* `<stdexcept>`
+* `<string>`
+* `<vector>`
+* `"card.h"`
+* `"game.h"`
+* `"player.h"`
+
+### General
+
+* Exceptions should have meaningful descriptions.
+* The program must compile without warnings or errors.
+
+### main.cpp
+
+* Used for actually playing the game.
+* Do not modify it (or do, at your own peril).
+* Do not submit it (it will be ignored).
+
+### Classes
+
+* You must implement three classes:
+  1. `Card`
+  2. `Player`
+  3. `Game`
+* Constructors must use [member initialization lists](https://en.cppreference.com/w/cpp/language/constructor).
+
+#### Card
+
+* `Card::Card(rank: string, suit: string)`
+  * Construct a new instance of `Card` with the given rank and suit.
+  * Throw a `std::invalid_argument` exception if rank or suit are empty or contain non-alphanumeric characters (i.e. anything other than letters and numbers)
+* `Card::rank(): string`
+  * The rank of the card.
+* `Card::suit(): string`
+  * The suit of the card.
+* `Card::times_played(): size_t`
+  * The number of times the card has been played.
+* `Card::CanBePlayed(rank: string const&, suit: string const&): bool`
+  * Whether the card can be played on a card with the given rank and suit.
+* `Card::Play(): void`
+  * Increment the number of times the card has been played.
+  * This method is provided (already implemented) in `card.h`.
+
+#### Player
+
+* `Player::Player(is_AI: bool)`
+  * Construct a new instance of `Player`.
+* `Player::AddToHand(card: Card const*): void`
+  * Add the card to the player's hand.
+  * The hand should be ordered from least recently added to most recently added (i.e. new cards should go at the back of the hand)
+* `Player::GetHandSize(): size_t`
+  * The number of cards in the player's hand.
+* `Player::GetHandString(): string`
+  * The player's hand as a string.
+  * Cards should be listed from the front of the hand (oldest card) to the back (newest card)
+  * The rank and suit of a card should be separated by a space
+  * Consecutive cards should be separated by a comma and a space
+  * For example, if the cards in the player’s hand are the 8 of Hearts and the 3 of Diamonds, this method should return the string “8 Hearts, 3 Diamonds”
+* `Player::PlayCard(rank: string const&, suit: string const&): Card const*`
+  * Choose a card to play from the player's hand.  Remove and return it.
+  * Call the cards' `Play` method to increment the number of times the card has been played.
+  * Return the null pointer if the player does not play a card.
+  * The process of choosing a card to play is different for AI players and for humans:
+    * The AI will always play the first card from its hand that it can legally play or draw a card if it has no cards it can play.
+    * For human players, you must tell them the current rank and suit and ask them to choose a card to play by entering two strings.
+      * Prompt the player to choose again if they choose a card they don’t have or a card they have in hand cannot play ([see the sample execution](#sample-execution))
+    * Upon playing an 8, the player may change the current suit to any suit in the game
+      * Invoke the `NextSuit` method to determine the next suit.
+* `Player::NextSuit(suits: vector<std::string> const&, suit: string const&): string`
+  * Choose the next suit to declare (after playing an 8 of the given suit).  Return the chosen suit.
+  * An AI player will always choose to use the suit of the 8.
+    * Do not validate that the chosen suit is one of the given (valid) suits.
+  * A human player should be prompted to pick a suit.
+    * Validate that the chosen suit is one of the given (valid) suits.
+    * Reprompt until player selects a valid suit
+
+#### Game
+
+* `Game::Game()`
+  * Construct a new instance of `Game` with all attributes empty.
+* `Game::~Game()`
+  * Deallocate all cards and players.
+* `Game::LoadDeckFromFile(filename: string const&): void`
+  * Load a deck from the file with the given name.
+  * [Refer to the Data File Format section](#data-file-format), which specifies the format of card information included in the file.
+  * When creating a new `Card` object, remember that we are working with dynamic memory. Use the `new` keyword to allocate memory on the heap.
+  * Cards read from the file should be added to both the deck and the draw pile
+    * Create `Card` objects as you read the lines from the file and use them to populate the `deck` and `draw_pile` attributes.
+      * `deck` is a permanent index of all cards and will not change over the course of the game.
+      * `deck` should list the cards in the same order that they appear in the file (i.e. the first card in the input file should be at position 0).
+      * `draw_pile` keeps track of the cards that have not been drawn yet, and will shrink as cards are drawn during the game.
+      * `draw_pile` should list the cards in the opposite order (i.e. the last card in the input file should be at position 0)
+      * Cards will be drawn from the end of `draw_pile` (recall that removing from the end of an array/vector is faster than removing from the beginning).
+  * Use the card information to initialize the `suits` attribute (a list of all the suits in the deck)
+  * Throw a `std::runtime_error` exception if file could not be opened.
+  * Throw a `std::runtime_error` exception if the file content does not match the specified format. This includes:
+    * A line that is too short or too long (i.e. doesn’t have both rank and suit, or has extra information)
+    * If the card constructor throws a `std::invalid_argument` exception you should catch it here and throw a `std::runtime_error` exception instead.
+* `Game::AddPlayer(is_AI: bool): void`
+  * Add a player to the game.
+  * Create a new `Player` and add them to the end of `players`
+  * When creating a new `Player` object, remember that we are working with dynamic memory. Use the `new` keyword to allocate memory on the heap.
+* `Game::DrawCard(player: Player*): void`
+  * Draw a card into the player's hand.
+  * Move the top card of the draw pile (the last card in `draw_pile`) into the player’s hand.
+  * If the draw pile is empty, you will need to replenish it before you draw the player their card:
+    * If the discard pile has at least two cards then print “Draw pile empty, flipping the discard pile.” and then form a new draw pile by leaving just the top card in the discard pile (as a reminder of what was played last) and flipping the rest of the discard pile.
+      * The second card from the top of the discard pile will become the bottom card of the draw pile.
+      * The bottom card of the discard pile will end up as the top card of the draw pile.
+      * In a typical game, we would shuffle the discard pile, but this non-random approach makes testing and debugging easier.
+    * If the discard pile contains only one card, there is nothing to draw, so print nothing and throw a `std::runtime_error` exception.
+* `Game::Deal(num_cards: size_t): Card*`
+  * Discard the top card of the deck, deal the given number of cards to each player.  Return the initially discarded card.
+  * First, form a starting discard pile by discarding the top (last) card of the draw pile
+  * Then, deal cards from the top of the deck to the players’ hands one at a time (use the `DrawCard` method).
+    * You should not catch any exceptions thrown by `DrawCard`.
+    * If you are unable to draw enough cards for all the players, allow the exception thrown by `DrawCard` to continue being thrown.
+  * You should give each player their first card (starting with player 0) before giving any player their second card.
+    * You should repeatedly give each player one card, in turn order, until each player has received `num_cards` many cards.
+* `Game::MostPlayedSuit(): string`
+  * The suit which has been played the most times.
+  * Figure out how many times each suit has been played by adding up the `times_played` values for all cards of that suit.
+  * In case of a tie, return any of the tied suits.
+  * *Hint: the deck contains all the cards in the game, whether they are in the draw pile, the discard pile, or a player’s hand.*
+* `Game::RunGame(): int`
+  * Run the game and return the index of the winning player.
+  * You may assume that the game has been set up using `LoadDeckFromFile`, `AddPlayer`, and `Deal`
+  * [Refer to the appendix for details on the rules of our version of Crazy 8s](#rules-of-crazy-8s).
+  * [Refer to the sample execution](#sample-execution) for examples of the messages you should print.
+  * At the start of each turn you should announce "Player &lt;Player #&gt;'s turn!".
+  * You should determine which card the player is playing, if any.
+  * If the player is playing a card:
+    * You should announce the rank and suit of this card.
+    * If the card is an 8, you should announce the new suit that the player has chosen.
+    * You should add the played card to the top (end) of the discard pile.
+  * If the player is drawing a card:
+    * You should announce this.
+    * You should draw a card and add it to their hand.
+    * If there are no more cards to draw, print "Player &lt;Player #&gt; cannot draw a card." and return -1 to indicate a draw (tied game).
+      * You will need to catch the exception thrown by `DrawCard` to detect this.
+  * Whenever any player has 0 cards remaining in hand, end the game and return the winner.
+
+## Appendix
+
+### Sample Execution
 
 <pre>
 Choose a file to load the deck from:
@@ -156,157 +308,6 @@ Player 1 plays 2 Clubs.
 Player 1 wins!
 The most played suit was Clubs.
 </pre>
-
-## Requirements
-
-### Allowed Includes
-
-* `<cctype>`
-* `<fstream>`
-* `<iostream>`
-* `<sstream>`
-* `<stdexcept>`
-* `<string>`
-* `<vector>`
-* `"card.h"`
-* `"game.h"`
-* `"player.h"`
-
-### General
-
-* Exceptions should have meaningful descriptions.
-* The program must compile without warnings or errors.
-
-### main.cpp
-
-* Used for actually playing the game.
-* Do not modify it (or do, at your own peril).
-* Do not submit it (it will be ignored).
-
-### Classes
-
-* You must implement three classes:
-  1. `Card`
-  2. `Player`
-  3. `Game`
-* Constructors must use [member initialization lists](https://en.cppreference.com/w/cpp/language/constructor).
-
-#### Card
-
-* `Card::Card(rank: string, suit: string)`
-  * Construct a new instance of `Card` with the given rank and suit.
-  * Throw a `std::invalid_argument` exception if rank or suit are empty or contain non-alphanumeric characters (i.e. anything other than letters and numbers)
-* `Card::rank(): string`
-  * The rank of the card.
-* `Card::suit(): string`
-  * The suit of the card.
-* `Card::times_played(): size_t`
-  * The number of times the card has been played.
-* `Card::CanBePlayed(rank: string const&, suit: string const&): bool`
-  * Whether the card can be played on a card with the given rank and suit.
-* `Card::Play(): void`
-  * Increment the number of times the card has been played.
-
-#### Player
-
-* `Player::Player(is_AI: bool)`
-  * Construct a new instance of `Player`.
-* `Player::AddToHand(card: Card const*): void`
-  * Add the card to the player's hand.
-  * The hand should be ordered from least recently added to most recently added (i.e. new cards should go at the back of the hand)
-* `Player::GetHandSize(): size_t`
-  * The number of cards in the player's hand.
-* `Player::GetHandString(): string`
-  * The player's hand as a string.
-  * Cards should be listed from the front of the hand (oldest card) to the back (newest card)
-  * The rank and suit of a card should be separated by a space
-  * Consecutive cards should be separated by a comma and a space
-  * For example, if the cards in the player’s hand are the 8 of Hearts and the 3 of Diamonds, this method should return the string “8 Hearts, 3 Diamonds”
-* `Player::PlayCard(rank: string const&, suit: string const&): Card const*`
-  * Choose a card to play from the player's hand.  Remove and return it.
-  * Call the cards' `Play` method to increment the number of times the card has been played.
-  * Return the null pointer if the player does not play a card.
-  * The process of choosing a card to play is different for AI players and for humans:
-    * The AI will always play the first card from its hand that it can legally play or draw a card if it has no cards it can play.
-    * For human players, you must tell them the current rank and suit and ask them to choose a card to play by entering two strings.
-      * Prompt the player to choose again if they choose a card they don’t have or a card they have in hand cannot play ([see the sample execution above](#sample-execution))
-    * Upon playing an 8, the player may change the current suit to any suit in the game
-      * Invoke the `NextSuit` method to determine the next suit.
-* `Player::NextSuit(suits: vector<std::string> const&, suit: string const&): string`
-  * Choose the next suit to declare (after playing an 8 of the given suit).  Return the chosen suit.
-  * An AI player will always choose to use the suit of the 8.
-    * Do not validate that the chosen suit is one of the given (valid) suits.
-  * A human player should be prompted to pick a suit.
-    * Validate that the chosen suit is one of the given (valid) suits.
-    * Reprompt until player selects a valid suit
-
-#### Game
-
-* `Game::Game()`
-  * Construct a new instance of `Game` with all attributes empty.
-* `Game::~Game()`
-  * Deallocate all cards and players.
-* `Game::LoadDeckFromFile(filename: string const&): void`
-  * Load a deck from the file with the given name.
-  * [Refer to the Data File Format section](#data-file-format), which specifies the format of card information included in the file.
-  * When creating a new `Card` object, remember that we are working with dynamic memory. Use the `new` keyword to allocate memory on the heap.
-  * Cards read from the file should be added to both the deck and the draw pile
-    * Create `Card` objects as you read the lines from the file and use them to populate the `deck` and `draw_pile` attributes.
-      * `deck` is a permanent index of all cards and will not change over the course of the game.
-      * `deck` should list the cards in the same order that they appear in the file (i.e. the first card in the input file should be at position 0).
-      * `draw_pile` keeps track of the cards that have not been drawn yet, and will shrink as cards are drawn during the game.
-      * `draw_pile` should list the cards in the opposite order (i.e. the last card in the input file should be at position 0)
-      * Cards will be drawn from the end of `draw_pile` (recall that removing from the end of an array/vector is faster than removing from the beginning).
-  * Use the card information to initialize the `suits` attribute (a list of all the suits in the deck)
-  * Throw a `std::runtime_error` exception if file could not be opened.
-  * Throw a `std::runtime_error` exception if the file content does not match the specified format. This includes:
-    * A line that is too short or too long (i.e. doesn’t have both rank and suit, or has extra information)
-    * If the card constructor throws a `std::invalid_argument` exception you should catch it here and throw a `std::runtime_error` exception instead.
-* `Game::AddPlayer(is_AI: bool): void`
-  * Add a player to the game.
-  * Create a new `Player` and add them to the end of `players`
-  * When creating a new `Player` object, remember that we are working with dynamic memory. Use the `new` keyword to allocate memory on the heap.
-* `Game::DrawCard(player: Player*): void`
-  * Draw a card into the player's hand.
-  * Move the top card of the draw pile (the last card in `draw_pile`) into the player’s hand.
-  * If the draw pile is empty, you will need to replenish it before you draw the player their card:
-    * If the discard pile has at least two cards then print “Draw pile empty, flipping the discard pile.” and then form a new draw pile by leaving just the top card in the discard pile (as a reminder of what was played last) and flipping the rest of the discard pile.
-      * The second card from the top of the discard pile will become the bottom card of the draw pile.
-      * The bottom card of the discard pile will end up as the top card of the draw pile.
-      * In a typical game, we would shuffle the discard pile, but this non-random approach makes testing and debugging easier.
-    * If the discard pile contains only one card, there is nothing to draw, so print nothing and throw a `std::runtime_error` exception.
-* `Game::Deal(num_cards: size_t): Card*`
-  * Discard the top card of the deck, deal the given number of cards to each player.  Return the initially discarded card.
-  * First, form a starting discard pile by discarding the top (last) card of the draw pile
-  * Then, deal cards from the top of the deck to the players’ hands one at a time (use the `DrawCard` method).
-    * You should not catch any exceptions thrown by `DrawCard`.
-    * If you are unable to draw enough cards for all the players, allow the exception thrown by `DrawCard` to continue being thrown.
-  * You should give each player their first card (starting with player 0) before giving any player their second card.
-    * You should repeatedly give each player one card, in turn order, until each player has received `num_cards` many cards.
-* `Game::MostPlayedSuit(): string`
-  * The suit which has been played the most times.
-  * Figure out how many times each suit has been played by adding up the `times_played` values for all cards of that suit.
-  * In case of a tie, return any of the tied suits.
-  * *Hint: the deck contains all the cards in the game, whether they are in the draw pile, the discard pile, or a player’s hand.*
-* `Game::RunGame(): int`
-  * Run the game and return the index of the winning player.
-  * You may assume that the game has been set up using `LoadDeckFromFile`, `AddPlayer`, and `Deal`
-  * [Refer to the appendix for details on the rules of our version of Crazy 8s](#rules-of-crazy-8s).
-  * [Refer to the sample execution](#sample-execution) for examples of the messages you should print.
-  * At the start of each turn you should announce "Player &lt;Player #&gt;'s turn!".
-  * You should determine which card the player is playing, if any.
-  * If the player is playing a card:
-    * You should announce the rank and suit of this card.
-    * If the card is an 8, you should announce the new suit that the player has chosen.
-    * You should add the played card to the top (end) of the discard pile.
-  * If the player is drawing a card:
-    * You should announce this.
-    * You should draw a card and add it to their hand.
-    * If there are no more cards to draw, print "Player &lt;Player #&gt; cannot draw a card." and return -1 to indicate a draw (tied game).
-      * You will need to catch the exception thrown by `DrawCard` to detect this.
-  * Whenever any player has 0 cards remaining in hand, end the game and return the winner.
-
-## Appendix
 
 ### Data File Format
 
