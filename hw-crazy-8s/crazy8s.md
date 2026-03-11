@@ -70,16 +70,18 @@ Crazy 8s is a simple classic card game which is very similar to Uno. If you aren
 
 ### Allowed Includes
 
-* `<cstddef>`
-* `<fstream>`
-* `<iostream>`
-* `<sstream>`
-* `<stdexcept>`
-* `<string>`
-* `<vector>`
-* `"card.h"`
-* `"game.h"`
-* `"player.h"`
+| header        | `card.cpp` | `game.cpp` | `player.cpp` |
+|:--------------|:----------:|:----------:|:------------:|
+| `<cstddef>`   | &#x2714;   | &#x2714;   | &#x2714;     |
+| `<fstream>`   |            | &#x2714;   |              |
+| `<iostream>`  | &#x2714;   | &#x2714;   | &#x2714;     |
+| `<sstream>`   |            | &#x2714;   | &#x2714;     |
+| `<stdexcept>` | &#x2714;   | &#x2714;   |              |
+| `<string>`    | &#x2714;   | &#x2714;   | &#x2714;     |
+| `<vector>`    |            | &#x2714;   | &#x2714;     |
+| `"card.h"`    | &#x2714;   | &#x2714;   | &#x2714;     |
+| `"game.h"`    |            | &#x2714;   |              |
+| `"player.h"`  |            | &#x2714;   | &#x2714;     |
 
 ### General
 
