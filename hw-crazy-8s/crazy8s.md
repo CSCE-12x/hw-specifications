@@ -333,15 +333,23 @@ If the draw pile ever runs out of cards, the next time a player needs to draw a 
 
 ### Useful functions and classes
 
-You may use any of the functionality provided by C++ strings and C++ vectors in your solution. Most students may find the following operations useful:
+You may use any of the functionality provided by C++ strings and C++ vectors in your solution. You may find the following operations useful:
+
+* `string`
+  * `empty()`: Return `true` if the string is empty (length is 0)
+  * `operator==(other)`: Returns `true` is the string is equal to `other`
+  * `operator+(other)`: Returns the concatenation of the string and `other`
+  * `operator+=(other)`: Concatenates `other` to the end of the string
+
 * `vector`
   * `back()`: Returns the last element of the vector
-  * `erase(pos)`: Remove the element of the vector at position `pos`
+  * `erase(pos)`: Removes the element of the vector at position `pos`
     * Note, this function takes an "iterator", not an `int`
     * You can obtain an iterator for position `i` in vector `v` using `v.begin()+i`
   * `pop_back()`: Removes the last element of the vector
-  * `push_back(elem)`: Adds a new element elem at the end of the vector
+  * `push_back(element)`: Adds `element` at the end of the vector
   * `size()`: Returns the number of elements in the vector
+  * `empty()`: Returns `true` if the vector is empty (size is 0)
 
 ### How to compile
 

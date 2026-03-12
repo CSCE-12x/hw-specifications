@@ -715,16 +715,40 @@ this way (because all the cards except the top discard are in the
 players’ hands), the game is declared a draw (a tie).</p>
 <h3 id="useful-functions-and-classes">Useful functions and classes</h3>
 <p>You may use any of the functionality provided by C++ strings and C++
-vectors in your solution. Most students may find the following
-operations useful: * <code>vector</code> * <code>back()</code>: Returns
-the last element of the vector * <code>erase(pos)</code>: Remove the
-element of the vector at position <code>pos</code> * Note, this function
-takes an “iterator”, not an <code>int</code> * You can obtain an
-iterator for position <code>i</code> in vector <code>v</code> using
-<code>v.begin()+i</code> * <code>pop_back()</code>: Removes the last
-element of the vector * <code>push_back(elem)</code>: Adds a new element
-elem at the end of the vector * <code>size()</code>: Returns the number
-of elements in the vector</p>
+vectors in your solution. You may find the following operations
+useful:</p>
+<ul>
+<li><code>string</code>
+<ul>
+<li><code>empty()</code>: Return <code>true</code> if the string is
+empty (length is 0)</li>
+<li><code>operator==(other)</code>: Returns <code>true</code> is the
+string is equal to <code>other</code></li>
+<li><code>operator+(other)</code>: Returns the concatenation of the
+string and <code>other</code></li>
+<li><code>operator+=(other)</code>: Concatenates <code>other</code> to
+the end of the string</li>
+</ul></li>
+<li><code>vector</code>
+<ul>
+<li><code>back()</code>: Returns the last element of the vector</li>
+<li><code>erase(pos)</code>: Removes the element of the vector at
+position <code>pos</code>
+<ul>
+<li>Note, this function takes an “iterator”, not an
+<code>int</code></li>
+<li>You can obtain an iterator for position <code>i</code> in vector
+<code>v</code> using <code>v.begin()+i</code></li>
+</ul></li>
+<li><code>pop_back()</code>: Removes the last element of the vector</li>
+<li><code>push_back(element)</code>: Adds <code>element</code> at the
+end of the vector</li>
+<li><code>size()</code>: Returns the number of elements in the
+vector</li>
+<li><code>empty()</code>: Returns <code>true</code> if the vector is
+empty (size is 0)</li>
+</ul></li>
+</ul>
 <h3 id="how-to-compile">How to compile</h3>
 <p>(<em>you should have memorized this by now!</em>)</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">g++</span> <span class="at">-std</span><span class="op">=</span>c++23 <span class="at">-Wall</span> <span class="at">-Wextra</span> <span class="at">-Weffc++</span> <span class="at">-pedantic</span> <span class="at">-g</span> <span class="at">-fsanitize</span><span class="op">=</span>undefined,address <span class="pp">*</span>.cpp</span></code></pre></div>
