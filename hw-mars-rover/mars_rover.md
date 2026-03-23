@@ -2,13 +2,39 @@
 
 ## How I learned to stop worrying and love the C-string
 
-## Overview
-
-### Objectives
+## Objectives
 
 * Practice writing classes with dynamic memory
 * Practice operator overloading
 * Apply the Rule of Three
+
+## Guidelines for Homework
+
+* This and all other homeworks are individual coding practice assignments.
+* Do not show your code to other students.
+* Do not look at the code of other students.
+* Do not share your code with other students.
+* Do not use AI tools.
+
+If you have questions about this assignment, talk to a Peer Teacher, a TA, or an instructor.
+
+* Go to Gradescope to submit your code
+* Ask questions on the Q\&A board.
+  * Look there to see if someone has already asked your question.
+  * It is very rare that a student's question is unique. Ask there, and everyone can benefit from the answer.
+  * If you know the answer, go ahead and answer it yourself!
+  * Do not post HW code publicly. Make a **private** post to Instructors and TAs on the Q\&A board..
+    * Do not post screenshots of code.
+
+If you know about another student who is sharing their code with other students (or in any other way is violating the Aggie Code of Honor), you should report them to the instructor or [report them to the AHSO](https://cm.maxient.com/reportingform.php?TexasAMUniv&layout_id=11). If you become aware of academic dishonesty, you are expected to report it through the appropriate channels.
+
+## Introduction
+
+On February 18, 2021, we celebrated the landing of the latest Mars rover, *Perseverance*. The [*Perseverance* rover](https://en.wikipedia.org/wiki/Perseverance_\(rover\)) is a remarkable feat of science and engineering. Engineers must optimize every aspect of their design to accommodate strict requirements for space vehicles. In fact, due to reliability specifications, [*Perseverance* is powered by a 20 year old processor](https://bigthink.com/technology-innovation/perseverance-rover-brain)\!
+
+For this assignment, assume you are on a team of engineers working on a sophisticated chemical composition analysis system for a new Mars rover. This rover will have even more advanced automation and learning capabilities than previous ones, and the chemical analysis tool is a key part of its ability to study the martian surface. The rover uses the [Simplified molecular-input line-entry system](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system) (SMILES) to store and operate on chemical data. SMILES are string representations of 3 dimensional molecular structures, enabling computational software to model complex structures in a format that is easy to store and use. Your team discovers that the program isn’t running correctly on the rover, and you’ve identified the problem is tied to memory. Specifically, the rover doesn’t have quite enough memory to load the full program. Rather than remove core functionality, you’ve discovered that just removing some library code frees up enough resources to make the program run.
+
+**You must implement a custom `MyString` object that will mimic the standard C++ string object for certain functions**. To facilitate this, we have provided a sample “test” rover which is nothing more than some simple functions to call your MyString object. We will read a set of basic commands from a file to simulate the chemical composition tool. Note that you must not use the library string or vector classes since that would defeat the purpose of MyString.
 
 ### Submission
 
@@ -28,14 +54,6 @@ Any resources or syntax obtained from outside of class materials in relation to 
 * `<iostream>`
 * `<stdexcept>`
 * `"MyString.h"`
-
-## Introduction
-
-On February 18, 2021, we celebrated the landing of the latest Mars rover, *Perseverance*. The [*Perseverance* rover](https://en.wikipedia.org/wiki/Perseverance_\(rover\)) is a remarkable feat of science and engineering. Engineers must optimize every aspect of their design to accommodate strict requirements for space vehicles. In fact, due to reliability specifications, [*Perseverance* is powered by a 20 year old processor](https://bigthink.com/technology-innovation/perseverance-rover-brain)\!
-
-For this assignment, assume you are on a team of engineers working on a sophisticated chemical composition analysis system for a new Mars rover. This rover will have even more advanced automation and learning capabilities than previous ones, and the chemical analysis tool is a key part of its ability to study the martian surface. The rover uses the [Simplified molecular-input line-entry system](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system) (SMILES) to store and operate on chemical data. SMILES are string representations of 3 dimensional molecular structures, enabling computational software to model complex structures in a format that is easy to store and use. Your team discovers that the program isn’t running correctly on the rover, and you’ve identified the problem is tied to memory. Specifically, the rover doesn’t have quite enough memory to load the full program. Rather than remove core functionality, you’ve discovered that just removing some library code frees up enough resources to make the program run.
-
-**You must implement a custom `MyString` object that will mimic the standard C++ string object for certain functions**. To facilitate this, we have provided a sample “test” rover which is nothing more than some simple functions to call your MyString object. We will read a set of basic commands from a file to simulate the chemical composition tool. Note that you must not use the library string or vector classes since that would defeat the purpose of MyString.
 
 ## Getting Started
 
