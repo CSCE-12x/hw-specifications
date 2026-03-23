@@ -60,9 +60,7 @@ For this assignment, you will be writing a custom MyString class from scratch.  
 
 Try this: put **just** \``` using MyString = std::string;` `` (just that one line and nothing else) in `MyString.h` and **just** \``#include “MyString.h”`\` in `MyString.cpp` and (1) compile and run with `RoverTest.cpp` locally to verify that it works, (2) submit to Gradescope to see every test pass (but one).
 
-Note that on some reference pages, there may be multiple versions of C++ listed. We use C++17 for autograding, so select the most recent standard available for that method’s documentation.  For example, the image below shows options for C++98 and C++11 with the most recent version selected (C++11).
-
-![A view of tabs with multiple C++ versions and C++11, the most recent one, is selected.][image1]
+Note that on some reference pages, there may be multiple versions of C++ listed. We use C++17 for autograding, so select the most recent standard available for that method’s documentation.
 
 ## **General Suggestions**
 
@@ -192,6 +190,3 @@ Under the hood, this creates a character array that looks like:
 Each character (including `'\0'`) is stored in a contiguous block of memory.
 So, the size of this string in memory is 6 bytes, not 5\.
 The *length* of the string is 5\.
-
-
-[image1]: <data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAG4AAAAjCAYAAAB1nT9JAAADUklEQVR4Xu2WTUhUURTH7WNT6Sp0Va7CEKISw6CPRUWrlm1yUS7ERaZEBRFkMI1j4yyaqVkEpmOB4bakZKLUImsRlqURWPlRKehoplkZWnrjjNzH/Xj3dp/MYk7cP/wZ7zn/d98798cbJ4NYoVSGWLDCIQsOqThw+4svWyMxBy5vX5U1EnPgfpN5aySWwE1+mySxxhjx+/1oXF9/nYx/TUjDsZ6d/0kiVyIkEAigcTgSluZwBefz+UhDQwOZnp5G56ampuTziwOCO589IZFIhB0VjWCmto42aSYJnHggmKwCB3XMcpuLAxcMBqXDwORoNCoNaMEhsAWH1Bac4O07L5GMNSccf/w0KmVS4e5XA849rtV1cL0Hbb3cMyTGv0jXewVXuCvE7RmOtouRlAruoZKutyxwsGH2xrNSTczp6iaZ3LwqrkcP0+264eGE6z5ewMH1ObnnpJqbVHVWkJmb+yOWk6KzuO2j61F5Brd5q8/1gFQ2yaoyUD9aesNZd73sd7IjIzIocQ02BZdfUK09KFEmWR04Kt0+up5ncG6Ho7NJXpWBetHekFRj/wYXl8TI6qxKsmJthbSHKTjYZ8Om81xNJ92hUqEC19f3mZSU3XQMeXZNcyaZbUU1yd7d1m7yonvpbRPBrVxX4dTLTzZLz+MFXHUwztVElZU3O4Y8u1ZlSo/fkjKsdHB0vZSDe971gWRmn3YMeXZNcyYZcKD2ngPmYfsb5/49vUPcs9TFHrs+mxdwew6EuZqorJwzjiHPrlWZtetPSRlWOji6nmdw+QV+1wNS2SRrkqE5mt2xu5YcPHRV6k9NTXE1U3BbCpfeblOZZCGTNl+V4gGC3X4osFmxJtokUxNq5XKvewa59djYhOs+puBAdC6qmZlfysNT1VmlHTjw4eI6Z9BVmZVSn/rCxTtSTbQuQ+8B/+/EHv2VSS32wV7AgY4ca+Tm6h+YECNJ1YTuiyVJkFlYWBTLSbHPDX73PqHsgUUtGxwWewWHRRYcUllwSGXBIZUFh1QWHFJZcEj1T3AQ+B/d0tKSnA/gmn661VL1yVrsuX3G43FpJumNE8lap6ctOKRWgvux+N06jW3BIbUFh9QWXArdOfhIqqk8NjtKWt/eJk+HzK9h/RfDlinbP1yawQAAAABJRU5ErkJggg==>
