@@ -1,14 +1,16 @@
-# **HW: Mars Rover (MyString)**
+# HW: Mars Rover
 
-## **Overview**
+## How I learned to stop worrying and love the C-string
 
-### ***Objectives***
+## Overview
+
+### Objectives
 
 * Practice writing classes with dynamic memory
 * Practice operator overloading
 * Apply the Rule of Three
 
-### ***Submission***
+### Submission
 
 Submit the following files to the autograder.
 
@@ -21,13 +23,13 @@ Any resources or syntax obtained from outside of class materials in relation to 
 
 * For a refresher refer to the *Academic Dishonesty* section in the syllabus or reach out to a TA.
 
-#### ***Allowed Includes***
+#### Allowed Includes
 
 * `<iostream>`
 * `<stdexcept>`
 * `"MyString.h"`
 
-## **Introduction**
+## Introduction
 
 On February 18, 2021, we celebrated the landing of the latest Mars rover, *Perseverance*. The [*Perseverance* rover](https://en.wikipedia.org/wiki/Perseverance_\(rover\)) is a remarkable feat of science and engineering. Engineers must optimize every aspect of their design to accommodate strict requirements for space vehicles. In fact, due to reliability specifications, [*Perseverance* is powered by a 20 year old processor](https://bigthink.com/technology-innovation/perseverance-rover-brain)\!
 
@@ -35,7 +37,7 @@ For this assignment, assume you are on a team of engineers working on a sophisti
 
 **You must implement a custom `MyString` object that will mimic the standard C++ string object for certain functions**. To facilitate this, we have provided a sample “test” rover which is nothing more than some simple functions to call your MyString object. We will read a set of basic commands from a file to simulate the chemical composition tool. Note that you must not use the library string or vector classes since that would defeat the purpose of MyString.
 
-## **Getting Started**
+## Getting Started
 
 * [Download the starter code](https://drive.google.com/file/d/1L21sbi8yq6wI-bk3dI2krxC6gWKcgjGi/view?usp=drive_link)
 * **Read** the provided `main()` in `RoverTest.cpp` and the simplified rover operations in `Rover.h` and `Rover.cpp`.
@@ -48,13 +50,12 @@ For this assignment, assume you are on a team of engineers working on a sophisti
   * Once you have the basic setup of your class, even though it may be incomplete, you can start using local testing and Gradescope to test your code.
 * Repeat the process of writing tests, implementing, testing, and submitting to incrementally develop a functionally correct `MyString` class.
 
-## **AI Policy**
+## AI Policy
 
 **It is against course policy to use an AI tool on an assignment for any reason**.  This includes, but is not limited to: summarizing the requirements, writing code, debugging code, code quality, coding advice.
 
-#
 
-## **Requirements** {#requirements}
+## Requirements
 
 For this assignment, you will be writing a custom MyString class from scratch.  It is based on the C++ string object, so you should make extensive use of the [CPlusPlus.com’s string reference](http://www.cplusplus.com/reference/string/string/)\!
 
@@ -62,7 +63,7 @@ Try this: put **just** \``` using MyString = std::string;` `` (just that one lin
 
 Note that on some reference pages, there may be multiple versions of C++ listed. We use C++17 for autograding, so select the most recent standard available for that method’s documentation.
 
-## **General Suggestions**
+## General Suggestions
 
 * A good first step is to **read the provided test rover files**.  Inside each file, there is a comment of the form “// MyString: …” which tells which operation will need to be implemented to make that part of the code work.
 * When you start writing your class, remember to implement **header guards** in order to avoid compiler errors tied to repeated includes.
@@ -71,7 +72,7 @@ Note that on some reference pages, there may be multiple versions of C++ listed.
 | `g++ -std=c++17 -g -Wall -Wextra -pedantic-errors -Weffc++ -Wno-unused-parameter -fsanitize=undefined,address RoverTest.cpp Rover.cpp MyString.cpp` |
 | :---- |
 
-## **MyString private members**
+## MyString private members
 
 The most important part of your custom MyString object will be its data.  Recall that strings are essentially dynamic character arrays that also track their size and capacity.  You will want to write your MyString class with private members to hold this information.
 
@@ -85,9 +86,7 @@ What about the character array? Remember you’ll need it to be a pointer since 
 
 Also, remember that our string object is essentially a [c-string](#c-strings) on the inside, just with additional members to track size and capacity and perform some operations. **The key thing to recall is that the character array ends with a null terminator: ‘\\0’**
 
-##
-
-## **MyString public members**
+## MyString public members
 
 Below, we list the functions belonging to the original C++ object that we will require in testing your new `MyString` object, and these are necessary for the provided runner to work.
 
@@ -138,7 +137,7 @@ Note that we are using the name given by CPlusPlus.com at the top next to the fu
 * [`operator+`](http://www.cplusplus.com/reference/string/string/operator+/) `(extra credit)`
 * [`operator==`](http://www.cplusplus.com/reference/string/string/operators/) `(extra credit)`
 
-## **Testing**
+## Testing
 
 **You should test locally\!** Not only are you provided an implemented main, but you can write your own to perform smaller tests on specific functions, like constructors.
 
@@ -158,21 +157,19 @@ Note that we are using the name given by CPlusPlus.com at the top next to the fu
 
 `FIND` 		\- search for the SMILES compound within the one saved in memory
 
-### ***Sample command file input***
+### Sample command file input
 
 | `SCAN   C1=C(C(C=C(C1O)Cl)O)Cl JOIN	 [NH4+] PRINT CLEAR JOIN   N+(C1=CC) PRINT TEST	 (COP(=O)(O)OP(=O) FIND	 CC` |
 | :---- |
 
-### ***Corresponding output***
+### Corresponding output
 
 | `C1=C(C(C=C(C1O)Cl)O)Cl[NH4+] N+(C1=CC) N+(C1=CC)(COP(=O)(O)OP(=O) CC was found` |
 | :---- |
 
 **All the logic for this is provided\!** You need only to implement the underlying `MyString` object to make the program work.
 
-##
-
-## **C-Strings** {#c-strings}
+## C-Strings
 
 A C-string is the way the C language (and by extension, early C++) represents text.
 It is simply an array of characters terminated by a null character, written as `'\0'`.
