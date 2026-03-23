@@ -32,7 +32,7 @@ If you know about another student who is sharing their code with other students 
 
 On February 18, 2021, we celebrated the landing of the latest Mars rover, *Perseverance*. The [*Perseverance* rover](https://en.wikipedia.org/wiki/Perseverance_\(rover\)) is a remarkable feat of science and engineering. Engineers must optimize every aspect of their design to accommodate strict requirements for space vehicles. In fact, due to reliability specifications, [*Perseverance* is powered by a 20 year old processor](https://bigthink.com/technology-innovation/perseverance-rover-brain)\!
 
-For this assignment, assume you are on a team of engineers working on a sophisticated chemical composition analysis system for a new Mars rover. This rover will have even more advanced automation and learning capabilities than previous ones, and the chemical analysis tool is a key part of its ability to study the martian surface. The rover uses the [Simplified molecular-input line-entry system](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system) (SMILES) to store and operate on chemical data. SMILES are string representations of 3 dimensional molecular structures, enabling computational software to model complex structures in a format that is easy to store and use. Your team discovers that the program isn’t running correctly on the rover, and you’ve identified the problem is tied to memory. Specifically, the rover doesn’t have quite enough memory to load the full program. Rather than remove core functionality, you’ve discovered that just removing some library code frees up enough resources to make the program run.
+For this assignment, assume you are on a team of engineers working on a sophisticated chemical composition analysis system for a new Mars rover. This rover will have even more advanced automation and learning capabilities than previous ones, and the chemical analysis tool is a key part of its ability to study the martian surface. The rover uses the [Simplified molecular-input line-entry system](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system) (SMILES) to store and operate on chemical data. SMILES are string representations of 3 dimensional molecular structures, enabling computational software to model complex structures in a format that is easy to store and use. Your team discovers that the program isn't running correctly on the rover, and you've identified the problem is tied to memory. Specifically, the rover doesn't have quite enough memory to load the full program. Rather than remove core functionality, you've discovered that just removing some library code frees up enough resources to make the program run.
 
 **You must implement a custom `MyString` object that will mimic the standard C++ string object for certain functions**. To facilitate this, we have provided a sample "test" rover which is nothing more than some simple functions to call your MyString object. We will read a set of basic commands from a file to simulate the chemical composition tool. Note that you must not use the library string or vector classes since that would defeat the purpose of MyString.
 
@@ -45,7 +45,7 @@ Submit the following files to the autograder.
 
 Any resources or syntax obtained from outside of class materials in relation to this assignment should be cited as a comment with a link to it in your submission.
 
-* **You cannot use another’s work** even if you cite it
+* **You cannot use another's work** even if you cite it
 
 * For a refresher refer to the *Academic Dishonesty* section in the syllabus or reach out to a TA.
 
@@ -75,17 +75,17 @@ Any resources or syntax obtained from outside of class materials in relation to 
 
 ## Requirements
 
-For this assignment, you will be writing a custom MyString class from scratch.  It is based on the C++ string object, so you should make extensive use of the [CPlusPlus.com’s string reference](http://www.cplusplus.com/reference/string/string/)\!
+For this assignment, you will be writing a custom MyString class from scratch.  It is based on the C++ string object, so you should make extensive use of the [CPlusPlus.com's string reference](http://www.cplusplus.com/reference/string/string/)\!
 
 Try this: put **just** \``` using MyString = std::string;` `` (just that one line and nothing else) in `MyString.h` and **just** \``#include "MyString.h"`\` in `MyString.cpp` and (1) compile and run with `RoverTest.cpp` locally to verify that it works, (2) submit to Gradescope to see every test pass (but one).
 
-Note that on some reference pages, there may be multiple versions of C++ listed. We use C++17 for autograding, so select the most recent standard available for that method’s documentation.
+Note that on some reference pages, there may be multiple versions of C++ listed. We use C++17 for autograding, so select the most recent standard available for that method's documentation.
 
 ## General Suggestions
 
 * A good first step is to **read the provided test rover files**.  Inside each file, there is a comment of the form "// MyString: …" which tells which operation will need to be implemented to make that part of the code work.
 * When you start writing your class, remember to implement **header guards** in order to avoid compiler errors tied to repeated includes.
-* The following would be a good command line to start compiling.  You need to have declarations and at least a definition for each function, even if it doesn’t do anything, before it will compile.
+* The following would be a good command line to start compiling.  You need to have declarations and at least a definition for each function, even if it doesn't do anything, before it will compile.
 
 | `g++ -std=c++17 -g -Wall -Wextra -pedantic-errors -Weffc++ -Wno-unused-parameter -fsanitize=undefined,address RoverTest.cpp Rover.cpp MyString.cpp` |
 | :---- |
@@ -100,9 +100,9 @@ How do you define a class named MyString?
 
 How can you define private members to hold the size and capacity inside the new class?
 
-What about the character array? Remember you’ll need it to be a pointer since you want to dynamically allocate and deallocate the data on the heap based on the string’s size.
+What about the character array? Remember you'll need it to be a pointer since you want to dynamically allocate and deallocate the data on the heap based on the string's size.
 
-Also, remember that our string object is essentially a [c-string](#c-strings) on the inside, just with additional members to track size and capacity and perform some operations. **The key thing to recall is that the character array ends with a null terminator: ‘\\0’**
+Also, remember that our string object is essentially a [c-string](#c-strings) on the inside, just with additional members to track size and capacity and perform some operations. **The key thing to recall is that the character array ends with a null terminator: ‘\\0'**
 
 ## MyString public members
 
@@ -171,7 +171,7 @@ Note that we are using the name given by CPlusPlus.com at the top next to the fu
 
 `CLEAR` 	\- clear the string
 
-`TEST` 		\- append the SMILES string but don’t save, just returns the result
+`TEST` 		\- append the SMILES string but don't save, just returns the result
 
 `FIND` 		\- search for the SMILES compound within the one saved in memory
 
