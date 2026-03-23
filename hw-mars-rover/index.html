@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HW: Mars Rover</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../global/md_styles.css" />
+  <script src="../global/index.js"></script>
+</head>
+<body>
+<h1 id="hw-mars-rover">HW: Mars Rover</h1>
+<h2 id="objectives">Objectives</h2>
+<ul>
+<li>Practice writing classes with dynamic memory</li>
+<li>Practice using C-strings</li>
+<li>Practice operator overloading</li>
+<li>Apply the Rule of Three</li>
+</ul>
+<h2 id="guidelines-for-homework">Guidelines for Homework</h2>
+<ul>
+<li>This and all other homeworks are individual coding practice
+assignments.</li>
+<li>Do not show your code to other students.</li>
+<li>Do not look at the code of other students.</li>
+<li>Do not share your code with other students.</li>
+<li>Do not use AI tools.
+<ul>
+<li><strong>It is against course policy to use an AI tool on an
+assignment for any reason</strong>. This includes, but is not limited
+to: summarizing the requirements, writing code, debugging code, code
+quality, coding advice.</li>
+</ul></li>
+</ul>
+<p>If you have questions about this assignment, talk to a Peer Teacher,
+a TA, or an instructor.</p>
+<ul>
+<li>Go to Gradescope to submit your code</li>
+<li>Ask questions on the Q&amp;A board.
+<ul>
+<li>Look there to see if someone has already asked your question.</li>
+<li>It is very rare that a student’s question is unique. Ask there, and
+everyone can benefit from the answer.</li>
+<li>If you know the answer, go ahead and answer it yourself!</li>
+<li>Do not post HW code publicly. Make a <strong>private</strong> post
+to Instructors and TAs on the Q&amp;A board..
+<ul>
+<li>Do not post screenshots of code.</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>If you know about another student who is sharing their code with
+other students (or in any other way is violating the Aggie Code of
+Honor), you should report them to the instructor or <a
+href="https://cm.maxient.com/reportingform.php?TexasAMUniv&amp;layout_id=11">report
+them to the AHSO</a>. If you become aware of academic dishonesty, you
+are expected to report it through the appropriate channels.</p>
+<h2 id="introduction">Introduction</h2>
+<p>On February 18, 2021, we celebrated the landing of the latest Mars
+rover, <em>Perseverance</em>. The <a
+href="https://en.wikipedia.org/wiki/Perseverance_(rover)"><em>Perseverance</em>
+rover</a> is a remarkable feat of science and engineering. Engineers
+must optimize every aspect of their design to accommodate strict
+requirements for space vehicles. In fact, due to reliability
+specifications, <a
+href="https://bigthink.com/technology-innovation/perseverance-rover-brain">NASA’s
+Perseverance rover has a 1997 computer chip brain.</a></p>
+<p>For this assignment, assume you are on a team of engineers working on
+a sophisticated chemical composition analysis system for a new Mars
+rover. This rover will have even more advanced automation and learning
+capabilities than previous ones, and the chemical analysis tool is a key
+part of its ability to study the martian surface. The rover uses the <a
+href="https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system">Simplified
+molecular-input line-entry system</a> (SMILES) to store and operate on
+chemical data. SMILES are string representations of 3 dimensional
+molecular structures, enabling computational software to model complex
+structures in a format that is easy to store and use. Your team
+discovers that the program isn’t running correctly on the rover, and
+you’ve identified the problem is tied to memory. Specifically, the rover
+doesn’t have quite enough memory to load the full program. Rather than
+remove core functionality, you’ve discovered that just removing some
+library code frees up enough resources to make the program run.</p>
+<p><strong>You must implement a custom <code>MyString</code> object that
+will mimic the standard C++ string object for certain
+functions</strong>. To facilitate this, we have provided a sample “test”
+rover which is nothing more than some simple functions to call your
+<code>MyString</code> object. We will read a set of basic commands from
+a file to simulate the chemical composition tool. Note that you may not
+use the C++ <code>string</code> or <code>vector</code> classes since
+that would defeat the purpose of the assignment (for you to practice
+creating and using classes with dynamic memory).</p>
+<h2 id="getting-started">Getting Started</h2>
+<ul>
+<li><a
+href="https://drive.google.com/file/d/1L21sbi8yq6wI-bk3dI2krxC6gWKcgjGi/view?usp=drive_link">Download
+the starter code</a></li>
+<li><strong>Read</strong> the provided <code>main()</code> in
+<code>RoverTest.cpp</code> and the simplified rover operations in
+<code>Rover.h</code> and <code>Rover.cpp</code>.
+<ul>
+<li><strong>You should not change these files</strong>. They utilize
+functions that should be in the <code>MyString</code> class.</li>
+</ul></li>
+<li>Note that there are two (mostly) blank files:
+<code>MyString.h</code> and <code>MyString.cpp</code>.
+<ul>
+<li>You must use these files to declare and define the
+<code>MyString</code> class (which you are to implement from
+scratch).</li>
+<li><strong>You should write your own <code>main</code> function to test
+different parts of your <code>MyString</code> class</strong>.</li>
+</ul></li>
+<li>Go through the <a href="#requirements">Requirements</a> below to
+review the functions you will implement.
+<ul>
+<li>Before you can compile, <strong>you must write at least</strong> the
+function declarations and function definitions that return some value of
+the expected type for non-void functions.</li>
+<li>Once you have the basic setup of your class, even though it may be
+incomplete, you can start using local testing to test your code.</li>
+</ul></li>
+<li>Repeat the process of writing tests, implementing, testing, and
+submitting to incrementally develop a functionally correct
+<code>MyString</code> class.</li>
+</ul>
+<h2 id="requirements">Requirements</h2>
+<p>For this assignment, you will be writing a custom
+<code>MyString</code> class from scratch. It is based on the C++ string
+object, so you should make extensive use of <a
+href="http://www.cplusplus.com/reference/string/string/">CPlusPlus.com’s
+string reference</a>!</p>
+<p>Try this * Put <strong>just</strong>
+<code>using MyString = std::string;</code> (just that one line and
+nothing else) in <code>MyString.h</code> * Put <strong>just</strong>
+<code>#include "MyString.h"</code> in <code>MyString.cpp</code> *
+Compile with <code>RoverTest.cpp</code> and run locally to verify that
+it works * Submit to Gradescope to see every test but one pass.</p>
+<p>Note that on some reference pages, there may be multiple versions of
+C++ listed. Select the most recent standard available for that method’s
+documentation. But, Gradescope uses C++17 for autograding, so also don’t
+use documentation for standards after C++17.</p>
+<h3 id="allowed-includes">Allowed Includes</h3>
+<ul>
+<li><code>&lt;iostream&gt;</code></li>
+<li><code>&lt;stdexcept&gt;</code></li>
+<li><code>"MyString.h"</code></li>
+</ul>
+<h3 id="submission">Submission</h3>
+<p>Submit the following files to the autograder.</p>
+<ul>
+<li><code>MyString.h</code></li>
+<li><code>MyString.cpp</code></li>
+</ul>
+<p>Any resources or syntax obtained from outside of class materials in
+relation to this assignment should be cited as a comment with a link to
+it in your submission.</p>
+<ul>
+<li><p><strong>You cannot use another’s work</strong> even if you cite
+it</p></li>
+<li><p>For a refresher, refer to the <em>Academic Dishonesty</em>
+section in the syllabus or reach out to a TA.</p></li>
+</ul>
+<h3 id="private-members">Private Members</h3>
+<p>The most important part of your custom <code>MyString</code> object
+will be its data. Recall that strings are essentially dynamic character
+arrays that also track their size and capacity. You will want to write
+your <code>MyString</code> class with private members to hold this
+information. The character array should end with a null terminator:
+<code>\0</code>.</p>
+<h3 id="public-interface">Public Interface</h3>
+<p>The functions belonging to the original C++ object that we will
+require in testing your new <code>MyString</code> object are listed
+below. These are necessary for the provided runner to work.</p>
+<p>We are using the names given by CPlusPlus.com at the top next to the
+function signatures. Keep in mind that references to the
+“<code>string</code>” datatype will have to use your
+“<code>MyString</code>” datatype instead.</p>
+<p><strong>The requirements for the <code>MyString</code> methods are
+specified in the reference documentation for C++’s
+<code>std::string</code> which is linked below.</strong> The subset of
+methods listed (and linked) below is the minimum set of functions
+required for this assignment.</p>
+<p><a href="http://www.cplusplus.com/reference/string/string/">Read the
+reference documentation for <code>string</code></a>.</p>
+<p><code>Member functions</code></p>
+<ul>
+<li><a
+href="http://www.cplusplus.com/reference/string/string/string/"><code>(constructors)</code></a>
+<ul>
+<li><code>default (1)</code></li>
+<li><code>copy (2)</code></li>
+<li><code>from c-string (4)</code></li>
+</ul></li>
+<li><a
+href="http://www.cplusplus.com/reference/string/string/~string/"><code>(destructor)</code></a></li>
+<li><a
+href="http://www.cplusplus.com/reference/string/string/operator=/"><code>operator=</code></a></li>
+<li><code>Capacity:</code>
+<ul>
+<li><a
+href="http://www.cplusplus.com/reference/string/string/size/"><code>size</code></a></li>
+<li><a
+href="http://www.cplusplus.com/reference/string/string/length/"><code>length</code></a></li>
+<li><a
+href="http://www.cplusplus.com/reference/string/string/resize/"><code>resize</code></a><code>:</code>
+<ul>
+<li><code>void resize (size_t n);</code></li>
+</ul></li>
+<li><a
+href="http://www.cplusplus.com/reference/string/string/capacity/"><code>capacity</code></a></li>
+<li><a
+href="http://www.cplusplus.com/reference/string/string/clear/"><code>clear</code></a></li>
+<li><a
+href="http://www.cplusplus.com/reference/string/string/empty/"><code>empty</code></a></li>
+</ul></li>
+<li><code>Element access:</code>
+<ul>
+<li><a
+href="http://www.cplusplus.com/reference/string/string/at/"><code>at</code></a>
+<ul>
+<li><code>const char&amp; at (size_t pos) const;</code></li>
+</ul></li>
+<li><a
+href="http://www.cplusplus.com/reference/string/string/front/"><code>front</code></a>
+<ul>
+<li><code>const char&amp; front() const;</code></li>
+</ul></li>
+</ul></li>
+<li><code>Modifiers:</code>
+<ul>
+<li><a
+href="http://www.cplusplus.com/reference/string/string/operator+=/"><code>operator+=</code></a></li>
+</ul></li>
+<li><code>String operations:</code>
+<ul>
+<li><a
+href="http://www.cplusplus.com/reference/string/string/data/"><code>data</code></a></li>
+<li><a
+href="http://www.cplusplus.com/reference/string/string/find/"><code>find</code></a>
+<ul>
+<li><code>string (1)</code></li>
+</ul></li>
+</ul></li>
+</ul>
+<p><code>Member constants</code></p>
+<ul>
+<li><a
+href="https://cplusplus.com/reference/string/string/npos/"><code>npos</code></a></li>
+</ul>
+<p><code>Non-member function overloads</code></p>
+<ul>
+<li><a
+href="http://www.cplusplus.com/reference/string/string/operator%3C%3C/"><code>operator&lt;&lt;</code></a></li>
+<li><a
+href="http://www.cplusplus.com/reference/string/string/operator+/"><code>operator+</code></a>
+<code>(extra credit)</code></li>
+<li><a
+href="http://www.cplusplus.com/reference/string/string/operators/"><code>operator==</code></a>
+<code>(extra credit)</code></li>
+</ul>
+<h2 id="general-suggestions">General Suggestions</h2>
+<ul>
+<li>A good first step is to <strong>read the provided test rover
+files</strong>. Inside each file, there is a comment of the form
+<code>// uses MyString ...</code> identifying the method which will need
+to be implemented to make that part of the code work.</li>
+<li>When you start writing your class, remember to implement
+<strong>header guards</strong> in order to avoid compiler errors tied to
+repeated includes.</li>
+<li>The following would be a good command line to start compiling. You
+need to have declarations and at least a definition for each function,
+even if it doesn’t do anything, before it will compile.</li>
+</ul>
+<h2 id="testing">Testing</h2>
+<p><strong>You should test locally!</strong> Not only are you provided
+code which uses <code>MyString</code> (acceptance testing), but you can
+write your own to perform smaller tests on specific functions (unit
+testing).</p>
+<p><code>RoverTest.cpp</code> is a program that reads a text file with
+sample commands and SMILES strings. The commands are:</p>
+<table>
+<colgroup>
+<col style="width: 38%" />
+<col style="width: 61%" />
+</colgroup>
+<thead>
+<tr>
+<th>command</th>
+<th>description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>SCAN</code></td>
+<td>save the string to the internal saved SMILES</td>
+</tr>
+<tr>
+<td><code>PRINT</code></td>
+<td>print the saved SMILES string</td>
+</tr>
+<tr>
+<td><code>READ</code></td>
+<td>read a specific index of a SMILES string</td>
+</tr>
+<tr>
+<td><code>JOIN</code></td>
+<td>append the SMILES string from the file to the one saved in
+memory</td>
+</tr>
+<tr>
+<td><code>CLEAR</code></td>
+<td>clear the string</td>
+</tr>
+<tr>
+<td><code>TEST</code></td>
+<td>append the SMILES string but don’t save, just returns the
+result</td>
+</tr>
+<tr>
+<td><code>FIND</code></td>
+<td>search for the SMILES compound within the one saved in memory</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sample-command-file-input">Sample command file input</h3>
+<pre><code>SCAN  C1=C(C(C=C(C1O)Cl)O)Cl
+JOIN  [NH4+]
+PRINT
+CLEAR
+JOIN  N+(C1=CC)
+PRINT
+TEST  (COP(=O)(O)OP(=O)
+FIND  CC</code></pre>
+<h3 id="corresponding-output">Corresponding output</h3>
+<pre><code>C1=C(C(C=C(C1O)Cl)O)Cl[NH4+]
+N+(C1=CC)
+N+(C1=CC)(COP(=O)(O)OP(=O)
+CC was found</code></pre>
+<p><strong>All the logic for this is provided!</strong> You need only to
+implement the underlying <code>MyString</code> object to make the
+program work.</p>
+<h2 id="c-strings">C-Strings</h2>
+<p>A C-string is the way the C language (and by extension, early C++)
+represents text. It is simply an array of characters terminated by the
+null character: <code>'\0'</code>.</p>
+<p>Example:</p>
+<p><code>char name[] = "Alice";</code></p>
+<p>This creates a character array that has 6 bytes, 5 from the
+characters in “Alice” and the null character at the end:</p>
+<pre>
+┌───┬───┬───┬───┬───┬────┐
+│ A │ l │ i │ c │ e │ \0 │
+└───┴───┴───┴───┴───┴────┘
+</pre>
+<p>Each character (including <code>'\0'</code>) is stored in a
+contiguous block of memory. Thus the size of this string in memory is 6
+bytes, not 5. The <em>length</em> of the string is 5.</p>
+<h2 id="how-to-compile">How to compile</h2>
+<p>(<em>you should have memorized this by now!</em>)</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">g++</span> <span class="at">-std</span><span class="op">=</span>c++23 <span class="at">-Wall</span> <span class="at">-Wextra</span> <span class="at">-Weffc++</span> <span class="at">-pedantic</span> <span class="at">-g</span> <span class="at">-fsanitize</span><span class="op">=</span>undefined,address RoverTest.cpp Rover.cpp MyString.cpp</span></code></pre></div>
+</body>
+</html>
