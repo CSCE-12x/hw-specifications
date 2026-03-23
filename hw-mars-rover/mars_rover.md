@@ -34,7 +34,7 @@ On February 18, 2021, we celebrated the landing of the latest Mars rover, *Perse
 
 For this assignment, assume you are on a team of engineers working on a sophisticated chemical composition analysis system for a new Mars rover. This rover will have even more advanced automation and learning capabilities than previous ones, and the chemical analysis tool is a key part of its ability to study the martian surface. The rover uses the [Simplified molecular-input line-entry system](https://en.wikipedia.org/wiki/Simplified_molecular-input_line-entry_system) (SMILES) to store and operate on chemical data. SMILES are string representations of 3 dimensional molecular structures, enabling computational software to model complex structures in a format that is easy to store and use. Your team discovers that the program isn’t running correctly on the rover, and you’ve identified the problem is tied to memory. Specifically, the rover doesn’t have quite enough memory to load the full program. Rather than remove core functionality, you’ve discovered that just removing some library code frees up enough resources to make the program run.
 
-**You must implement a custom `MyString` object that will mimic the standard C++ string object for certain functions**. To facilitate this, we have provided a sample “test” rover which is nothing more than some simple functions to call your MyString object. We will read a set of basic commands from a file to simulate the chemical composition tool. Note that you must not use the library string or vector classes since that would defeat the purpose of MyString.
+**You must implement a custom `MyString` object that will mimic the standard C++ string object for certain functions**. To facilitate this, we have provided a sample "test" rover which is nothing more than some simple functions to call your MyString object. We will read a set of basic commands from a file to simulate the chemical composition tool. Note that you must not use the library string or vector classes since that would defeat the purpose of MyString.
 
 ### Submission
 
@@ -77,13 +77,13 @@ Any resources or syntax obtained from outside of class materials in relation to 
 
 For this assignment, you will be writing a custom MyString class from scratch.  It is based on the C++ string object, so you should make extensive use of the [CPlusPlus.com’s string reference](http://www.cplusplus.com/reference/string/string/)\!
 
-Try this: put **just** \``` using MyString = std::string;` `` (just that one line and nothing else) in `MyString.h` and **just** \``#include “MyString.h”`\` in `MyString.cpp` and (1) compile and run with `RoverTest.cpp` locally to verify that it works, (2) submit to Gradescope to see every test pass (but one).
+Try this: put **just** \``` using MyString = std::string;` `` (just that one line and nothing else) in `MyString.h` and **just** \``#include "MyString.h"`\` in `MyString.cpp` and (1) compile and run with `RoverTest.cpp` locally to verify that it works, (2) submit to Gradescope to see every test pass (but one).
 
 Note that on some reference pages, there may be multiple versions of C++ listed. We use C++17 for autograding, so select the most recent standard available for that method’s documentation.
 
 ## General Suggestions
 
-* A good first step is to **read the provided test rover files**.  Inside each file, there is a comment of the form “// MyString: …” which tells which operation will need to be implemented to make that part of the code work.
+* A good first step is to **read the provided test rover files**.  Inside each file, there is a comment of the form "// MyString: …" which tells which operation will need to be implemented to make that part of the code work.
 * When you start writing your class, remember to implement **header guards** in order to avoid compiler errors tied to repeated includes.
 * The following would be a good command line to start compiling.  You need to have declarations and at least a definition for each function, even if it doesn’t do anything, before it will compile.
 
@@ -108,7 +108,7 @@ Also, remember that our string object is essentially a [c-string](#c-strings) on
 
 Below, we list the functions belonging to the original C++ object that we will require in testing your new `MyString` object, and these are necessary for the provided runner to work.
 
-Note that we are using the name given by CPlusPlus.com at the top next to the function signatures. Furthermore, keep in mind that references to “`string`” datatype will have to use your “`MyString`” datatype instead.
+Note that we are using the name given by CPlusPlus.com at the top next to the function signatures. Furthermore, keep in mind that references to "`string`" datatype will have to use your "`MyString`" datatype instead.
 
 [`string`](http://www.cplusplus.com/reference/string/string/) `reference`
 
