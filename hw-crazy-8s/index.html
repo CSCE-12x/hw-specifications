@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>HW Crazy 8s</title>
+  <title>HW: Crazy 8s</title>
   <style>
     /* Default styles provided by pandoc.
     ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -399,12 +399,6 @@ ask them to choose a card to play by entering two strings.
 have or a card they have in hand cannot play (<a
 href="#sample-execution">see the sample execution</a>)</li>
 </ul></li>
-<li>Upon playing an 8, the player may change the current suit to any
-suit in the game
-<ul>
-<li>Invoke the <code>NextSuit</code> method to determine the next
-suit.</li>
-</ul></li>
 </ul></li>
 </ul></li>
 <li><code>Player::NextSuit(suits: vector&lt;std::string&gt; const&amp;, suit: string const&amp;): string</code>
@@ -569,7 +563,11 @@ examples of the messages you should print.</li>
 <ul>
 <li>You should announce the rank and suit of this card.</li>
 <li>If the card is an 8, you should announce the new suit that the
-player has chosen.</li>
+player has chosen.
+<ul>
+<li>Invoke the player’s <code>NextSuit</code> method to determine the
+next suit.</li>
+</ul></li>
 <li>You should add the played card to the top (end) of the discard
 pile.</li>
 </ul></li>
