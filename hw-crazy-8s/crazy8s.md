@@ -143,8 +143,6 @@ Crazy 8s is a simple classic card game which is very similar to Uno. If you aren
     * The AI will always play the first card from its hand that it can legally play or draw a card if it has no cards it can play.
     * For human players, you must tell them the current rank and suit and ask them to choose a card to play by entering two strings.
       * Prompt the player to choose again if they choose a card they don't have or a card they have in hand cannot play ([see the sample execution](#sample-execution))
-    * Upon playing an 8, the player may change the current suit to any suit in the game
-      * Invoke the `NextSuit` method to determine the next suit.
 * `Player::NextSuit(suits: vector<std::string> const&, suit: string const&): string`
   * Choose the next suit to declare (after playing an 8 of the given suit).  Return the chosen suit.
   * An AI player will always choose to use the suit of the 8.
@@ -212,6 +210,7 @@ Crazy 8s is a simple classic card game which is very similar to Uno. If you aren
   * If the player is playing a card:
     * You should announce the rank and suit of this card.
     * If the card is an 8, you should announce the new suit that the player has chosen.
+      * Invoke the player's `NextSuit` method to determine the next suit.
     * You should add the played card to the top (end) of the discard pile.
   * If the player is drawing a card:
     * You should announce this.
