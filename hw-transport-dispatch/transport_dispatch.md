@@ -1,6 +1,8 @@
 # HW: Transport Dispatch
 
-## Objectives
+## Overview
+
+### Objectives
 
 * Create and manipulate pointers.
 * Create linked lists using node data type.
@@ -8,13 +10,14 @@
 * Implement Rule of 3
 * Avoid memory errors
 
-## Guidelines for Homework
+### Guidelines for Homework
 
 * This and all other homeworks are individual coding practice assignments.
 * Do not show your code to other students.
 * Do not look at the code of other students.
 * Do not share your code with other students.
 * <trap type="hotswap" replacement="Abide by the course policy on AI use.">Do not use AI tools.</trap>
+  * It is against course policy to use an AI tool on an assignment for any reason.  This includes, but is not limited to: summarizing the requirements, writing code, debugging code, code quality, coding advice.
 
 If you have questions about this assignment, talk to a Peer Teacher, a TA, or an instructor.
 
@@ -28,25 +31,7 @@ If you have questions about this assignment, talk to a Peer Teacher, a TA, or an
 
 If you know about another student who is sharing their code with other students (or in any other way is violating the Aggie Code of Honor), you should report them to the instructor or [report them to the AHSO](https://cm.maxient.com/reportingform.php?TexasAMUniv&layout_id=11). If you become aware of academic dishonesty, you are expected to report it through the appropriate channels.
 
-## Submission
-
-Submit these files:
-
-* `LinkedList.cpp`
-* `DispatchScheduler.cpp`
-
-## HW Policy
-
-This is an individual assignment. Do not share your code with other students. Do not show your code to other students. Do not look at the code of other students. Do not ask other students how they solved a problem. HWs are individual practice assignments. If you have questions about this assignment, talk to a Peer Teacher, a TA, or an instructor.
-
-* Go to Gradescope to submit your code
-* Ask questions on Q\&A board.
-
-If you know about another student who is sharing their code with other students (or in any other way is violating the Aggie Code of Honor), you should report them to the instructor or [report them to the AHSO](https://cm.maxient.com/reportingform.php?TexasAMUniv&layout_id=11). If you are found to know about another student's academic dishonesty, you are complicit in academic dishonesty and will be reported to the Honor Council.
-
-It is against course policy to use an AI tool on an assignment for any reason.  This includes, but is not limited to: summarizing the requirements, writing code, debugging code, code quality, coding advice.
-
-## Introduction
+### Introduction
 
 Cross continental transportation companies have to plan dispatch of their trucks to deliver and pick up goods. The order of their stops has to be done in a way to minimize transit time and cost of fuel. Dispatch schedules are built city by city, with frequent additions, deletions and making some stops that are out of sequence for special needs.  You will write a program that a dispatcher can use to create dispatch schedules.
 
@@ -67,15 +52,15 @@ Cross continental transportation companies have to plan dispatch of their trucks
 
 ### Approved Includes
 
-| header | `LinkedList.cpp` | `DispatchScheduler.cpp` |
-| :---- | :---: | :---: |
-| `iostream` | ✅ | ✅ |
-| `limits` |  | ✅ |
-| `sstream` |  | ✅ |
-| `stdexcept` | ✅ | ✅ |
-| `string` |  | ✅ |
-| `Cities.h` |  | ✅ |
-| `LinkedList.h` | ✅ | ✅ |
+| header           | `LinkedList.cpp` | `DispatchScheduler.cpp` |
+| :--------------- | :--------------: | :---------------------: |
+| `<iostream>`     | &#x2714;         | &#x2714;                |
+| `<limits>`       |                  | &#x2714;                |
+| `<sstream>`      |                  | &#x2714;                |
+| `<stdexcept>`    | &#x2714;         | &#x2714;                |
+| `<string>`       |                  | &#x2714;                |
+| `"Cities.h"`     |                  | &#x2714;                |
+| `"LinkedList.h"` | &#x2714;         | &#x2714;                |
 
 ### Implement a Linked List \[70 points\]
 
@@ -134,131 +119,138 @@ The dispatch scheduler is a terminal application that recognizes the following c
 * `clear`: clear the current schedule
 * `quit`: end the program
 
-### Example Test Scenarios
+### Submission
 
-#### Scenario: The empty schedule
+Submit these files:
 
-Given an empty schedule
-When I issue the following commands:
-	`print`
-	`quit`
-The the output should be:
-	`The schedule is empty.`
+* `LinkedList.cpp`
+* `DispatchScheduler.cpp`
 
-#### Scenario: Push cities into schedule
+## Example Test Scenarios
 
-Given an empty schedule
-When I give the following commands:
-	`push Boston`
-	`push Pittsburgh`
-	`print`
-`quit`
-Then the output should be:
-`Pittsburgh -> Boston -> . (14)`
+### Scenario: The empty schedule
 
-#### Scenario: Add cities to schedule
+- Given an empty schedule
+- When I issue the following commands:
+  - `print`
+  - `quit`
+- Then the output should be:
+  - `The schedule is empty.`
 
-Given an empty schedule
-When I issue the following commands:
-`add Atlanta`
-`add Boston`
-`add Dallas`
-`add New York`
-`add Pittsburgh`
-`print`
-`quit`
-Then the output should be:
-`Boston -> New York -> Pittsburgh -> Atlanta -> Dallas -> . (32)`
+### Scenario: Push cities into schedule
 
-#### Scenario: Pop city from schedule
+- Given an empty schedule
+- When I give the following commands:
+  - `push Boston`
+  - `push Pittsburgh`
+  - `print`
+  - `quit`
+- Then the output should be:
+  - `Pittsburgh -> Boston -> . (14)`
 
-Given the following schedule:
-`Boston -> New York -> Pittsburgh -> Atlanta -> Dallas -> .`
-When I issue the following commands:
-	`pop`
-	`print`
-	`quit`
-Then the output should be:
-	`New York -> Pittsburgh -> Atlanta -> Dallas -> . (32)`
+### Scenario: Add cities to schedule
 
-#### Scenario: Remove city from schedule
+- Given an empty schedule
+- When I issue the following commands:
+  - `add Atlanta`
+  - `add Boston`
+  - `add Dallas`
+  - `add New York`
+  - `add Pittsburgh`
+  - `print`
+  - `quit`
+- Then the output should be:
+  - `Boston -> New York -> Pittsburgh -> Atlanta -> Dallas -> . (32)`
 
-Given the following schedule:
-`Boston -> New York -> Pittsburgh -> Atlanta -> Dallas -> .`
-When I issue the following commands:
-	`remove Dallas`
-	`print`
-	`quit`
-Then the output should be:
-`Boston -> New York -> Pittsburgh -> Atlanta -> . (26)`
+### Scenario: Pop city from schedule
 
-#### Scenario: Clear the schedule
+- Given the following schedule:
+  - `Boston -> New York -> Pittsburgh -> Atlanta -> Dallas -> .`
+- When I issue the following commands:
+  - `pop`
+  - `print`
+  - `quit`
+- Then the output should be:
+  - `New York -> Pittsburgh -> Atlanta -> Dallas -> . (32)`
 
-Given the following schedule:
-`Boston -> New York -> Pittsburgh -> Atlanta -> Dallas -> .`
-When I issue the following commands:
-	`clear`
-	`print`
-	`quit`
-Then the output should be:
-`The schedule is empty.`
+### Scenario: Remove city from schedule
 
-#### Scenario: Unknown command
+- Given the following schedule:
+  - `Boston -> New York -> Pittsburgh -> Atlanta -> Dallas -> .`
+- When I issue the following commands:
+  - `remove Dallas`
+  - `print`
+  - `quit`
+- Then the output should be:
+  - `Boston -> New York -> Pittsburgh -> Atlanta -> . (26)`
 
-When I issue the following commands:
-	`push Austin`
-	`yeet Austin`
-	`quit`
-Then the output should be:
-`Unknown command.`
+### Scenario: Clear the schedule
 
-#### Scenario: Unknown city
+- Given the following schedule:
+  - `Boston -> New York -> Pittsburgh -> Atlanta -> Dallas -> .`
+- When I issue the following commands:
+  - `clear`
+  - `print`
+  - `quit`
+- Then the output should be:
+  - `The schedule is empty.`
 
-When I issue the following commands:
-	`push College Station`
-	`add Bryan`
-	`remove t.u.`
-	`quit`
-Then the output should be:
-`Unknown city.`
-`Unknown city.`
-`Unknown city.`
+### Scenario: Unknown command
 
-#### Scenario: Pop from empty schedule
+- When I issue the following commands:
+  - `push Austin`
+  - `yeet Austin`
+  - `quit`
+- Then the output should be:
+  - `Unknown command.`
 
-Given an empty schedule
-When I issue the following commands:
-	`pop`
-	`quit`
-Then the output should be:
-`Cannot pop from an empty schedule.`
+### Scenario: Unknown city
 
-#### Scenario: Remove city from schedule that it’s not on
+- When I issue the following commands:
+  - `push College Station`
+  - `add Bryan`
+  - `remove t.u.`
+  - `quit`
+- Then the output should be:
+  - `Unknown city.`
+  - `Unknown city.`
+  - `Unknown city.`
 
-Given the following schedule:
-`Boston -> New York -> Pittsburgh -> Atlanta -> Dallas -> .`
-When I issue the following commands:
-	`remove Houston`
-	`quit`
-Then the output should be:
-`Houston is not on the schedule.`
+### Scenario: Pop from empty schedule
 
-#### Scenario: Add or push a duplicate city
+- Given an empty schedule
+- When I issue the following commands:
+  - `pop`
+  - `quit`
+- Then the output should be:
+  - `Cannot pop from an empty schedule.`
 
-Given the following schedule:
-`Boston -> New York -> Pittsburgh -> .`
-When I issue the following commands:
-`add New York`
-`push Boston`
-	`push Pittsburgh`
-`print`
-	`quit`
-Then the output should be:
-	`Pittsburgh -> Boston -> New York -> Pittsburgh -> . (26)`
+### Scenario: Remove city from schedule that it’s not on
 
-*Explanation: A \-\> A is redundant, so is not allowed.  A \-\> B \-\> A is allowed.*
+- Given the following schedule:
+- `Boston -> New York -> Pittsburgh -> Atlanta -> Dallas -> .`
+- When I issue the following commands:
+  - `remove Houston`
+  - `quit`
+- Then the output should be:
+  - `Houston is not on the schedule.`
 
-### Cities
+### Scenario: Add or push a duplicate city
+
+- Given the following schedule:
+  - `Boston -> New York -> Pittsburgh -> .`
+- When I issue the following commands:
+  - `add New York`
+  - `push Boston`
+  - `push Pittsburgh`
+  - `print`
+  - `quit`
+- Then the output should be:
+  - `Pittsburgh -> Boston -> New York -> Pittsburgh -> . (26)`
+
+*Explanation: `A -> A` is redundant, so is not allowed.  `A -> B -> A` is allowed.*
+
+## Cities
 
 * The names and locations of all cities are provided in `Cities.h`.
 * `City` is an `enum`, which means its values are aliases for integers
@@ -267,7 +259,7 @@ Then the output should be:
 * You can use `enum City` values as integers.
 * To turn an integer into a City, use `City(integer)`
   * E.g. `City(1)` will construct `City::Boston`.
-* Given a string name of a city, use `get_city_by_name(string)` to get the corresponding `enum City` value.
-  * E.g. `get_city_by_name(“Boston”)` will return the enum `City::Boston`
-* Given an `enum City` value, use `get_city_name(city)` to get the string name of the city.
-  * E.g. `get_city_name(City::Houston)` will return the string `“Houston”`
+* Given a string name of a city, use `StringToCity(string)` to get the corresponding `enum City` value.
+  * E.g. `StringToCity("Boston")` will return the enum `City::Boston`
+* Given an `enum City` value, use `CityToString(city)` to get the string name of the city.
+  * E.g. `CityToString(City::Houston)` will return the string `"Houston"`
