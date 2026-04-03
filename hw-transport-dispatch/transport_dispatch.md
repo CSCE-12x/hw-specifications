@@ -8,6 +8,26 @@
 * Implement Rule of 3
 * Avoid memory errors
 
+## Guidelines for Homework
+
+* This and all other homeworks are individual coding practice assignments.
+* Do not show your code to other students.
+* Do not look at the code of other students.
+* Do not share your code with other students.
+* <trap type="hotswap" replacement="Abide by the course policy on AI use.">Do not use AI tools.</trap>
+
+If you have questions about this assignment, talk to a Peer Teacher, a TA, or an instructor.
+
+* Go to Gradescope to submit your code
+* Ask questions on the Q\&A board.
+  * Look there to see if someone has already asked your question.
+  * It is very rare that a student's question is unique. Ask there, and everyone can benefit from the answer.
+  * If you know the answer, go ahead and answer it yourself!
+  * Do not post HW code publicly. Make a **private** post to Instructors and TAs on the Q\&A board..
+    * Do not post screenshots of code.
+
+If you know about another student who is sharing their code with other students (or in any other way is violating the Aggie Code of Honor), you should report them to the instructor or [report them to the AHSO](https://cm.maxient.com/reportingform.php?TexasAMUniv&layout_id=11). If you become aware of academic dishonesty, you are expected to report it through the appropriate channels.
+
 ## Submission
 
 Submit these files:
