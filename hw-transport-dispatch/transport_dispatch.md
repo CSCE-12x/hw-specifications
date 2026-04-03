@@ -1,4 +1,4 @@
-# \[HW\] Transport Dispatch
+# HW: Transport Dispatch
 
 ## Objectives
 
@@ -25,8 +25,6 @@ This is an individual assignment. Do not share your code with other students. Do
 If you know about another student who is sharing their code with other students (or in any other way is violating the Aggie Code of Honor), you should report them to the instructor or [report them to the AHSO](https://cm.maxient.com/reportingform.php?TexasAMUniv&layout_id=11). If you are found to know about another student's academic dishonesty, you are complicit in academic dishonesty and will be reported to the Honor Council.
 
 It is against course policy to use an AI tool on an assignment for any reason.  This includes, but is not limited to: summarizing the requirements, writing code, debugging code, code quality, coding advice.
-
-###
 
 ## Introduction
 
@@ -101,8 +99,6 @@ Cross continental transportation companies have to plan dispatch of their trucks
   * `void clear()`
     * Remove all items from the list
 
-###
-
 ### Implement the Dispatch Scheduler \[30 points\]
 
 The dispatch scheduler is a terminal application that recognizes the following commands:
@@ -140,8 +136,6 @@ When I give the following commands:
 Then the output should be:
 `Pittsburgh -> Boston -> . (14)`
 
-####
-
 #### Scenario: Add cities to schedule
 
 Given an empty schedule
@@ -178,8 +172,6 @@ When I issue the following commands:
 Then the output should be:
 `Boston -> New York -> Pittsburgh -> Atlanta -> . (26)`
 
-###
-
 #### Scenario: Clear the schedule
 
 Given the following schedule:
@@ -211,8 +203,6 @@ Then the output should be:
 `Unknown city.`
 `Unknown city.`
 `Unknown city.`
-
-####
 
 #### Scenario: Pop from empty schedule
 
@@ -247,8 +237,6 @@ Then the output should be:
 	`Pittsburgh -> Boston -> New York -> Pittsburgh -> . (26)`
 
 *Explanation: A \-\> A is redundant, so is not allowed.  A \-\> B \-\> A is allowed.*
-
-###
 
 ### Cities
 
