@@ -247,6 +247,10 @@ Player 0's turn!
 Your hand contains: 8 Clubs, 7 Spades, 4 Spades, 9 Hearts, 5 Hearts.
 The next card played must be a 7 or Hearts.
 What would you like to play? (enter "draw card" to draw a card)
+8
+Invalid card. Try again.
+8 Clubs and 7 Spades
+Invalid card. Try again.
 8 Hearts
 That's not a card you have. Try again.
 4 Spades
