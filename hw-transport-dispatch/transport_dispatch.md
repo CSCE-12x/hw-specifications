@@ -32,7 +32,7 @@ Cross continental transportation companies have to plan dispatch of their trucks
 
 ## Getting Started
 
-* [Download the starter code](https://drive.google.com/file/d/1Cmq3wUQZfSVDLISDIgu5AjLn27SpGXME/view?usp=sharing).
+* [Download the starter code](https://drive.google.com/file/d/1XjJcIe6cm4_aPZD8Z2ETatAMq6g1BfIy/view?usp=drive_link).
 * Compile it.
 * Run it.
 * Submit it to Gradescope.
