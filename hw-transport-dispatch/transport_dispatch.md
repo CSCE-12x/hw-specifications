@@ -33,7 +33,7 @@ If you know about another student who is sharing their code with other students 
 
 ### Introduction
 
-Cross continental transportation companies have to plan dispatch of their trucks to deliver and pick up goods. The order of their stops has to be done in a way to minimize transit time and cost of fuel. Dispatch schedules are built city by city, with frequent additions, deletions and making some stops that are out of sequence for special needs.  You will write a program that a dispatcher can use to create dispatch schedules.
+Cross-continental transportation companies have to plan dispatch of their trucks to deliver and pick up goods. The order of their stops has to be done in a way to minimize transit time and fuel cost. Dispatch schedules are built city-by-city, with frequent additions, deletions, and some stops that are out of sequence for special needs.  You must write a program that a dispatcher can use to create dispatch schedules.
 
 ## Getting Started
 
