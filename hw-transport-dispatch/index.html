@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>HW: Transport Dispatch</title>
+  <style>
+    /* Default styles provided by pandoc.
+    ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+    */
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
+    html { -webkit-text-size-adjust: 100%; }
+    pre > code.sourceCode { white-space: pre; position: relative; }
+    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span:empty { height: 1.2em; }
+    .sourceCode { overflow: visible; }
+    code.sourceCode > span { color: inherit; text-decoration: inherit; }
+    div.sourceCode { margin: 1em 0; }
+    pre.sourceCode { margin: 0; }
+    @media screen {
+    div.sourceCode { overflow: auto; }
+    }
+    @media print {
+    pre > code.sourceCode { white-space: pre-wrap; }
+    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    }
+    pre.numberSource code
+      { counter-reset: source-line 0; }
+    pre.numberSource code > span
+      { position: relative; left: -4em; counter-increment: source-line; }
+    pre.numberSource code > span > a:first-child::before
+      { content: counter(source-line);
+        position: relative; left: -1em; text-align: right; vertical-align: baseline;
+        border: none; display: inline-block;
+        -webkit-touch-callout: none; -webkit-user-select: none;
+        -khtml-user-select: none; -moz-user-select: none;
+        -ms-user-select: none; user-select: none;
+        padding: 0 4px; width: 4em;
+        color: #aaaaaa;
+      }
+    pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+    div.sourceCode
+      {   }
+    @media screen {
+    pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+    }
+    code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+    code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+    code span.at { color: #7d9029; } /* Attribute */
+    code span.bn { color: #40a070; } /* BaseN */
+    code span.bu { color: #008000; } /* BuiltIn */
+    code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+    code span.ch { color: #4070a0; } /* Char */
+    code span.cn { color: #880000; } /* Constant */
+    code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+    code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+    code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+    code span.dt { color: #902000; } /* DataType */
+    code span.dv { color: #40a070; } /* DecVal */
+    code span.er { color: #ff0000; font-weight: bold; } /* Error */
+    code span.ex { } /* Extension */
+    code span.fl { color: #40a070; } /* Float */
+    code span.fu { color: #06287e; } /* Function */
+    code span.im { color: #008000; font-weight: bold; } /* Import */
+    code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+    code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+    code span.op { color: #666666; } /* Operator */
+    code span.ot { color: #007020; } /* Other */
+    code span.pp { color: #bc7a00; } /* Preprocessor */
+    code span.sc { color: #4070a0; } /* SpecialChar */
+    code span.ss { color: #bb6688; } /* SpecialString */
+    code span.st { color: #4070a0; } /* String */
+    code span.va { color: #19177c; } /* Variable */
+    code span.vs { color: #4070a0; } /* VerbatimString */
+    code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+  </style>
+  <link rel="stylesheet" href="../global/md_styles.css" />
+  <script src="../global/index.js"></script>
+</head>
+<body>
+<h1 id="hw-transport-dispatch">HW: Transport Dispatch</h1>
+<h2 id="overview">Overview</h2>
+<h3 id="objectives">Objectives</h3>
+<ul>
+<li>Create and manipulate pointers.</li>
+<li>Create linked lists using node data type.</li>
+<li>Modify linked lists (add a value, remove a value, access a
+value).</li>
+<li>Implement Rule of 3</li>
+<li>Avoid memory errors</li>
+</ul>
+<h3 id="guidelines-for-homework">Guidelines for Homework</h3>
+<ul>
+<li>This and all other homeworks are individual coding practice
+assignments.</li>
+<li>Do not show your code to other students.</li>
+<li>Do not look at the code of other students.</li>
+<li>Do not share your code with other students.</li>
+<li>It is against course policy to use an AI tool on an assignment for
+any reason. This includes, but is not limited to: summarizing the
+requirements, writing code, debugging code, code quality, coding
+advice.</li>
+</ul>
+<p>If you have questions about this assignment, talk to a Peer Teacher,
+a TA, or an instructor.</p>
+<ul>
+<li>Go to Gradescope to submit your code</li>
+<li>Ask questions on the Q&amp;A board.
+<ul>
+<li>Look there to see if someone has already asked your question.</li>
+<li>It is very rare that a student’s question is unique. Ask there, and
+everyone can benefit from the answer.</li>
+<li>If you know the answer, go ahead and answer it yourself!</li>
+<li>Do not post HW code publicly. Make a <strong>private</strong> post
+to Instructors and TAs on the Q&amp;A board..
+<ul>
+<li>Do not post screenshots of code.</li>
+</ul></li>
+</ul></li>
+</ul>
+<p>If you know about another student who is sharing their code with
+other students (or in any other way is violating the Aggie Code of
+Honor), you should report them to the instructor or <a
+href="https://cm.maxient.com/reportingform.php?TexasAMUniv&amp;layout_id=11">report
+them to the AHSO</a>. If you become aware of academic dishonesty, you
+are expected to report it through the appropriate channels.</p>
+<h3 id="introduction">Introduction</h3>
+<p>Cross-continental transportation companies have to plan dispatch of
+their trucks to deliver and pick up goods. The order of their stops has
+to be done in a way to minimize transit time and fuel cost. Dispatch
+schedules are built city-by-city, with frequent additions, deletions,
+and some stops that are out of sequence for special needs. You must
+write a program that a dispatcher can use to create dispatch
+schedules.</p>
+<h2 id="getting-started">Getting Started</h2>
+<ul>
+<li><a
+href="https://drive.google.com/file/d/1XjJcIe6cm4_aPZD8Z2ETatAMq6g1BfIy/view?usp=drive_link">Download
+the starter code</a>.</li>
+<li><a href="#how-to-compile-and-run">Compile and run it</a>.</li>
+<li><a href="https://www.gradescope.com">Submit it to Gradescope</a>.
+<ul>
+<li>Take note of the test scenarios</li>
+</ul></li>
+<li>Start developing your code:
+<ul>
+<li>Pick <strong>exactly one</strong> failing test and <strong>reproduce
+it locally</strong> (turn it into an actual, concrete, runnable
+test)</li>
+<li>Change the code to make the test (and all previous tests) pass.</li>
+<li>Optionally, refactor to improve the implementation design</li>
+<li>Repeat until all tests are passing on Gradescope</li>
+</ul></li>
+</ul>
+<h2 id="requirements">Requirements</h2>
+<h3 id="approved-includes">Approved Includes</h3>
+<table>
+<thead>
+<tr>
+<th style="text-align: left;">header</th>
+<th style="text-align: center;"><code>LinkedList.cpp</code></th>
+<th style="text-align: center;"><code>DispatchScheduler.cpp</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align: left;"><code>&lt;iostream&gt;</code></td>
+<td style="text-align: center;">✔</td>
+<td style="text-align: center;">✔</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>&lt;limits&gt;</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✔</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>&lt;sstream&gt;</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✔</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>&lt;stdexcept&gt;</code></td>
+<td style="text-align: center;">✔</td>
+<td style="text-align: center;">✔</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>&lt;string&gt;</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✔</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>"Cities.h"</code></td>
+<td style="text-align: center;"></td>
+<td style="text-align: center;">✔</td>
+</tr>
+<tr>
+<td style="text-align: left;"><code>"LinkedList.h"</code></td>
+<td style="text-align: center;">✔</td>
+<td style="text-align: center;">✔</td>
+</tr>
+</tbody>
+</table>
+<h3 id="compile-without-warnings-or-errors-1-point">Compile Without
+Warnings Or Errors [1 point]</h3>
+<p><code>LinkedList.cpp</code> and <code>DispatchScheduler.cpp</code>
+must compile with the flags
+<code>-std=c++23 -Wall -Wextra -Weffc++ -pedantic-errors</code> without
+warnings or errors.</p>
+<h3 id="implement-a-linked-list-50-points">Implement a Linked List [50
+points]</h3>
+<p>Your linked list must implement the following methods:</p>
+<ul>
+<li>Constructors
+<ul>
+<li><code>LinkedList()</code>
+<ul>
+<li>create an empty list</li>
+</ul></li>
+<li><code>LinkedList(const LinkedList&amp;)</code>
+<ul>
+<li>make a copy of the other list</li>
+</ul></li>
+</ul></li>
+<li>Destructor
+<ul>
+<li><code>~LinkedList()</code>
+<ul>
+<li>deallocate all nodes in the list</li>
+</ul></li>
+</ul></li>
+<li>Copy assignment
+<ul>
+<li><code>LinkedList&amp; operator=(const LinkedList&amp;)</code>
+<ul>
+<li>replace the list with a copy of the other list</li>
+</ul></li>
+</ul></li>
+<li>Capacity
+<ul>
+<li><code>bool empty() const</code>
+<ul>
+<li><code>true</code> if the list is empty</li>
+</ul></li>
+<li><code>unsigned size() const</code>
+<ul>
+<li>The number of items in the list</li>
+</ul></li>
+</ul></li>
+<li>Element access
+<ul>
+<li><code>int at(unsigned) const</code>
+<ul>
+<li>The value at the given index</li>
+<li>Throw <code>std::out_of_range</code> if the index is out of
+bounds</li>
+</ul></li>
+<li><code>int front() const</code>
+<ul>
+<li>The first item in the list</li>
+<li>Throw <code>std::out_of_range</code> if the list is empty</li>
+</ul></li>
+</ul></li>
+<li>Modifiers
+<ul>
+<li><code>void add(int, unsigned)</code>
+<ul>
+<li>Add the value at the given index</li>
+<li>Throw <code>std::out_of_range</code> if the index is out of
+bounds</li>
+</ul></li>
+<li><code>void remove(unsigned)</code>
+<ul>
+<li>Remove the value at the given index</li>
+<li>Throw <code>std::out_of_range</code> if the index is out of
+bounds</li>
+</ul></li>
+<li><code>void clear()</code>
+<ul>
+<li>Remove all items from the list</li>
+</ul></li>
+</ul></li>
+</ul>
+<h3 id="implement-the-dispatch-scheduler-24-points">Implement the
+Dispatch Scheduler [24 points]</h3>
+<p>The dispatch scheduler is a terminal application using standard input
+and output that recognizes the following commands:</p>
+<ul>
+<li><code>push &lt;city&gt;</code>: Add the city to the front of the
+schedule
+<ul>
+<li>If the city is unknown, print <code>Unknown city.</code></li>
+</ul></li>
+<li><code>pop</code>: Remove the first city from the schedule
+<ul>
+<li>If the schedule is empty, print
+<code>Cannot pop from an empty schedule.</code></li>
+</ul></li>
+<li><code>add &lt;city&gt;</code>: Add the city to the schedule so that
+cities are in increasing order of location
+<ul>
+<li>Insert before the first city further than the new city</li>
+<li>Do not add the city if the same city would appear consecutively in
+the schedule.</li>
+<li>If the city is unknown, print <code>Unknown city.</code></li>
+</ul></li>
+<li><code>remove &lt;city&gt;</code>: Remove the first instance of the
+city from the schedule
+<ul>
+<li>If the city is not on the schedule, print
+<code>&lt;city&gt; is not on the schedule.</code></li>
+<li>If the city is unknown, print <code>Unknown city.</code></li>
+</ul></li>
+<li><code>print</code>: Print the current schedule and route length
+<ul>
+<li>Route length is the sum of the absolute differences between
+consecutive cities in the schedule, starting and ending at 0 (HQ or
+headquarters).
+<ul>
+<li>Example: the schedule [3, 1, 4] has route length 12
+<ul>
+<li>12 = |0 - 3| + |3 - 1| + |1 - 4| + |4 - 0|</li>
+</ul></li>
+</ul></li>
+</ul></li>
+<li><code>clear</code>: Clear the current schedule</li>
+<li><code>quit</code>: End the program</li>
+</ul>
+<p>If a command is not recognized, print
+<code>Unknown command.</code></p>
+<p><a href="#example-test-scenarios">See Example Test Scenarios</a> for
+example use cases of the dispatch scheduler.</p>
+<h3 id="avoid-memory-errors-25-points">Avoid Memory Errors [25
+points]</h3>
+<p>Your linked list and dispatch scheduler must avoid memory errors,
+such as:</p>
+<ul>
+<li>memory leaks</li>
+<li>use after free</li>
+<li>double free</li>
+<li>access out of bounds</li>
+</ul>
+<h3 id="submission">Submission</h3>
+<p>Submit these files:</p>
+<ul>
+<li><code>LinkedList.cpp</code></li>
+<li><code>DispatchScheduler.cpp</code></li>
+</ul>
+<h2 id="appendix">Appendix</h2>
+<h3 id="example-test-scenarios">Example Test Scenarios</h3>
+<h4 id="scenario-the-empty-schedule">Scenario: The empty schedule</h4>
+<ul>
+<li>Given an empty schedule</li>
+<li>When I issue the following commands:
+<ul>
+<li><code>print</code></li>
+<li><code>quit</code></li>
+</ul></li>
+<li>Then the output should be:
+<ul>
+<li><code>The schedule is empty.</code></li>
+</ul></li>
+</ul>
+<h4 id="scenario-push-cities-into-schedule">Scenario: Push cities into
+schedule</h4>
+<ul>
+<li>Given an empty schedule</li>
+<li>When I give the following commands:
+<ul>
+<li><code>push Boston</code></li>
+<li><code>push Pittsburgh</code></li>
+<li><code>print</code></li>
+<li><code>quit</code></li>
+</ul></li>
+<li>Then the output should be:
+<ul>
+<li><code>Pittsburgh -&gt; Boston -&gt; . (14)</code></li>
+</ul></li>
+</ul>
+<h4 id="scenario-add-cities-to-schedule">Scenario: Add cities to
+schedule</h4>
+<ul>
+<li>Given an empty schedule</li>
+<li>When I issue the following commands:
+<ul>
+<li><code>add Atlanta</code></li>
+<li><code>add Boston</code></li>
+<li><code>add Dallas</code></li>
+<li><code>add New York</code></li>
+<li><code>add Pittsburgh</code></li>
+<li><code>print</code></li>
+<li><code>quit</code></li>
+</ul></li>
+<li>Then the output should be:
+<ul>
+<li><code>Boston -&gt; New York -&gt; Pittsburgh -&gt; Atlanta -&gt; Dallas -&gt; . (32)</code></li>
+</ul></li>
+</ul>
+<h4 id="scenario-pop-city-from-schedule">Scenario: Pop city from
+schedule</h4>
+<ul>
+<li>Given the following schedule:
+<ul>
+<li><code>Boston -&gt; New York -&gt; Pittsburgh -&gt; Atlanta -&gt; Dallas -&gt; .</code></li>
+</ul></li>
+<li>When I issue the following commands:
+<ul>
+<li><code>pop</code></li>
+<li><code>print</code></li>
+<li><code>quit</code></li>
+</ul></li>
+<li>Then the output should be:
+<ul>
+<li><code>New York -&gt; Pittsburgh -&gt; Atlanta -&gt; Dallas -&gt; . (32)</code></li>
+</ul></li>
+</ul>
+<h4 id="scenario-remove-city-from-schedule">Scenario: Remove city from
+schedule</h4>
+<ul>
+<li>Given the following schedule:
+<ul>
+<li><code>Boston -&gt; New York -&gt; Pittsburgh -&gt; Atlanta -&gt; Dallas -&gt; .</code></li>
+</ul></li>
+<li>When I issue the following commands:
+<ul>
+<li><code>remove Dallas</code></li>
+<li><code>print</code></li>
+<li><code>quit</code></li>
+</ul></li>
+<li>Then the output should be:
+<ul>
+<li><code>Boston -&gt; New York -&gt; Pittsburgh -&gt; Atlanta -&gt; . (26)</code></li>
+</ul></li>
+</ul>
+<h4 id="scenario-clear-the-schedule">Scenario: Clear the schedule</h4>
+<ul>
+<li>Given the following schedule:
+<ul>
+<li><code>Boston -&gt; New York -&gt; Pittsburgh -&gt; Atlanta -&gt; Dallas -&gt; .</code></li>
+</ul></li>
+<li>When I issue the following commands:
+<ul>
+<li><code>clear</code></li>
+<li><code>print</code></li>
+<li><code>quit</code></li>
+</ul></li>
+<li>Then the output should be:
+<ul>
+<li><code>The schedule is empty.</code></li>
+</ul></li>
+</ul>
+<h4 id="scenario-unknown-command">Scenario: Unknown command</h4>
+<ul>
+<li>When I issue the following commands:
+<ul>
+<li><code>push Austin</code></li>
+<li><code>yeet Austin</code></li>
+<li><code>quit</code></li>
+</ul></li>
+<li>Then the output should be:
+<ul>
+<li><code>Unknown command.</code></li>
+</ul></li>
+</ul>
+<h4 id="scenario-unknown-city">Scenario: Unknown city</h4>
+<ul>
+<li>When I issue the following commands:
+<ul>
+<li><code>push College Station</code></li>
+<li><code>add Bryan</code></li>
+<li><code>remove t.u.</code></li>
+<li><code>quit</code></li>
+</ul></li>
+<li>Then the output should be:
+<ul>
+<li><code>Unknown city.</code></li>
+<li><code>Unknown city.</code></li>
+<li><code>Unknown city.</code></li>
+</ul></li>
+</ul>
+<h4 id="scenario-pop-from-empty-schedule">Scenario: Pop from empty
+schedule</h4>
+<ul>
+<li>Given an empty schedule</li>
+<li>When I issue the following commands:
+<ul>
+<li><code>pop</code></li>
+<li><code>quit</code></li>
+</ul></li>
+<li>Then the output should be:
+<ul>
+<li><code>Cannot pop from an empty schedule.</code></li>
+</ul></li>
+</ul>
+<h4 id="scenario-remove-city-from-schedule-that-its-not-on">Scenario:
+Remove city from schedule that it’s not on</h4>
+<ul>
+<li>Given the following schedule:</li>
+<li><code>Boston -&gt; New York -&gt; Pittsburgh -&gt; Atlanta -&gt; Dallas -&gt; .</code></li>
+<li>When I issue the following commands:
+<ul>
+<li><code>remove Houston</code></li>
+<li><code>quit</code></li>
+</ul></li>
+<li>Then the output should be:
+<ul>
+<li><code>Houston is not on the schedule.</code></li>
+</ul></li>
+</ul>
+<h4 id="scenario-add-or-push-a-duplicate-city">Scenario: Add or push a
+duplicate city</h4>
+<ul>
+<li>Given the following schedule:
+<ul>
+<li><code>Boston -&gt; New York -&gt; Pittsburgh -&gt; .</code></li>
+</ul></li>
+<li>When I issue the following commands:
+<ul>
+<li><code>add New York</code></li>
+<li><code>push Boston</code></li>
+<li><code>push Pittsburgh</code></li>
+<li><code>print</code></li>
+<li><code>quit</code></li>
+</ul></li>
+<li>Then the output should be:
+<ul>
+<li><code>Pittsburgh -&gt; Boston -&gt; New York -&gt; Pittsburgh -&gt; . (26)</code></li>
+</ul></li>
+</ul>
+<p><em>Explanation: <code>A -&gt; A</code> is redundant, so is not
+allowed. <code>A -&gt; B -&gt; A</code> is allowed.</em></p>
+<h3 id="cities">Cities</h3>
+<ul>
+<li>The names and locations of all cities are provided in
+<code>Cities.h</code>.</li>
+<li><code>City</code> is an <code>enum</code> (<em>enumeration</em>),
+which means its values are aliases for integers
+<ul>
+<li>E.g. <code>City::Boston == 1</code>,
+<code>City::Houston == 14</code>.</li>
+</ul></li>
+<li>The integer value is also the location of the city.</li>
+<li>You can use <code>enum City</code> values as integers.</li>
+<li>To turn an integer into a City, use <code>City(integer)</code>
+<ul>
+<li>E.g. <code>City(1)</code> will construct
+<code>City::Boston</code>.</li>
+</ul></li>
+<li>Given a string name of a city, use <code>StringToCity(string)</code>
+to get the corresponding <code>enum City</code> value.
+<ul>
+<li>E.g. <code>StringToCity("Boston")</code> will return the
+<code>enum City</code> value <code>City::Boston</code></li>
+</ul></li>
+<li>Given an <code>enum City</code> value, use
+<code>CityToString(City)</code> to get the string name of the city.
+<ul>
+<li>E.g. <code>CityToString(City::Houston)</code> will return the string
+value <code>"Houston"</code></li>
+</ul></li>
+</ul>
+<h3 id="how-to-compile-and-run">How to compile and run</h3>
+<p>(<em>you should have memorized this by now!</em>)</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode sh"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">g++</span> <span class="at">-std</span><span class="op">=</span>c++23 <span class="at">-Wall</span> <span class="at">-Wextra</span> <span class="at">-Weffc++</span> <span class="at">-pedantic</span> <span class="at">-g</span> <span class="at">-fsanitize</span><span class="op">=</span>undefined,address <span class="pp">*</span>.cpp</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">./a.out</span></span></code></pre></div>
+</body>
+</html>
