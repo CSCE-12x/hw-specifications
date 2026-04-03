@@ -125,6 +125,8 @@ The dispatch scheduler is a terminal application using standard input and output
 
 If a command is not recognized, print `Unknown command.`
 
+[See Example Test Scenarios](#example-test-scenarios) for example use cases of the dispatch scheduler.
+
 ### Avoid Memory Errors \[25 points\]
 
 Your linked list and dispatch scheduler must avoid memory errors, such as:
@@ -289,4 +291,3 @@ Submit these files:
 g++ -std=c++23 -Wall -Wextra -Weffc++ -pedantic -g -fsanitize=undefined,address *.cpp
 ./a.out
 ```
-
