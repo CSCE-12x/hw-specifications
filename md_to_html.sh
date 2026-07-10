@@ -38,9 +38,12 @@ if [[ -z "$(which pandoc)" ]]; then
     echo
     echo "Ubuntu:"
     echo
-    echo "wget https://github.com/jgm/pandoc/releases/download/3.9/pandoc-3.9-1-amd64.deb"
-    echo "sudo dpkg -i pandoc-3.9-1-amd64.deb"
-    echo "rm pandoc-3.9-1-amd64.deb"
+    RELEASES="https://api.github.com/repos/jgm/pandoc/releases"
+    name=$(curl -s "${RELEASES}/latest" | grep "name.*amd64.deb" | cut -d : -f 2 | tr -d \" | tr -d ,)
+    url=$(curl -s "${RELEASES}/latest" | grep "browser_download_url.*amd64.deb" | cut -d : -f 2,3 | tr -d \")
+    echo "wget ${url}"
+    echo "sudo dpkg -i ${name}"
+    echo "rm ${name}"
     echo
     exit 1
 fi
