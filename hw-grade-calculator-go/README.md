@@ -1,6 +1,6 @@
 # HW: Grade Calculator
 
-Build a grade calculator for CSCE 120. The program should calculate summary grades in the course based on formatted score input. Use the course syllabus and provided test cases to design and implement the program.
+Build a grade calculator for CSCE 120. The program should produce summary report of grades in the course based on formatted score input. Use the course syllabus and provided test cases to design and implement the program.
 
 ## Objectives
 
@@ -57,13 +57,13 @@ A grade summary reported should be printed to the standard output stream (e.g. t
 
 ```txt
 summary:
-      homework:  94.47
-       labwork:  90.00
-       quizzes:  95.23
- midterm exams:  95.64
-    final exam:  92.92
+      homework:  96.40
+       labwork: 100.00
+       quizzes:  94.18
+ midterm exams:  93.12
+    final exam:  95.63
 ----------------------
-weighted total:  94.19
+weighted total:  95.06
 final letter grade: A
 ```
 
@@ -75,13 +75,13 @@ You can redirect the contents of a file to a program's standard input stream usi
 go run grade_calculator.go < test_cases/input/complete_one_A.txt
 ```
 
-You can compare the output of your program to the expected output by piping the stanrdard output stream to the `diff` utility:
+You can compare the output of your program to the expected output by piping the standard output stream to the `diff` utility:
 
 ```sh
 go run grade_calculator.go < test_cases/input/complete_one_A.txt | diff test_cases/output/complete_one_A.txt -
 ```
 
-If the output does not match, `diff` will tell you where and show you, e.g. if my spacing was off in the 5th line the report would be:
+If the output does not match, `diff` will tell you where and show you, e.g. if my spacing was off in the 5th line, then the report would be:
 
 ```txt
 5c5
@@ -101,7 +101,7 @@ There are 2 syllabi that your program must support: regular and honors.  You can
 
 ### Additional Details
 
-If a detail that you think is necessary for this assignment is not specified in the syllabi and is not listed below (refresh the page in case it has been added since you last loaded the page), contact your instructor for clarification.
+If a detail that you think is necessary for this assignment is not specified in the syllabi and is not demonstrated sufficiently in the test cases and is not listed below (refresh the page in case it has been added since you last loaded the page), contact your instructor for clarification.
 
 * Labwork scores are `0` or `100`
   * `0`: not complete
