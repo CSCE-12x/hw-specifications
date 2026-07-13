@@ -92,16 +92,16 @@ If the output does not match, `diff` will tell you where and show you, e.g. if m
 
 In plain English, `diff` just said: "Line 5 of the first file (the expected output) has been changed to line 5 of the second file (your actual output)".
 
-## Two Syllabi
+## Grading Policy is in the Syllabus
 
 There are 2 syllabi that your program must support: regular and honors.  You can both both syllabi in Simple Syllabus:
 
-* TODO: link to honors syllabus
-* TODO: link to regular syllabus
+* [CSCE 120-200](https://tamu.simplesyllabus.com/en-US/doc/i01fhdygf/Fall-2026-College-Station-CSCE-120-200-%2857876%29-PROGRAM-DESIGN-&-CONCEPTS?mode=view)
+* [CSCE 120-{512-517}](https://tamu.simplesyllabus.com/en-US/doc/9lg7v2vyy/Fall-2026-College-Station-CSCE-120-512-%2857882%29-PROGRAM-DESIGN-&-CONCEPTS?mode=view)
 
-### Additional Details
+## Additional Requirements
 
-If a detail that you think is necessary for this assignment is not specified in the syllabi and is not demonstrated sufficiently in the test cases and is not listed below (refresh the page in case it has been added since you last loaded the page), contact your instructor for clarification.
+If a requirement is not specified in the syllabi and is not demonstrated sufficiently in the test cases and is not listed below (refresh the page in case it has been added since you last loaded the page), contact your instructor for clarification.
 
 * Labwork scores are `0` or `100`
   * `0`: not complete
