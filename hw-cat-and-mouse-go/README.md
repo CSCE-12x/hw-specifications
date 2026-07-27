@@ -125,10 +125,10 @@ Your program must define the `struct` types:
   * mouse's speed  (meters per minute)
   * statue's diameter (meters)
 * `Cat` with fields:
-  * `radius`
-  * `angle`
+  * `radius` (meters)
+  * `angle` (radians)
 * `Mouse` with field:
-  * `angle`
+  * `angle` (radians)
 
 ### Testing
 
