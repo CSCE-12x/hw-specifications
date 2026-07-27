@@ -85,33 +85,31 @@ cat speed around statue: 1.25
         statue diameter: 2
              cat radius: 4
               cat angle: 0
-            mouse angle: 57
+            mouse angle: 57.29578
 
 | time | cat radius | cat angle | mouse angle |
 | ---- | ---------- | --------- | ----------- |
-|    0 |     4.0000 |    0.0000 |     57.0000 |
-|    1 |     3.0000 |    0.0000 |    114.2958 |
-|    2 |     3.0000 |   23.8732 |    171.5916 |
-|    3 |     3.0000 |   47.7465 |    228.8873 |
-|    4 |     3.0000 |   71.6197 |    286.1831 |
-|    5 |     3.0000 |   95.4930 |    343.4789 |
-|    6 |     3.0000 |  119.3662 |     40.7747 |
-|    7 |     3.0000 |  143.2394 |     98.0705 |
-|    8 |     2.0000 |  143.2394 |    155.3662 |
-|    9 |     1.0000 |  143.2394 |    212.6620 |
-|   10 |     1.0000 |  212.6620 |    212.6620 |
+|    0 |     4.0000 |    0.0000 |     57.2958 |
+|    1 |     3.0000 |    0.0000 |    114.5916 |
+|    2 |     3.0000 |   23.8732 |    171.8873 |
+|    3 |     3.0000 |   47.7465 |    229.1831 |
+|    4 |     3.0000 |   71.6197 |    286.4789 |
+|    5 |     3.0000 |   95.4930 |    343.7747 |
+|    6 |     3.0000 |  119.3662 |     41.0705 |
+|    7 |     3.0000 |  143.2394 |     98.3662 |
+|    8 |     2.0000 |  143.2394 |    155.6620 |
+|    9 |     1.0000 |  143.2394 |    212.9578 |
+|   10 |     1.0000 |  212.9578 |    212.9578 |
 
 The cat caught the mouse at t=10.
 ```
 
 ## Requirements
 
-[Get the starter code.](starter.zip)
-
 Your program must include the following functions:
 
-* `main()` - provided in the starter code
-* `Main(r io.Reader, w. io.Writer)`
+* `main()` (should contain exactly one line: `Main(os.Stdin, os.Stdout)`)
+* `Main(r io.Reader, w io.Writer)`
 * `CatCatchesMouse(p Parameters, c Cat, m Mouse) (bool, []Cat, []Mouse)`
 
 Your program *really ought to* include other functions, too.
@@ -137,6 +135,8 @@ You must write tests that cover at least 90% of the statements in your program.
 `Main` has `io.Reader` and `io.Writer` parameters so that you can test functions that expect user input by providing input via those interfaces instead of the standard input and output streams.  The `fmt` package has functions like `fmt.Fscan` that allows you to read from an `io.Reader` and `fmt.Fprint` that allows you to write to an `io.Writer`.
 
 *Tip: Because short and simple functions are easier to test than long and complex functions, the more decomposition you do the easier it will be to achieve a high level of useful coverage.*
+
+[More information on testing.](testing.md)
 
 ## Submission
 
