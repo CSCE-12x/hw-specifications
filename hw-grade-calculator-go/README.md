@@ -9,10 +9,9 @@ There are two syllabi that your program must support:
 1. [CSCE 120-200](https://tamu.simplesyllabus.com/en-US/doc/i01fhdygf/Fall-2026-College-Station-CSCE-120-200-%2857876%29-PROGRAM-DESIGN-&-CONCEPTS?mode=view)
 2. [CSCE 120-{512-517}](https://tamu.simplesyllabus.com/en-US/doc/9lg7v2vyy/Fall-2026-College-Station-CSCE-120-512-%2857882%29-PROGRAM-DESIGN-&-CONCEPTS?mode=view)
 
-## Starter Code and Test Cases
+## Test Cases
 
-[Get the starter code and test cases](starter.zip)
-* `grade_calculator.go`
+[Get the test cases.](testcases.zip)
 * `test_cases/`
   * `input/` has the grade input data
   * `output/` has the expected grade summary output
