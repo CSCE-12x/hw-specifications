@@ -16,7 +16,7 @@ The input file contains ASCII-encoded printable characters: e.g. letters, number
 
 The output file should contain a list of words and counts, one per line.  The list should be sorted in numerically descending order by count, then (within the same count) in lexicographically ascending order by word.  Words are case insensitive and contain only letters and apostrophes (e.g. contractions like "y'all").
 
-If the third command line argument is present, standard output (i.e. the terminal) should contain a report on how many times the word appears and the location (line and column number) of each appearance in the original text. If the word is invalid, the report should be `"<string>" is not a word.`.
+If the third command line argument is present, standard output (i.e. the terminal) should contain a report on how many times the word appears and the location (line and position number) of each appearance in the original text. If the word is invalid, the report should be `"<string>" is not a word.`.
 
 #### Example
 
@@ -96,8 +96,8 @@ And standard output should contain:
 
 ```txt
 The word "truth" appears 2 times:
-1) Ln 1, Col 8
-2) Ln 5, Col 38
+1) Ln 1 Pos 8
+2) Ln 5 Pos 38
 ```
 
 ### Testing
