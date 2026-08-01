@@ -58,3 +58,12 @@ Main(input, &output)
 When `Main` reads from its reader (1st argument, `input`), it will read from the string you provided.  When `Main` writes to its writer (2nd argument, `output`), it will write to the buffer you provided.  You can get the contents of the buffer as a string: `output.String()`.
 
 This same tactic works for testing any function that has `io.reader` and `io.writer` parameters.
+
+## Coverage Report
+
+You can create am HTML coverage report that shows you which lines are covered and which are not by using these two commands in the terminal:
+
+```sh
+go test -coverprofile=coverage.out
+go tool cover -html=coverage.out -o coverage.html
+```

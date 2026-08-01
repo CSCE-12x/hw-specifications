@@ -104,6 +104,15 @@ The word "truth" appears 2 times:
 
 You must write tests that cover at least 90% of the statements in your program.
 
+#### Coverage Report
+
+You can create am HTML coverage report that shows you which lines are covered and which are not by using these two commands in the terminal:
+
+```sh
+go test -coverprofile=coverage.out
+go tool cover -html=coverage.out -o coverage.html
+```
+
 ## Submission
 
 Submit only these files to Gradescope:
