@@ -61,9 +61,8 @@ This same tactic works for testing any function that has `io.reader` and `io.wri
 
 ## Coverage Report
 
-You can create am HTML coverage report that shows you which lines are covered and which are not by using these two commands in the terminal:
+You can create a coverage report that shows you which lines are covered and which are not by using this command in the terminal:
 
 ```sh
-go test -coverprofile=coverage.out
-go tool cover -html=coverage.out -o coverage.html
+go test -coverprofile=coverage.out && go tool cover -html=coverage.out -o coverage.html
 ```

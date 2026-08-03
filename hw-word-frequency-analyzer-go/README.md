@@ -6,7 +6,7 @@ Write a program to analyze the frequency of words in text.
 
 ### Input and Output Formatting
 
-The program expects two, three, or four command line arguments:
+The program expects two or three command line arguments:
 
 1. path to input file **(required)**
 2. path to output file **(required)**
@@ -14,7 +14,7 @@ The program expects two, three, or four command line arguments:
 
 The input file contains ASCII-encoded printable characters: e.g. letters, numbers, punctuation, whitespace.
 
-The output file should contain a list of words and counts, one per line.  The list should be sorted in numerically descending order by count, then (within the same count) in lexicographically ascending order by word.  Words are case insensitive and contain only letters and apostrophes (e.g. contractions like "y'all").
+The output file should contain a list of words and counts, one per line.  The list should be sorted in numerically descending order by count, then (within the same count) in lexicographically ascending order by word.  For this assignment, words are case insensitive, contain only letters and apostrophes, start and end with a letter, and contain no two consecutive apostrophes. E.g. "y'all" and "you'dn't've" are words but "'cept", "'n', and "ol'" are not (they should be counted as instances of "cept", "n", and "ol", respectively).
 
 If the third command line argument is present, standard output (i.e. the terminal) should contain a report on how many times the word appears and the location (line and position number) of each appearance in the original text. If the word is invalid, the report should be `"<string>" is not a word.`.
 
@@ -106,11 +106,10 @@ You must write tests that cover at least 90% of the statements in your program.
 
 #### Coverage Report
 
-You can create am HTML coverage report that shows you which lines are covered and which are not by using these two commands in the terminal:
+You can create a coverage report that shows you which lines are covered and which are not by using this command in the terminal:
 
 ```sh
-go test -coverprofile=coverage.out
-go tool cover -html=coverage.out -o coverage.html
+go test -coverprofile=coverage.out && go tool cover -html=coverage.out -o coverage.html
 ```
 
 ## Submission
