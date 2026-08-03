@@ -14,7 +14,7 @@ The program expects two or three command line arguments:
 
 The input file contains ASCII-encoded printable characters: e.g. letters, numbers, punctuation, whitespace.
 
-The output file should contain a list of words and counts, one per line.  The list should be sorted in numerically descending order by count, then (within the same count) in lexicographically ascending order by word.  For this assignment, words are case insensitive, contain only letters and apostrophes, start and end with a letter, and contain no two consecutive apostrophes. E.g. "y'all" and "you'dn't've" are words but "'cept", "'n', and "ol'" are not (they should be counted as instances of "cept", "n", and "ol", respectively).
+The output file should contain a list of words and counts, one per line.  The list should be sorted in numerically descending order by count, then (within the same count) in lexicographically ascending order by word.  For this assignment, words are case insensitive, contain only letters and apostrophes, start and end with a letter, and contain no two consecutive apostrophes. E.g. "y'all" and "you'dn't've" are words but "'cept", "'n'", and "ol'" are not (they should be counted as instances of "cept", "n", and "ol", respectively).
 
 If the third command line argument is present, standard output (i.e. the terminal) should contain a report on how many times the word appears and the location (line and position number) of each appearance in the original text. If the word is invalid, the report should be `"<string>" is not a word.`.
 
