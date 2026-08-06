@@ -160,7 +160,7 @@ A picker-bot is dispatched to retreive the items.
 #### func Discontinue
 
 ```go
-func (w *Warehouse) Discontinue(sku string) error
+func (w *Warehouse) Discontinue(sku string)
 ```
 
 `Discontinue` removes all units of an item from the inventory.
