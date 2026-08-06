@@ -23,9 +23,8 @@ type Location struct {
 ```
 
 `Location` is the 3-dimensional address of an item in a warehouse.
-An aisle contains bays.
-A bay contains bins.
-A bin contains items.
+A warehouse contains aisles of bays of bins of items.
+Aisles, bays, and bins are numbered starting at 1.
 Picker-bots in the warehouse must navigate to an item's location to retrieve it for order fulfillment.
 The special value `Location{0, 0, 0}` is the receiving bay where items are delivered to the warehouse.
 Items cannot be picked for order fulfillment until they are moved from the receiving bay to another location in the warehouse.
