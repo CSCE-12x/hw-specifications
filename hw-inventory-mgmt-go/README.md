@@ -6,8 +6,9 @@ As an additional challenge, try to increase productivity by helping the picker-b
 
 ## Requirements
 
-Your program **must** have certain types and functions with specific names and signatures.
-You *may* define other types and functions to help you.
+Your program must have certain types and functions with specific names and signatures.
+You may define other types and functions to help you.
+
 
 ### Types
 
@@ -15,9 +16,9 @@ You *may* define other types and functions to help you.
 
 ```go
 type Location struct {
-	aisle int
-	bay   int
-	bin   int
+	Aisle int
+	Bay   int
+	Bin   int
 }
 ```
 
@@ -29,52 +30,57 @@ Picker-bots in the warehouse must navigate to an item's location to retrieve it 
 The special value `Location{0, 0, 0}` is the receiving bay where items are delivered to the warehouse.
 Items cannot be picked for order fulfillment until they are moved from the receiving bay to another location in the warehouse.
 
+
 #### type Item
 
 ```go
 type Item struct {
-	sku      string
-	name     string
-	quantity int
-	location Location
+	Sku      string
+	Name     string
+	Quantity int
+	Location Location
 }
 ```
 
 `Item` is an item in a warehouse.
 Items have a "stock-keeping unit" (SKU) that uniquely identifies the item, a name that describes the item, a quantity of items currently in inventory, and a location in the warehouse.
 
+
 #### type Warehouse
 
 ```go
 type Warehouse struct {
-	name      string
-	items     map[string]*Item
-    numAisles int
-    numBays   int
-    numBins   int
+	Name      string
+	Items     map[string]*Item
+    NumAisles int
+    NumBays   int
+    NumBins   int
 }
 ```
 
 `Warehouse` is a building that has a name and many items arranged in aisles, bays, and bins.
 Picker-bots move through the warehouse selecting and retrieving items for order fulfillment.
 
+
 ### Functions
 
 #### func NewItem
 
 ```go
-func NewItem(sku, name string, quantity int) *Item
+func NewItem(sku, name string, quantity int) (*Item, error)
 ```
 
 `NewItem` returns a pointer to an `Item` with the given SKU, name, and quantity and an initial location of {0, 0, 0} (i.e. the receiving bay).
 
+
 #### func NewWarehouse
 
 ```go
-func NewWarehouse(name string, aisles, bays, bins int) *Warehouse
+func NewWarehouse(name string, aisles, bays, bins int) (*Warehouse, error)
 ```
 
 `NewWarehouse` returns a pointer to a `Warehouse` with the given name, number of aisles, bays per aisle and bins per bay, and an empty inventory.
+
 
 #### func LoadWarehouse
 
@@ -84,6 +90,7 @@ func LoadWarehouse(filename string) (*Warehouse, error)
 
 `LoadWarehouse` loads a warehouse and its inventory from a file in JSON format.
 
+
 #### func SaveWarehouse
 
 ```go
@@ -91,6 +98,7 @@ func SaveWarehouse(w *Warehouse, filename string) error
 ```
 
 `SaveWarehouse` saves a warehouse and its inventory to a file in JSON format.
+
 
 #### func Add
 
@@ -101,13 +109,24 @@ func (w *Warehouse) Add(sku, name string, quantity int) error
 `Add` adds a new item to the warehouse inventory.
 New items are initially stored at the receiving bay.
 
+
 #### func Find
 
 ```go
-func (w *Warehouse) Find(sku string) *Item
+func (w *Warehouse) Find(sku string) (*Item, error)
 ```
 
 `Find` returns a pointer to the item in the inventory with the given SKU.
+
+
+#### func LowStock
+
+```go
+func (w *Warehouse) LowStock(amount int) []*Item
+```
+
+`LowStock` returns a slice of pointers to items that have quantity strictly less than the given amount.
+
 
 #### func Move
 
@@ -118,13 +137,6 @@ func (w *Warehouse) Move(sku string, newLocation Location) error
 `Move` updates the location of an item given the SKU and new location.
 A picker-bot is dispatched to find and move the item.
 
-#### func LowStock
-
-```go
-func (w *Warehouse) LowStock(amount int) []*Item
-```
-
-`LowStock` returns a slice of pointers to items that have quantity strictly less than the given amount.
 
 #### func Restock
 
@@ -135,7 +147,8 @@ func (w *Warehouse) Restock(sku string, quantity int) error
 `Restock` increases the quantity of an item in the inventory.
 A picker-bot is dispatched to add the new stock to the item's bin.
 
-#### func pick
+
+#### func Pick
 
 ```go
 func (w *Warehouse) Pick(sku string, quantity int) error
@@ -143,6 +156,7 @@ func (w *Warehouse) Pick(sku string, quantity int) error
 
 `Pick` removes a number of items from the inventory.
 A picker-bot is dispatched to retreive the items.
+
 
 #### func Discontinue
 
@@ -153,36 +167,38 @@ func (w *Warehouse) Discontinue(sku string) error
 `Discontinue` removes all units of an item from the inventory.
 A picker-bot is dispatched to collect and dispose of the discontinued item.
 
-#### func
+
+#### func FindShorterPath
 
 ```go
 func (w *Warehouse) FindShorterPath(skus []string, distance func(a, b Location) float64) ([]string, error)
 ```
 
-`FindShorterPath` finds a path (ordering of SKUs) that is shorter (with respect to the provided distance function) than the original (input) order, if possible.
+`FindShorterPath` finds a path (ordering of item SKUs) that is shorter (with respect to the provided distance function) than the original (input) order, if possible.
 The picker-bot starts and ends at the receiving bay: `Location{0, 0, 0}`.
 
-[More information about functions as arguments](functions-as-args.md)
+[More information about functions as arguments.](functions-as-args.md)
+
 
 ### Example
 
-Given `warehouse.txt` contains:
+Given `warehouse.json` contains:
 
 ```json
 {
-    "name": "Gopher Books",
-    "numAisles": 8,
-    "numBays": 6,
-    "numBins": 7,
-    "items": [
+    "Name": "Gopher Books",
+    "NumAisles": 8,
+    "NumBays": 6,
+    "NumBins": 7,
+    "Items": [
         {
-            "sku": "GoPL",
-            "name": "The Go Programming Language",
-            "quantity": 5,
-            "location": {
-                "aisle": 3,
-                "bay": 1,
-                "bin": 2
+            "Sku": "GoPL",
+            "Name": "The Go Programming Language",
+            "Quantity": 5,
+            "Location": {
+                "Aisle": 3,
+                "Bay": 1,
+                "Bin": 2
             }
         }
     ]
@@ -192,19 +208,17 @@ Given `warehouse.txt` contains:
 When I run the code:
 
 ```go
-w, err := LoadWarehouse("warehouse.txt")
-fmt.Printf("err is %v\n", err)
+w, _ := LoadWarehouse("warehouse.json")
 item := w.Find("GoPL")
-fmt.Printf("*item is %v\n", item)
+fmt.Printf("item is %v\n", item)
 w.Pick("GoPL", 2)
 w.Move("GoPL", Location{2, 2, 1})
-fmt.Printf("*item is %v\n", item)
+fmt.Printf("item is %v\n", item)
 ```
 
 Then I should see:
 
 ```txt
-err is <nil>
 item is &{GoPL The Go Programming Language 5 {3 1 2}}
 item is &{GoPL The Go Programming Language 3 {2 2 1}}
 ```

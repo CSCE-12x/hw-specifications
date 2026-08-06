@@ -1,31 +1,40 @@
 # Functions as Arguments
 
-In Go, functions are first-class citizens, meaning they can be passed as arguments to other functions, assigned to variables, and returned from functions.  To pass a function as an argument, you define a parameter with the function's signature (e.g. `func(int) string`) and pass either a named function or an anonymous function at the call site.
+Functions are first-class citizens in Go: they can be passed as arguments to other functions, assigned to variables, and returned from functions.
+To pass a function as an argument, you define a parameter with the function's signature (e.g. `func(int) string` is the signature of a function which takes an integer argument and returns a string) and pass either a named function or an anonymous function at the call site.
 
-For example, a higher-order function can accept a callback to perform custom logic:
+For example, a higher-order function can accept a function argument to perform custom logic:
 
 ```go
 package main
 
-import "fmt"
+import (
+	"fmt"
+	"math"
+)
 
-// greet takes a function that accepts a string and returns nothing
-func greet(callback func(string), name string) {
-    callback(name)
+// isTriangle takes a function that accepts two ints and returns a float64
+func isTriangle(a, b, c int, dist func(int, int) float64) bool {
+	// invoke the function by name
+	return dist(a, b)+dist(b, c) >= dist(a, c)
 }
 
-func sayHello(name string) {
-    fmt.Printf("Hello, %s!\n", name)
+func l2Norm(a, b int) float64 {
+	return math.Abs(float64(a) - float64(b))
 }
 
 func main() {
-    // Pass a named function
-    greet(sayHello, "Alice")
+	// Pass a named function
+	p := isTriangle(3, 4, 5, l2Norm)
 
-    // Pass an anonymous function
-    greet(func(name string) {
-        fmt.Printf("Hi, %s!\n", name)
-    }, "Bob")
+	// Pass an anonymous function
+	q := isTriangle(3, 4, 5,
+		func(a, b int) float64 {
+			return float64((a - b) * (a - b))
+		})
+
+	fmt.Printf("p = %v\n", p)
+	fmt.Printf("q = %v\n", q)
 }
 ```
 
