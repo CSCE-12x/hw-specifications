@@ -118,15 +118,6 @@ func (w *Warehouse) Find(sku string) (*Item, error)
 `Find` returns a pointer to the item in the inventory with the given SKU.
 
 
-#### func LowStock
-
-```go
-func (w *Warehouse) LowStock(amount int) []*Item
-```
-
-`LowStock` returns a slice of pointers to items that have quantity strictly less than the given amount.
-
-
 #### func Move
 
 ```go
@@ -135,6 +126,15 @@ func (w *Warehouse) Move(sku string, newLocation Location) error
 
 `Move` updates the location of an item given the SKU and new location.
 A picker-bot is dispatched to find and move the item.
+
+
+#### func LowStock
+
+```go
+func (w *Warehouse) LowStock(amount int) []*Item
+```
+
+`LowStock` returns a slice of pointers to items that have quantity strictly less than the given amount.
 
 
 #### func Restock
