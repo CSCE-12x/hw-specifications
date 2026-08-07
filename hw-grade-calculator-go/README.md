@@ -23,9 +23,8 @@ There are two syllabi that your program must support:
 
 If an apparent requirement is not specified in the syllabi and is not demonstrated sufficiently in the test cases and is not listed below (refresh the page in case it has been added since you last loaded the page), contact your instructor for clarification.
 
-* Labwork scores are `0` or `100`
-  * `0`: not complete
-  * `100`: complete
+* Labwork scores are out of 10
+* Quiz scores are out of 20
 * The final weighted total is rounded to the nearest integer before conversion to the final letter grade
   * Ties round up: *X*.5 rounds to *X*+1
 
@@ -36,11 +35,12 @@ If an apparent requirement is not specified in the syllabi and is not demonstrat
 Input to the program is supplied via the standard input stream (e.g. in the terminal).
 
 ```txt
-lw 100
+lw 10
 hw 96.40
-quiz 94.18
-midterm-exam 93.12
-final-exam 95.63
+quiz 18.8
+midterm-exam 93.5
+midterm-exam 87
+final-exam 95.7
 ```
 
 ### Output
@@ -51,11 +51,11 @@ Output should be printed to the standard output stream (e.g. to the terminal).
 summary:
       homework:  96.40
        labwork: 100.00
-       quizzes:  94.18
- midterm exams:  93.12
-    final exam:  95.63
+       quizzes:  94.00
+ midterm exams:  91.33
+    final exam:  95.70
 ----------------------
-weighted total:  95.06
+weighted total:  94.29
 final letter grade: A
 ```
 
