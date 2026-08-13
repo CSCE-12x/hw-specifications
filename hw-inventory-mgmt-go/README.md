@@ -63,6 +63,8 @@ Picker-bots move through the warehouse selecting and retrieving items for order 
 
 ### Functions
 
+Many of these functions will possibly return an `error`. We haven't specified what those errors are because we want *you* to think about what would be an error condition. Be thorough as the test cases will check for the use of errors.
+
 #### func NewItem
 
 ```go
