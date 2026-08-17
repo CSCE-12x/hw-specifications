@@ -6,8 +6,8 @@ Build a grade calculator for CSCE 120. The program should produce summary report
 
 There are two syllabi that your program must support:
 
-1. [CSCE 120-200](https://tamu.simplesyllabus.com/en-US/doc/i01fhdygf/Fall-2026-College-Station-CSCE-120-200-%2857876%29-PROGRAM-DESIGN-&-CONCEPTS?mode=view)
-2. [CSCE 120-{512-517}](https://tamu.simplesyllabus.com/en-US/doc/9lg7v2vyy/Fall-2026-College-Station-CSCE-120-512-%2857882%29-PROGRAM-DESIGN-&-CONCEPTS?mode=view)
+1. [CSCE 120-200](https://tamu.simplesyllabus.com/en-US/doc/i01fhdygf/Fall-2026-College-Station-CSCE-120-200-%2857876%29-PROGRAM-DESIGN-%26-CONCEPTS?mode=view)
+2. [CSCE 120-{512-517}](https://tamu.simplesyllabus.com/en-US/doc/9lg7v2vyy/Fall-2026-College-Station-CSCE-120-512-%2857882%29-PROGRAM-DESIGN-%26-CONCEPTS?mode=view)
 
 ## Test Cases
 
