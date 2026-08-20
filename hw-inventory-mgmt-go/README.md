@@ -1,4 +1,4 @@
-# HW: Inventory Management System
+# HW: Inventory Manager
 
 Write a program to manage the inventory in a warehouse.
 As an additional challenge, try to increase productivity by helping the picker-bots to pick items in a more efficient order.
