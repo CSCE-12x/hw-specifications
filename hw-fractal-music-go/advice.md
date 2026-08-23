@@ -12,9 +12,9 @@ Here is a first pass at the initial decomposition:
     - represent playing a note or taking a rest
 3. Functions and methods:
    * `Program`
-     - evaluate to produce a sequence of events
+     - `Run`: evaluate the program to produce a sequence of events
    * `Event`
-     - express in ABC notation
+     - `Abc`: express the event in ABC notation
 
 You might decompose the problem differently.
 From here, you would further decompose the problem, looking for other types, interfaces, and methods that would be useful, or modifying existing types to fit your evolving understanding of the problem and program design.
