@@ -1,6 +1,6 @@
 # HW: Grade Calculator
 
-Build a grade calculator for CSCE 120. The program should produce summary report of grades in the course based on formatted score input. Use the course syllabus and provided test cases to design and implement the program.
+Build a grade calculator for CSCE 120. The program should produce a summary report of grades in the course based on formatted score input. Use the course syllabus and provided test cases to design and implement the program.
 
 ## Grading Policy is in the Syllabus
 
