@@ -5,14 +5,14 @@
 You can redirect the contents of a file to a program's standard input stream using the `Get-Content` cmdlet (aliased as `cat`) and the pipe operator `|`:
 
 ```ps
-cat test_cases\input/complete_one_A.txt -Raw | go run grade_calculator.go
+cat test_cases/input/complete_one_A.txt -Raw | go run grade_calculator.go
 ```
 
 You can compare the output of your program to the expected output by saving the output to a file using the output redirection operator `>` and using the `Compare-Object` cmdlet (aliased as `diff`) to compare the expected file to the actual file:
 
 ```ps
-cat test_cases\input\complete_one_A.txt -Raw | go run grade_calculator.go > summary.txt
-diff (cat test_cases\output\complete_one_A.txt) (cat summary.txt)
+cat test_cases/input/complete_one_A.txt -Raw | go run grade_calculator.go > summary.txt
+diff (cat test_cases/output/complete_one_A.txt) (cat summary.txt)
 ```
 
 If the output does not match, `diff` will show you, e.g. if my midterm exam grade was wrong, then the report would be:
