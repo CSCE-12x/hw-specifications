@@ -1,6 +1,35 @@
 # Testing
 
-You can redirect the contents of a file to a program's standard input stream using the input redirection operator `<` in the shell:
+## PowerShell
+
+You can redirect the contents of a file to a program's standard input stream using the `Get-Content` cmdlet (aliased as `cat`) and the pipe operator `|`:
+
+```ps
+cat test_cases\input/complete_one_A.txt -Raw | go run grade_calculator.go
+```
+
+You can compare the output of your program to the expected output by saving the output to a file using the output redirection operator `>` and using the `Compare-Object` cmdlet (aliased as `diff`) to compare the expected file to the actual file:
+
+```ps
+cat test_cases\input\complete_one_A.txt -Raw | go run grade_calculator.go > summary.txt
+diff (cat test_cases\output\complete_one_A.txt) (cat summary.txt)
+```
+
+If the output does not match, `diff` will show you, e.g. if my spacing was off on the line for midterm exams, then the report would be:
+
+```txt
+InputObject            SideIndicator
+-----------            -------------
+ midterm exams: 99.18  =>
+ midterm exams:  99.18 <=
+```
+
+In plain English, `diff` just said: "midterm exams: 99.18" is only in the right-side argument (the `DifferenceObject`, your actual output) and "midterm exams:  99.18" is only in the left-side argument (the `ReferenceObject`, or the expected output).
+
+
+## *nix Shell (e.g. WSL, MacOS)
+
+You can redirect the contents of a file to a program's standard input stream using the input redirection operator `<`:
 
 ```sh
 go run grade_calculator.go < test_cases/input/complete_one_A.txt
