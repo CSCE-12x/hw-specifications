@@ -35,12 +35,11 @@ If an apparent requirement is not specified in the syllabi and is not demonstrat
 Input to the program is supplied via the standard input stream (e.g. in the terminal).
 
 ```txt
-lw 10
-hw 96.40
-quiz 18.8
-midterm-exam 93.5
-midterm-exam 87
-final-exam 95.7
+hw 98.88
+lw 9.79
+quiz 18.71
+midterm-exam 90.59
+final-exam 99.42
 ```
 
 ### Output
@@ -49,13 +48,13 @@ Output should be printed to the standard output stream (e.g. to the terminal).
 
 ```txt
 summary:
-      homework:  96.40
-       labwork: 100.00
-       quizzes:  94.00
- midterm exams:  91.33
-    final exam:  95.70
+      homework:  98.88
+       labwork:  97.90
+       quizzes:  93.55
+ midterm exams:  90.59
+    final exam:  99.42
 ----------------------
-weighted total:  94.29
+weighted total:  94.86
 final letter grade: A
 ```
 
