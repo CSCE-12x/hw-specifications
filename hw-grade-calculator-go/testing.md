@@ -24,7 +24,7 @@ InputObject            SideIndicator
  midterm exams:  90.59 <=
 ```
 
-In plain English, `diff` just said: `midterm exams:  86.75` is only in the right-side argument (the second file, the `DifferenceObject`, your actual output) and `midterm exams:  99.18` is only in the left-side argument (the first file, the `ReferenceObject`, the expected output).
+In plain English, `diff` just said: `midterm exams:  86.75` is only in the right-side argument (a.k.a the second file, a.k.a. the `DifferenceObject`, a.k.a your actual output) and `midterm exams:  99.18` is only in the left-side argument (a.k.a the first file, a.k.a the `ReferenceObject`, a.k.a the expected output).
 
 
 ## *nix Shell (e.g. WSL, MacOS)
