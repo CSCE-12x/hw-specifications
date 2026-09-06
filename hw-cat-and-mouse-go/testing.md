@@ -12,10 +12,10 @@ For example:
 
 ```go
 // Given:
-// * cat moves toward the statue at 1 m/s
-// * cat moves around the statue at 1.25 m/s
+// * cat moves toward the statue at 1 m/min
+// * cat moves around the statue at 1.25 m/min
 // * cat will give up after 30 minutes
-// * mouse moves at 1 m/s
+// * mouse moves at 1 m/min
 // * statue diameter is 2 m
 p := Parameters{1.0, 1.25, 30, 1.0, 2.0}
 // And cat initial position is 4 m and 0 radians
