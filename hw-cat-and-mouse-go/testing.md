@@ -29,7 +29,7 @@ func TestExample(t *testing.T) {
 
     // Then the cat should catch the mouse at time 10
     if !caught {
-        t.Errorf("fail: expected cat to catch mouse")
+        t.Error("fail: expected cat to catch mouse")
     }
     if len(catRecords) != 11 {
         t.Errorf("fail: expected exactly 11 cat records, got %d\n", len(catRecords))
@@ -41,7 +41,7 @@ func TestExample(t *testing.T) {
     finalCatAngle := catRecords[len(catRecords)-1].angle
     finalMouseAngle := mouseRecords[len(mouseRecords)-1].angle
     if finalCatAngle != finalMouseAngle {
-        fmt.t.Errorf("fail: expected cat to stop at mouse, got %f != %f", finalCatAngle, finalMouseAngle)
+        t.Errorf("fail: expected cat to stop at mouse, got %f != %f", finalCatAngle, finalMouseAngle)
     }
 }
 ```
