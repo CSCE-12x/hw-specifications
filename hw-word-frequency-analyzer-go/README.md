@@ -104,6 +104,8 @@ The word "truth" appears 2 times:
 
 You must write tests that cover at least 90% of the statements in your program.
 
+[More information on testing.](testing.md)
+
 #### Coverage Report
 
 You can create a coverage report that shows you which lines are covered and which are not by using these two commands in the terminal:
