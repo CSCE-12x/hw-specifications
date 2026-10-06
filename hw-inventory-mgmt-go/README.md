@@ -236,3 +236,4 @@ Submit only these files to Gradescope:
 
 * `inventory_manager.go`
 * `inventory_manager_test.go`
+* `inventory.json` (*optional, e.g. for testing*)
