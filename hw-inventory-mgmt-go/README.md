@@ -16,9 +16,9 @@ You may define other types and functions to help you.
 
 ```go
 type Location struct {
-	Aisle int
-	Bay   int
-	Bin   int
+	Aisle int `json:"Aisle"`
+	Bay   int `json:"Bay"`
+	Bin   int `json:"Bin"`
 }
 ```
 
@@ -34,10 +34,10 @@ Items cannot be picked for order fulfillment until they are moved from the recei
 
 ```go
 type Item struct {
-	Sku      string
-	Name     string
-	Quantity int
-	Location Location
+	Sku      string   `json:"Sku"`
+	Name     string   `json:"Name"`
+	Quantity int      `json:"Quantity"`
+	Location Location `json:"Location"`
 }
 ```
 
@@ -49,11 +49,11 @@ Items have a "stock-keeping unit" (SKU) that uniquely identifies the item, a nam
 
 ```go
 type Warehouse struct {
-	Name      string
-	Items     map[string]*Item
-	NumAisles int
-	NumBays   int
-	NumBins   int
+	Name      string           `json:"Name"`
+	Items     map[string]*Item `json:"Items"`
+	NumAisles int              `json:"NumAisles"`
+	NumBays   int              `json:"NumBays"`
+	NumBins   int              `json:"NumBins"`
 }
 ```
 
