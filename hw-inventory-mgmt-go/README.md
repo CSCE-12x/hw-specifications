@@ -51,9 +51,9 @@ Items have a "stock-keeping unit" (SKU) that uniquely identifies the item, a nam
 type Warehouse struct {
 	Name      string
 	Items     map[string]*Item
-    NumAisles int
-    NumBays   int
-    NumBins   int
+	NumAisles int
+	NumBays   int
+	NumBins   int
 }
 ```
 
