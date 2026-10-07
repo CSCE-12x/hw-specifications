@@ -114,7 +114,7 @@ New items are initially stored at the receiving bay.
 #### func Find
 
 ```go
-func (w *Warehouse) Find(sku string) (*Item, error)
+func (w *Warehouse) Find(sku string) *Item
 ```
 
 `Find` returns a pointer to the item in the inventory with the given SKU.
