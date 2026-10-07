@@ -16,9 +16,9 @@ You may define other types and functions to help you.
 
 ```go
 type Location struct {
-	Aisle int `json:"Aisle"`
-	Bay   int `json:"Bay"`
-	Bin   int `json:"Bin"`
+	Aisle int `json:"aisle"`
+	Bay   int `json:"bay"`
+	Bin   int `json:"bin"`
 }
 ```
 
@@ -34,10 +34,10 @@ Items cannot be picked for order fulfillment until they are moved from the recei
 
 ```go
 type Item struct {
-	Sku      string   `json:"Sku"`
-	Name     string   `json:"Name"`
-	Quantity int      `json:"Quantity"`
-	Location Location `json:"Location"`
+	Sku      string   `json:"sku"`
+	Name     string   `json:"name"`
+	Quantity int      `json:"quantity"`
+	Location Location `json:"location"`
 }
 ```
 
@@ -49,11 +49,11 @@ Items have a "stock-keeping unit" (SKU) that uniquely identifies the item, a nam
 
 ```go
 type Warehouse struct {
-	Name      string           `json:"Name"`
-	Items     map[string]*Item `json:"Items"`
-	NumAisles int              `json:"NumAisles"`
-	NumBays   int              `json:"NumBays"`
-	NumBins   int              `json:"NumBins"`
+	Name      string           `json:"name"`
+	Items     map[string]*Item `json:"items"`
+	NumAisles int              `json:"numAisles"`
+	NumBays   int              `json:"numBays"`
+	NumBins   int              `json:"numBins"`
 }
 ```
 
@@ -187,22 +187,22 @@ Given `warehouse.json` contains:
 
 ```json
 {
-    "Name": "Gopher Books",
-    "NumAisles": 8,
-    "NumBays": 6,
-    "NumBins": 7,
-    "Items": [
-        {
-            "Sku": "GoPL",
-            "Name": "The Go Programming Language",
-            "Quantity": 5,
-            "Location": {
-                "Aisle": 3,
-                "Bay": 1,
-                "Bin": 2
+    "name": "Gopher Books",
+    "numAisles": 8,
+    "numBays": 6,
+    "numBins": 7,
+    "items": {
+        "GoPL": {
+            "sku": "GoPL",
+            "name": "The Go Programming Language",
+            "quantity": 5,
+            "location": {
+                "aisle": 3,
+                "bay": 1,
+                "bin": 2
             }
         }
-    ]
+    }
 }
 ```
 
