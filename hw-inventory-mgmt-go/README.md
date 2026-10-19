@@ -237,3 +237,5 @@ Submit only these files to Gradescope:
 * `inventory_manager.go`
 * `inventory_manager_test.go`
 * `warehouse.json` (*optional, e.g. for testing*)
+
+*Note: Since `func main()` is not required, don't name your package `main`. If you want your package named `main`, then you must include `func main()`, which the compiler requires but will be ignored by the tests.*
