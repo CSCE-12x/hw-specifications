@@ -101,7 +101,7 @@ func (qt StdioQuizTaker) Ask(text string) string {
 }
 ```
 
-You need to identify, define, and implement the interfaces and types required in order for code like the above to work correctly.
+You need to identify, define, and implement the structs and interfaces required in order for code like the above to work correctly.
 
 Your goal is not just to make the program work, but to organize the program around meaningful behaviors. The main behavior of your program must be implemented in types, functions, and methods that can be called directly from tests.  Types (structs and interfaces) should represent important concepts in the problem. Functions and methods should describe what those concepts can do.
 
@@ -114,6 +114,7 @@ You must write tests that cover at least 90% of the statements in your program.
 ## Submission
 
 The only restriction on filenames for this assignment is that they must end with `.go`.
-The exceptions are files named `main.go` and `stdio_quiz_taker.go`, which you should not submit because they are provided and your versions will be overwritten.
+The exceptions are files named `main.go` and `stdio_quiz_taker.go`, which you **should not** submit because they are provided and your versions will be overwritten.
 Test files should end with `_test.go`.
 Do not submit any files with a `main` function.
+You should use `package main` in your files.
