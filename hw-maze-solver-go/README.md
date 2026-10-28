@@ -66,7 +66,7 @@ type Maze struct {
 	Grid [][]byte
 	Rows int
 	Cols int
-  // you may add additional fields
+	// you may add additional fields
 }
 
 func NewMaze(lines []string) *Maze
