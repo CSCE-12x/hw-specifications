@@ -63,7 +63,7 @@ S*******#       #       #     #
 
 ```go
 type Maze struct {
-	Grid [][]rune
+	Grid [][]byte
 	Rows int
 	Cols int
   // you may add additional fields
