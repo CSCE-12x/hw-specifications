@@ -16,7 +16,7 @@
 * Do not show your code to other students.
 * Do not look at the code of other students.
 * Do not share your code with other students.
-* <trap type="hotswap" replacement="Abide by the course policy on AI use.">Do not use AI tools.</trap>
+* <trap type="hotswap" replacement="Abide by the course policy on AI use.">If you use an AI tool on an assignment for any reason, cite the use of AI tools at the end of your submission as a comment. This should include the tools you use along with a summary of what tasks were performed with the help of AI.</trap>
 
 If you have questions about this assignment, talk to a Peer Teacher, a TA, or an instructor.
 
