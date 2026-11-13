@@ -5,5 +5,5 @@
 3. [Word Frequency Analyzer](hw-word-frequency-analyzer-go)
 4. [Inventory Manager](hw-inventory-mgmt-go)
 5. [Quiz Game](hw-quiz-game-go)
-6. Fractal Music Composer
-7. TBD
+6. [Maze Solver](hw-maze-solver-go)
+7. [Navigation System](hw-navigation-system-go)
