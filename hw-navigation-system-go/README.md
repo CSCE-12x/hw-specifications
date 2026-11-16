@@ -44,7 +44,9 @@ The fields inside `Graph` are up to you because you may choose how to represent 
 
 ### Required Public Functions and Methods
 
-You must implement the following functions and methods exactly:
+You must implement the following functions and methods exactly.
+All public methods except getters should trim leading and trailing whitespace from location-name arguments before validating or using them.
+Names that are empty after trimming are invalid.
 
 #### Constructor
 
@@ -53,19 +55,25 @@ You must implement the following functions and methods exactly:
 func NewGraph() *Graph
 ```
 
+Each call to `NewGraph` must return a new, independent graph.
+
 #### Getters
 
 Access information about the graph.
+Do not trim whitespace from location names in these methods.
 
 ```go
 // Determine whether the graph contains a location (vertex).
+// Returns true if the graph has the location.
 func (g *Graph) HasLocation(name string) bool
 
 // Determine whether the graph contains a path between two locations (edge).
+// Returns true if the graph has an edge between the two locations.
 func (g *Graph) HasPath(from, to string) bool
 
 // Determine the distance/length of the path between two locations (edge weight).
-// The locations must have a direct path (single edge) between them.
+// Returns the positive distance of a direct path (single edge).
+// Returns -1 otherwise.
 func (g *Graph) GetDistance(from, to string) int
 ```
 
@@ -77,10 +85,10 @@ func (g *Graph) AddLocation(name string) error
 ```
 
 Rules:
-* Location names must not be empty.
-* A duplicate location should return an error.
-* Leading and trailing whitespace should not be considered part of the name.
+* Location name must not be empty.
+* A duplicate location must return an error.
 * Location names are case-sensitive.
+* If `AddLocation` returns an error, the graph must remain unchanged.
 
 #### Add a Path
 
@@ -94,20 +102,26 @@ Rules:
 * Distance must be positive.
 * Paths are undirected.
   - If there is a path from `Library` to `Gym`, there is also a path from `Gym` to `Library`.
-* A duplicate path between the same two locations should return an error.
+* A duplicate path between the same two locations must return an error.
 * A location may not have a path to itself.
+* If `AddPath` returns an error, the graph must remain unchanged.
 
 #### Find a Shortest Path
 
 ```go
 // Find a shortest path between two locations.
-func (g *Graph) ShortestPath(from, to string) ([]string, int, error)
+func (g *Graph) ShortestPath(from, to string) RouteResult
 ```
 
-Return values:
-* The path as a slice of location names,
-* The total distance,
-* An error if no valid route exists.
+Return value:
+* On success:
+  * `Path` contains the complete route.
+  * `Distance` contains the route's total distance.
+  * `Error` is `nil`.
+* On any failure, including an unknown location or no connecting route:
+  * `Path` is `nil`.
+  * `Distance` is `-1`.
+  * `Error` is non-nil.
 
 Rules:
 * Both locations must exist.
@@ -126,8 +140,11 @@ func (g *Graph) ShortestPaths(queries []RouteQuery) []RouteResult
 Notes:
 * The returned slice must have the same length as the input slice.
 * The result for `queries[i]` must appear at `results[i]`.
-* The `Path` field of the `RouteResult` struct should contain at least two elements: the original query locations
-* This function may be implemented concurrently using goroutines.
+* `ShortestPaths` must not reorder the input slice or modify any `RouteQuery` value stored in it.
+* Your implementation must comfortably handle graphs with at least 100 locations, 100 paths, and 1,000 route queries.
+  - Do not enumerate every possible route.
+* This function *may* be implemented concurrently using goroutines.
+  - Use of concurrency is encouraged, but optional.
 
 #### Main for Testing
 
@@ -159,22 +176,30 @@ QUERY from to
 ```
 
 Rules:
-* Commands words are case-insensitive.
-* Lines beginning with `#` are comments and should be ignored.
-* Blank lines should be ignored.
+* Trim leading and trailing whitespace from lines before processing
+* Command words are case-insensitive.
 * Command lines are order-insensitive.
   - Process locations first, then paths, then queries.
+  - Within each command category, process commands in their original input order.
 * `LOCATION name` adds a location.
   - Location names do not contain spaces.
 * `PATH from to distance` adds a path between two locations.
   - Path distances are positive integers.
 * `QUERY from to` requests a shortest path.
+* Command fields are separated by whitespace.
+* Lines beginning with `#` are comments and should be ignored.
+  - Inline comments are not supported.
+* Blank lines should be ignored.
+
 
 ### Output Format
 
-For each query, your program must print either a route or an error message.
-A single route or error message ends with a newline character.
-When there are multiple queries, print a blank line between each route or error message.
+For each query, your program must print a query result.
+A single query result ends with a newline character.
+When there are multiple queries, print a blank line between each result.
+
+A syntactically valid `QUERY` always produces a query-result block.
+If either location is unknown or no connecting route exists, the query should fail.
 
 #### Successful Query
 
@@ -186,7 +211,7 @@ PATH
 Distance: DISTANCE
 ```
 
-Where `PATH` is the sequence of locations separated by `->`.
+Where `PATH` is the sequence of locations separated by `" -> "`.
 
 #### Failed Query
 
@@ -236,13 +261,37 @@ Distance: 0
 
 ### Error Handling
 
-Your program should not panic on bad input.
+Your program must not panic on bad input.
 
-For invalid or malformed commands, print a message to standard output: `invalid command: "COMMAND"` and continue processing commands.
+Unless explicitly stated otherwise, tests will check whether or not an error is `nil`, not its exact message.
+
+#### Invalid Commands
+
+A command is invalid if (any of):
+* its command word is unknown
+* it has the wrong number of fields
+* a field cannot be parsed as the required type
+* executing it would violate an `AddLocation` or `AddPath` rule
+
+For invalid commands, print `invalid command: "COMMAND"`, where `COMMAND` is the entire original line (trimmed of whitespace), and then continue processing commands.
+Every invalid command produces exactly one `invalid command` line.
+Invalid-command lines do not receive surrounding blank lines and do not affect query-result separation.
+
+Print structurally malformed-command diagnostics during parsing, in their original relative order.
+Then process locations, paths, and queries in that order.
+Print semantic location and path diagnostics during their respective phases, preserving original relative order within each category.
+Consequently, diagnostic order is:
+
+1. structural diagnostics
+2. location diagnostics
+3. path diagnostics
+4. query results
 
 ### Testing
 
 You must write tests that cover at least 90% of the statements in your program.
+
+Run your tests with `go test -cover -race` to measure coverage and check for race conditions (if you use concurrency).
 
 ## Submission
 
@@ -252,5 +301,4 @@ You are required to submit:
 * `navigation_system_test.go`
 
 You may also submit other files.
-You should use `package main` in `navigation_system.go`.
-You should put `func main()` in `navigation_system.go`.
+You should use `package main` and put `func main()` in `navigation_system.go`.
